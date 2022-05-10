@@ -1,0 +1,99 @@
+/* welcome */
+.welcome{
+    position: relative;
+    width: 100%;
+    height: 400px;
+}
+
+.img-container{
+    width: 100%;
+    height: 400px;
+}
+
+.img-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.welcome-content{
+    position: absolute;
+    left: 20%;
+    top: 60px;
+}
+
+.welcome-title{
+    line-height: 80px;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 0px 0px 20px white;
+}
+
+.welcome-text{
+    line-height: 35px;
+    font-size: 19px;
+    color: #666666;
+}
+
+.welcome-text img{
+    width: 19px;
+}
+
+.sign-btn{
+    margin-right: 30px;
+}
+
+#consultant-signup-btn{
+    cursor: pointer;
+    height: 40px;
+    background: #F3F3F3;
+    border-style: #3F3225;
+    border-radius: 5px;
+    font-size: 19px;
+    text-align: center;
+    padding: 0 20px;
+    color: #3F3225;
+}
+
+/* fields */
+.fields{
+    margin-top: 40px;
+    text-align: center;
+}
+
+.field-list{
+    display: grid;
+    grid-template-columns: 25px 330px 330px 330px 25px;
+    grid-template-rows: 200px 200px;
+    column-gap: 40px;
+    row-gap: 20px;
+    grid-template-areas:
+        "left item item item right"
+        "left item item item right";
+    margin-top: 40px;
+}
+
+.field-item{
+    border: 1px solid brown;
+}
+
+.left{
+    grid-area: left;
+    display: flex;
+    align-items: center;
+}
+
+.right{
+    grid-area: right;
+    display: flex;
+    align-items: center;
+}
+
+/* intro */
+.intro{
+    height: 500px;
+    margin-top: 100px;
+    background-color: #E0C5A4;
+    border-radius: 20px;
+    opacity: 80%;
+}

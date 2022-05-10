@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/index.css"></link>
+        {% extends "base.html" %}
+    </head>
+    <body>
+        {% block body %}
+        <div class="welcome">
+            <div class="img-container">
+                <img src="/img/welcome.png"/>
+            </div>
+            <div class="welcome-content">
+                <div class="page-title">尋找你的專業顧問</div>
+                <div class="welcome-text"><img src="/img/star.png" /> 專家一對一諮詢</div>
+                <div class="welcome-text"><img src="/img/star.png" /> 價格公開透明</div>
+                <div class="welcome-text"><img src="img/star.png" /> 即時解決你的問題</div>
+                <br/>
+                <br/>
+                <div>
+                    <button id="member-signup-btn" class="btn sign-btn">我是一般民眾</button>
+                    <button id="consultant-signup-btn" class="sign-btn">我是專業顧問</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="fields">
+                <div class="page-title">專業領域篩選</div>
+                <div class="field-list">
+                    <div class="field-item left"><img src="/img/" /></div>
+                    <div class="field-item right"><img src="/img/" /></div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="/img/"/></div>
+                        <div>稅務</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="/img/"/></div>
+                        <div>會計</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="/img/"/></div>
+                        <div>金融</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="/img/"/></div>
+                        <div>刑法</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="/img/"/></div>
+                        <div>民法</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="/img/"/></div>
+                        <div>公司法</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro">
+                
+            </div>
+
+        </div>
+        {% endblock body%}
+    </body>
+</html>
