@@ -26,13 +26,14 @@
     line-height: 80px;
     font-size: 28px;
     font-weight: bold;
-    text-shadow: 0px 0px 20px white;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 10px #AABBCC;
 }
 
 .welcome-text{
     line-height: 35px;
     font-size: 19px;
-    color: #666666;
+    color: #FFFFFF;
 }
 
 .welcome-text img{
@@ -47,12 +48,13 @@
     cursor: pointer;
     height: 40px;
     background: #F3F3F3;
-    border-style: #3F3225;
+    /* border: 2px solid #27A9BE; */
+    border-style: none;
     border-radius: 5px;
     font-size: 19px;
     text-align: center;
     padding: 0 20px;
-    color: #3F3225;
+    color: #242C3E;
 }
 
 /* fields */
@@ -93,7 +95,7 @@
 .intro{
     height: 500px;
     margin-top: 100px;
-    background-color: #E0C5A4;
+    background-color: #EFEBE5;
     border-radius: 20px;
     opacity: 80%;
 }

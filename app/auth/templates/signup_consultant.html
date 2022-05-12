@@ -6,35 +6,91 @@
     </head>
     <body>
         {% block body %}
-        
-        <div class="content">
-            <div class="signup-container">
-                <div class="page-top">
-                    <img src="/img/"/>
-                    <div class="page-title">註冊會員 - 專業顧問</div>
-                </div>
-                <form>
-                    <div class="signup-basic">
-                        <div class="signup-img-container">
-                            <img src="/img" />
-                        </div>
-                        <div>信箱： <input type="email"/></div>
-                        <div>密碼： <input type="password"/></div>
 
-                        <div>姓名： <input type="text"/></div>
-                        <div>性別： <input type="text"/></div> <!-- checkbox -->
-                        <div>電話： <input type="number"/></div>
+        <div class="content">
+            <div class="page-top">
+                <img src="/img/title-mark.png"/>
+                <div class="page-title">註冊會員 - 專業顧問</div>
+            </div>
+            <div class="signup-container">
+                <form id="signup-form">
+                    <div class="signup-basic">
+                        <div class="signup-title">
+                            <img src="/img/title-mark.png"/>
+                            <div>註冊資訊</div>
+                        </div>
+                        <div>註冊信箱： <input type="email" class="text-input"/></div>
+                        <div>註冊密碼： <input type="password" class="text-input"/></div>
+
+                        <div class="signup-title">
+                            <img src="/img/title-mark.png"/>
+                            <div>個人基本資料</div>
+                        </div>
+                        <div>照片： 
+                            <label class="file-input">選擇檔案<input type="file"/></label>
+                        </div>
+                        <div id="name">姓名： <input type="text" class="text-input"/></div>
+                        <div>性別： 
+                            <label class="gender">
+                                <input type="radio" name="gender" value="man" checked="checked"/><span class="gender-checkmark"></span>
+                                男性
+                            </label>
+                            &nbsp;
+                            <label class="gender">
+                                <input type="radio" name="gender" value="woman"/><span class="gender-checkmark"></span>
+                                女性
+                            </label>
+                        </div>
+                        <div id="phone">電話： <input type="text" class="text-input"/></div>
                     </div>
 
                     <div class="signup-pro">
-                        <div>專業領域： <input type="text"/></div> <!-- checkbox -->
-                        <div>執業證書： <input type="file"/></div>
-                        <div>服務機構： <input type="text"/></div>
-                        <div>職稱： <input type="text" placeholder="律師/會計師..."/></div>
-                        <div>資歷： <input type="text"/></div> <!-- many inputs -->
-                        <div>時薪報價： NT$ <input type="number"/> /時</div> <!-- *100 -->
+                        <div class="signup-title">
+                            <img src="/img/title-mark.png"/>
+                            <div>專業相關資料</div>
+                        </div>
+                        <div>專業領域： 
+                            <br/>
+                            <br/>
+                            <label class="field"><input type="checkbox" name="field" value="ta"/><span class="field-checkmark"></span>
+                                稅務
+                            </label>
+                            &nbsp;
+                            <label class="field"><input type="checkbox" name="field" value="ac"/><span class="field-checkmark"></span>
+                                會計
+                            </label>
+                            &nbsp;
+                            <label class="field"><input type="checkbox" name="field" value="fi"/><span class="field-checkmark"></span>
+                                金融
+                            </label>
+                            &nbsp;
+                            <label class="field"><input type="checkbox" name="field" value="co"/><span class="field-checkmark"></span>
+                                公司法
+                            </label>
+                            &nbsp;
+                            <label class="field"><input type="checkbox" name="field" value="cr"/><span class="field-checkmark"></span>
+                                刑法
+                            </label>
+                            &nbsp;
+                            <label class="field"><input type="checkbox" name="field" value="ci"/><span class="field-checkmark"></span>
+                                民法
+                            </label>
+                            <br/>
+                            <div> <br/> &nbsp; * 若有其他專精領域，可至<span id="to-intro">【 網站說明 】</span>申請</div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div>執業證書： 
+                            <label class="file-input">選擇檔案<input type="file"/></label>
+                        </div>
+                        <div id="agency">服務機構： <input type="text" class="text-input"/></div>
+                        <div>職稱頭銜： <input type="text" class="text-input" placeholder="律師/會計師..." /></div>
+                        <div>職涯經歷： <input type="text" class="text-input"/></div> <!-- many inputs -->
+                        <div>時薪報價： NT$ <input type="text" class="price-input" placeholder="請輸入百元倍數"/> /時</div>
                     </div>
-                    <button class="btn">顧問註冊</button>
+                    <div class="btn-container">
+                        <button class="btn">註冊會員</button>
+                    </div>
                 </form>
             </div>
         </div>

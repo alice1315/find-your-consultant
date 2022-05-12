@@ -8,19 +8,24 @@
         {% block body %}
 
         <div class="content">
+            <div class="page-top">
+                <img src="/img/title-mark.png"/>
+                <div class="page-title">會員登入</div>
+            </div>
+
             <div class="signin-container">
-                <div class="page-top">
-                    <img src="/img/"/>
-                    <div class="page-title">會員登入</div>
+                <div class="membership">
+                    <input id="member" type="radio" name="member-checkbox" value="member" checked="checked" onclick="console.log('in member')"/>
+                    <label for="member">一般會員登入</label>
+
+                    <img src="/img/checkbox-mark.png"/>
+                    
+                    <input id="consultant" type="radio" name="member-checkbox" value="consultant" onclick="console.log('in pro')"/>
+                    <label for="consultant">專業顧問登入</label>
                 </div>
-                <div class="member-checkbox">
-                    <div>一般會員登入</div>  <!-- checkbox -->
-                    <img src="/img/"/>
-                    <div>專業顧問登入</div>  <!-- checkbox -->
-                </div>
-                <form>
+                <form id="signin-form">
                     <div>信箱： <input type="email" placeholder="請輸入電子信箱"/></div>
-                    <div>密碼： <input type="password" placeholder="請輸入電子信箱"/></div>
+                    <div>密碼： <input type="password" placeholder="請輸入密碼"/></div>
                     <button class="btn">登入會員</button>
                 </form>
             </div>
