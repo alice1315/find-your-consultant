@@ -48,7 +48,6 @@
     cursor: pointer;
     height: 40px;
     background: #F3F3F3;
-    /* border: 2px solid #27A9BE; */
     border-style: none;
     border-radius: 5px;
     font-size: 19px;
@@ -76,19 +75,38 @@
 }
 
 .field-item{
-    border: 1px solid brown;
+    cursor: pointer;
+    font-size: 19px;
+}
+
+.field-item:hover{
+    background-color: #F3F3F3;
+}
+
+.field-item:nth-child(3), .field-item:nth-child(4), .field-item:nth-child(5){
+    /* border-bottom: 1px solid #242C3E; */
+}
+
+.field-img img{
+    height: 120px;
 }
 
 .left{
     grid-area: left;
-    display: flex;
-    align-items: center;
 }
 
 .right{
     grid-area: right;
+}
+
+.left, .right{
     display: flex;
     align-items: center;
+}
+
+.left img, .right img{
+    cursor: pointer;
+    width: 20px;
 }
 
 /* intro */
