@@ -57,26 +57,44 @@ TABLES['fields'] = (
     "  `field_name` varchar(50) NOT NULL,"
     "  `field_code` varchar(50) NOT NULL,"
     "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`field_name`))")
-"""
-TABLES['images'] = (
-    "CREATE TABLE `images` ("
+    "  UNIQUE (`field_name`),"
+    "  UNIQUE (`field_code`))")
+
+TABLES['consultant'] = (
+    "CREATE TABLE `consultant` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `member_id` varchar(20) NOT NULL,"
+    "  `email` varchar(255) NOT NULL,"
+    "  `password` varchar(255) NOT NULL,"
+    "  `picture_url` varchar(255) NOT NULL,"
     "  `name` varchar(50) NOT NULL,"
-    "  `image_url` varchar(255) NOT NULL,"
+    "  `gender` varchar(10) NOT NULL,"
+    "  `phone` varchar(15),"
+    "  `fields` varchar(255) NOT NULL,"
+    "  `certificate_url` varchar(255) NOT NULL,"
+    "  `company` varchar(20),"
+    "  `price` int NOT NULL,"
+    "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`name`) REFERENCES spots(`name`))")
+    "  UNIQUE (`member_id`),"
+    "  UNIQUE (`email`))")
 
 TABLES['member'] = (
     "CREATE TABLE `member` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `name` varchar(255) NOT NULL,"
+    "  `member_id` varchar(20) NOT NULL,"
     "  `email` varchar(255) NOT NULL,"
     "  `password` varchar(255) NOT NULL,"
+    "  `picture_url` varchar(255) NOT NULL,"
+    "  `name` varchar(50) NOT NULL,"
+    "  `gender` varchar(10) NOT NULL,"
+    "  `phone` varchar(15),"
     "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
+    "  UNIQUE (`member_id`),"
     "  UNIQUE (`email`))")
 
+"""
 TABLES['shopping_cart'] = (
     "CREATE TABLE `shopping_cart` ("
     "  `user_id` bigint NOT NULL,"
@@ -131,6 +149,13 @@ for table_name in TABLES:
     else:
         print("OK")
 
+"""
+# Insert fields
+insert_field = ("INSERT INTO fields (field_name, field_code) VALUES (%s, %s)")
+field_data_list = [("稅務", "ta"), ("會計", "ac"), ("金融", "fi"), ("刑法", "ci"), ("民法", "cr"), ("公司法", "co")]
+for data in field_data_list:
+    cursor.execute(insert_field, data)
+"""
 
 cnx.commit()
 
