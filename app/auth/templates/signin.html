@@ -2,9 +2,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="/css/signin.css"></link>
-        {% extends "base.html" %}
     </head>
     <body>
+        {% extends "base.html" %}
+        
         {% block body %}
 
         <div class="content">
@@ -19,7 +20,7 @@
                     <label for="member">一般會員登入</label>
 
                     <img src="/img/checkbox-mark.png"/>
-                    
+
                     <input id="consultant" type="radio" name="member-checkbox" value="consultant" onclick="console.log('in pro')"/>
                     <label for="consultant">專業顧問登入</label>
                 </div>

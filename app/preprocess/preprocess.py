@@ -63,10 +63,9 @@ TABLES['fields'] = (
 TABLES['consultant'] = (
     "CREATE TABLE `consultant` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `member_id` varchar(20) NOT NULL,"
     "  `email` varchar(255) NOT NULL,"
     "  `password` varchar(255) NOT NULL,"
-    "  `picture_url` varchar(255) NOT NULL,"
+    "  `pic_url` varchar(255) NOT NULL,"
     "  `name` varchar(50) NOT NULL,"
     "  `gender` varchar(10) NOT NULL,"
     "  `phone` varchar(15),"
@@ -76,22 +75,19 @@ TABLES['consultant'] = (
     "  `price` int NOT NULL,"
     "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`member_id`),"
     "  UNIQUE (`email`))")
 
 TABLES['member'] = (
     "CREATE TABLE `member` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `member_id` varchar(20) NOT NULL,"
     "  `email` varchar(255) NOT NULL,"
     "  `password` varchar(255) NOT NULL,"
-    "  `picture_url` varchar(255) NOT NULL,"
+    "  `pic_url` varchar(255) NOT NULL,"
     "  `name` varchar(50) NOT NULL,"
     "  `gender` varchar(10) NOT NULL,"
     "  `phone` varchar(15),"
     "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`member_id`),"
     "  UNIQUE (`email`))")
 
 """

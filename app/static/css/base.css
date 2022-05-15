@@ -36,6 +36,10 @@ input{
     color: #FFFFFF;
 }
 
+.hide{
+    display: none;
+}
+
 /* page-top */
 .page-top{
     display: flex;

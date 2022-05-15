@@ -2,9 +2,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="/css/index.css"></link>
-        {% extends "base.html" %}
     </head>
-    <body>
+    <body onload="baseInit(); indexInit();">
+        {% extends "base.html" %}
+
         {% block body %}
         <div class="welcome">
             <div class="img-container">
@@ -62,6 +63,8 @@
             </div>
 
         </div>
+
+        <script src="/js/index.js"></script>
         {% endblock body%}
     </body>
 </html>

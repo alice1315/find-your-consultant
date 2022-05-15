@@ -2,34 +2,36 @@
 <html>
     <head>
         <link rel="stylesheet" href="/css/signup.css"></link>
-        {% extends "base.html" %}
     </head>
-    <body>
+    <body onload="baseInit(); authInit();">
+        {% extends "base.html" %}
+        
         {% block body %}
 
         <div class="content">
             <div class="page-top">
                 <img src="/img/title-mark.png"/>
-                <div class="page-title">註冊會員 - 專業顧問</div>
+                <div class="page-title hide">註冊會員 - 專業顧問</div>
+                <div class="page-title hide">註冊會員 - 一般民眾</div>
             </div>
             <div class="signup-container">
-                <form id="signup-form">
+                <form id="signup-form" method="POST" enctype="multipart/form-data">
                     <div class="signup-basic">
                         <div class="signup-title">
                             <img src="/img/title-mark.png"/>
                             <div>註冊資訊</div>
                         </div>
-                        <div>註冊信箱： <input type="email" class="text-input"/></div>
-                        <div>註冊密碼： <input type="password" class="text-input"/></div>
+                        <div>註冊信箱： <input type="email" name="email" class="text-input"/></div>
+                        <div>註冊密碼： <input type="password" name="password" class="text-input"/></div>
 
                         <div class="signup-title">
                             <img src="/img/title-mark.png"/>
                             <div>個人基本資料</div>
                         </div>
                         <div>照片： 
-                            <label class="file-input">選擇檔案<input type="file"/></label>
+                            <label class="file-input">選擇檔案<input type="file" name="pic" accept="image/*"/></label>
                         </div>
-                        <div id="name">姓名： <input type="text" class="text-input"/></div>
+                        <div id="name">姓名： <input type="text" name="name" class="text-input"/></div>
                         <div>性別： 
                             <label class="gender">
                                 <input type="radio" name="gender" value="man" checked="checked"/><span class="gender-checkmark"></span>
@@ -41,10 +43,10 @@
                                 女性
                             </label>
                         </div>
-                        <div id="phone">電話： <input type="text" class="text-input"/></div>
+                        <div id="phone">電話： <input type="text" name="phone" class="text-input"/></div>
                     </div>
 
-                    <div class="signup-pro">
+                    <div class="signup-pro hide">
                         <div class="signup-title">
                             <img src="/img/title-mark.png"/>
                             <div>專業相關資料</div>
@@ -88,12 +90,13 @@
                         <div>時薪報價： NT$ <input type="text" class="price-input" placeholder="請輸入百元倍數"/> /時</div>
                     </div>
                     <div class="btn-container">
-                        <button class="btn">註冊會員</button>
+                        <button type="submit" class="btn">註冊會員</button>
                     </div>
                 </form>
             </div>
         </div>
 
+        <script src="/js/auth.js"></script>
         {% endblock body%}
     </body>
 </html>
