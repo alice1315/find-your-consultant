@@ -3,7 +3,7 @@
     <head>
         <link rel="stylesheet" href="/css/field.css"></link>
     </head>
-    <body>
+    <body onload="baseInit(); fieldInit();">
         {% extends "base.html" %}
         
         {% block body %}
@@ -11,7 +11,7 @@
         <div class="content">
             <div class="page-top">
                 <img src="/img/title-mark.png"/>
-                <div class="page-title"><span id="field-name">稅務</span>領域</div>
+                <div class="page-title"><span id="field-name"></span>領域</div>
             </div>
 
             <div class="field-container">
@@ -21,7 +21,7 @@
                             <div class="img-container">
                                 <img src="/img/profile.jpg"/>
                             </div>
-                            <div>
+                            <div> 
                                 <div class="star"> <img src="/img/p-star.png"/> &nbsp;&nbsp; <span> 4.5</span></div>
                                 <div>
                                     <span class="name">董小宛</span>
@@ -29,85 +29,21 @@
                                     &nbsp;&nbsp;<span class="gender">女性</span>
                                 </div>
                                 <div>
-                                    <div class="pro-fields"><img src="/img/check.png" />公司法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />刑法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />民法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />稅務</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />會計</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />金融</div>
+                                    <div class="pro-fields"><img src="/img/check.png" /><span>公司法</span></div>
+                                    <div class="pro-fields"><img src="/img/check.png" /><span>刑法</span></div>
+                                    <div class="pro-fields"><img src="/img/check.png" /><span>民法</span></div>
+                                    <div class="pro-fields"><img src="/img/check.png" /><span>稅務</span></div>
+                                    <div class="pro-fields"><img src="/img/check.png" /><span>會計</span></div>
+                                    <div class="pro-fields"><img src="/img/check.png" /><span>金融</span></div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="profile-pro">
-                            <div class="price">諮詢時薪： $ <span>1500</span> /時</div>
-                            <div class="company">服務機構： <span>啟程律師事務所</span></div>
-                            <div class="case">已處理案件數： <span>28</span> 件</div>
-                            <div class="feedback">案件回饋： <span></span></div>
-                        </div>
-                        <button class="btn start">尋求諮詢</button>
-                    </div>
-
-                    <div class="profile">
-                        <div class="profile-basic">
-                            <div class="img-container">
-                                <img src="/img/profile.jpg"/>
-                            </div>
-                            <div>
-                                <div class="star"> <img src="/img/p-star.png"/> &nbsp;&nbsp; <span> 4.5</span></div>
-                                <div>
-                                    <span class="name">董小宛</span>
-                                    &nbsp;&nbsp;<span class="job-title">律師</span>
-                                    &nbsp;&nbsp;<span class="gender">女性</span>
-                                </div>
-                                <div>
-                                    <div class="pro-fields"><img src="/img/check.png" />公司法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />刑法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />民法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />稅務</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />會計</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />金融</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="profile-pro">
-                            <div class="price">諮詢時薪： $ <span>1500</span> /時</div>
-                            <div class="company">服務機構： <span>啟程律師事務所</span></div>
-                            <div class="case">已處理案件數： <span>28</span> 件</div>
-                            <div class="feedback">案件回饋： <span></span></div>
-                        </div>
-                        <button class="btn start">尋求諮詢</button>
-                    </div>
-
-                    <div class="profile">
-                        <div class="profile-basic">
-                            <div class="img-container">
-                                <img src="/img/profile.jpg"/>
-                            </div>
-                            <div>
-                                <div class="star"> <img src="/img/p-star.png"/> &nbsp;&nbsp; <span> 4.5</span></div>
-                                <div>
-                                    <span class="name">董小宛</span>
-                                    &nbsp;&nbsp;<span class="job-title">律師</span>
-                                    &nbsp;&nbsp;<span class="gender">女性</span>
-                                </div>
-                                <div>
-                                    <div class="pro-fields"><img src="/img/check.png" />公司法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />刑法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />民法</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />稅務</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />會計</div>
-                                    <div class="pro-fields"><img src="/img/check.png" />金融</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="profile-pro">
-                            <div class="price">諮詢時薪： $ <span>1500</span> /時</div>
-                            <div class="company">服務機構： <span>啟程律師事務所</span></div>
-                            <div class="case">已處理案件數： <span>28</span> 件</div>
-                            <div class="feedback">案件回饋： <span></span></div>
+                            <div class="price">諮詢時薪： $ 1500 /時</div>
+                            <div class="agency">服務機構： 啟程律師事務所</div>
+                            <div class="case">已處理案件數： 28 件</div>
+                            <div class="feedback">案件回饋： </div>
                         </div>
                         <button class="btn start">尋求諮詢</button>
                     </div>
@@ -115,6 +51,7 @@
             </div>
         </div>
 
+        <script src="/js/field.js"></script>
         {% endblock body%}
     </body>
 </html>

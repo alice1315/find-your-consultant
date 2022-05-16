@@ -1,11 +1,15 @@
-from flask import request, make_response, jsonify
+from flask import request, make_response
 
 from . import api_
 from .. import res
 from .. import db
 
-# Sign In
 @api_.route("/auth", methods = ["GET"])
+def auth():
+    return "api: auth"
+
+# Sign In
+@api_.route("/auth", methods = ["PATCH"])
 def sign_in():
     return "api: sign_in"
 

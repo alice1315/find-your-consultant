@@ -19,7 +19,7 @@ async function initAuthData(fetchOptions){
     await fetch(authUrl, fetchOptions)
     .then((resp) => {
         return resp.json();
-    }).then((result) =>{
+    }).then((result) => {
         authData = result;
     })
 }
