@@ -3,8 +3,8 @@ function indexInit(){
 }
 
 function handleSignUpBtn(){
-    let memberBtn = document.getElementById("member-signup-btn");
-    let consultantBtn = document.getElementById("consultant-signup-btn");
+    let memberBtn = document.querySelector("#member-signup-btn");
+    let consultantBtn = document.querySelector("#consultant-signup-btn");
 
     memberBtn.addEventListener("click", function(){
         location.href = "/signup/member";

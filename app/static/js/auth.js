@@ -2,8 +2,17 @@ var authUrl = "/api/auth"
 var authData;
 
 function authInit(){
-    renderAuthPage();
-    signUp();
+    checkLocation();
+}
+
+function checkLocation(){
+    let path = window.location.pathname.split("/")[1];
+    if (path === "signin"){
+        signIn();
+    } else if (path === "signup"){
+        renderSignUpPage();
+        signUp();
+    }
 }
 
 async function initAuthData(fetchOptions){
@@ -15,7 +24,23 @@ async function initAuthData(fetchOptions){
     })
 }
 
-function renderAuthPage(){
+// Sign In
+function signIn(){
+    let form = document.querySelector("#signin-form");
+    // let membership = 
+
+    function handleSignInSubmit(event){
+        event.preventDefault();
+
+        let reqForm = new FormData(form);
+        console.log("in signin");
+    }
+
+    form.addEventListener("submit", handleSignInSubmit);
+}
+
+// Sign Up
+function renderSignUpPage(){
     let membership = window.location.pathname.split("/")[2];
     let pageTitle = document.querySelectorAll(".page-title");
     let pro = document.querySelector(".signup-pro");
@@ -29,21 +54,39 @@ function renderAuthPage(){
 }
 
 function signUp(){
+    let form = document.querySelector("#signup-form");
+    let membership = window.location.pathname.split("/")[2];
+
     async function handleSignUpSubmit(event){
         event.preventDefault();
 
-        let reqForm = new FormData(document.querySelector("#signup-form"));
+        let reqForm = new FormData(form);
+        reqForm.append("membership", membership);
 
+        if(membership === "consultant"){
+            let fields = reqForm.getAll("field");
+            reqForm.delete("field");
+            reqForm.append("fields", fields)
+        }
+        
         let fetchOptions = {
             method: "POST",
             body: reqForm
         };
 
         await initAuthData(fetchOptions);
-        // Show if SignUp succeed or not
+
+        if (authData["ok"]){
+            location.href = "/signin";
+        } else if(authData["error"]){
+            showMsg("註冊失敗：" + authData["message"])
+        }
     }
 
-    let form = document.querySelector("#signup-form");
     form.addEventListener("submit", handleSignUpSubmit);
+}
 
+function showMsg(message){
+    let signMsg = document.querySelector(".sign-msg");
+    signMsg.innerHTML = message;
 }

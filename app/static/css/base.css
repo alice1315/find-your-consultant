@@ -36,6 +36,13 @@ input{
     color: #FFFFFF;
 }
 
+.msg-container{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    color: #CF4B49;
+}
+
 .hide{
     display: none;
 }

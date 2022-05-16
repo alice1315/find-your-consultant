@@ -1,11 +1,13 @@
+from flask import jsonify
+
 class Response():
     def __init__(self):
         pass
 
     def ok(self):
         dict = {"ok": True}
-        return dict
+        return jsonify(dict)
 
     def error(self, message):
         dict = {"error": True, "message": message}
-        return dict
+        return jsonify(dict)

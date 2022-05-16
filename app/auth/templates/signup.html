@@ -83,14 +83,18 @@
                         <br/>
                         <br/>
                         <div>執業證書： 
-                            <label class="file-input">選擇檔案<input type="file"/></label>
+                            <label class="file-input">選擇檔案<input type="file" name="certificate"/></label>
                         </div>
-                        <div id="agency">服務機構： <input type="text" class="text-input"/></div>
-                        <div>職稱頭銜： <input type="text" class="text-input" placeholder="律師/會計師..." /></div>
-                        <div>時薪報價： NT$ <input type="text" class="price-input" placeholder="請輸入百元倍數"/> /時</div>
+                        <div id="agency">服務機構： <input type="text" name="agency" class="text-input"/></div>
+                        <div>職稱頭銜： <input type="text" name="job-title" class="text-input" placeholder="律師/會計師..." /></div>
+                        <div>時薪報價： NT$ <input type="text" name="price" class="price-input" placeholder="請輸入百元倍數"/> /時</div>
                     </div>
+
                     <div class="btn-container">
                         <button type="submit" class="btn">註冊會員</button>
+                    </div>
+                    <div class="msg-container">
+                        <div class="sign-msg"></div>
                     </div>
                 </form>
             </div>
