@@ -12,7 +12,7 @@ class Auth:
         payload = {
             "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes = 60),
             "iat": datetime.datetime.now(datetime.timezone.utc),
-            "data": {
+            "info": {
                 "membership": membership,
                 "id": id,
                 "name": name,
@@ -26,7 +26,7 @@ class Auth:
         try:
             payload = jwt.decode(auth_token, SECRET_KEY, algorithms = ["HS256"])
 
-            if ("data" in payload and "id" in payload["data"]):
+            if ("info" in payload and "id" in payload["info"]):
                 return payload
             else:
                 raise jwt.InvalidTokenError

@@ -2,10 +2,19 @@ var authUrl = "/api/auth"
 var authData;
 
 function authInit(){
-    checkLocation();
+    checkSignPath();
 }
 
-function checkLocation(){
+async function isSignedIn(){
+    await initAuthData({method: "GET"});
+    if (authData["data"]){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+function checkSignPath(){
     let path = window.location.pathname.split("/")[1];
     if (path === "signin"){
         signIn();
@@ -87,13 +96,27 @@ function signUp(){
         await initAuthData(fetchOptions);
 
         if (authData["ok"]){
-            location.href = "/signin";
+            location.href = "/";
         } else{
             showMsg("註冊失敗：" + authData["message"])
         }
     }
 
     form.addEventListener("submit", handleSignUpSubmit);
+}
+
+// Sign Out
+function signOut(){
+    async function handleSignOutSubmit(){
+        await initAuthData({method: "DELETE"});
+
+        if (authData["ok"]){
+            location.reload(true);
+        }
+    }
+
+    let btn = document.querySelector("#signout-btn");
+    btn.addEventListener("click", handleSignOutSubmit);
 }
 
 function showMsg(message){

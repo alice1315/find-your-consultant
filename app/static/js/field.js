@@ -2,12 +2,12 @@ var fieldData;
 var fieldCode;
 
 async function fieldInit(){
-    checkLocation();
+    checkFieldPath();
     await initFieldData();
     renderProfile();
 }
 
-function checkLocation(){
+function checkFieldPath(){
     fieldCode = window.location.pathname.split("/")[2];
     let fieldName = convertFieldName(fieldCode);
     document.querySelector("#field-name").innerText = fieldName;

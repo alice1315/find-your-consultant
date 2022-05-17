@@ -1,8 +1,19 @@
+var signInBtn = document.querySelector("#signin-btn");
+var memberBtn = document.querySelector("#member-btn");
+
 function baseInit(){
+    checkSignedIn();
+    signOut();
     handleBtns();
-    handleSignInBtn();
     convertFieldName();
     convertFieldCode();
+}
+
+async function checkSignedIn(){
+    if (await isSignedIn()){
+        toggleBlock(signInBtn, memberBtn);
+    }
+    document.body.classList.remove("hide");
 }
 
 function handleBtns(){
@@ -10,13 +21,21 @@ function handleBtns(){
     logo.addEventListener("click", function(){
         location.href = "/";
     })
-}
 
-function handleSignInBtn(){
-    let btn = document.querySelector("#signin-btn");
-    btn.addEventListener("click", function(){
+    signInBtn.addEventListener("click", function(){
         location.href = "/signin";
     })
+
+    memberBtn.addEventListener("click", function(){
+        let memberCenter = document.querySelector("#member-center");
+        memberCenter.classList.toggle("slideshow");
+    })
+
+    
+}
+
+function toggleBlock(...targets){
+    targets.forEach(target => target.classList.toggle("hide"))
 }
 
 function convertFieldName(fieldCode){

@@ -1,4 +1,4 @@
-from flask import request, make_response
+from flask import request, make_response, jsonify
 
 from . import api_
 from .. import res, db, utils
@@ -6,7 +6,12 @@ from ..models.auth import Auth
 
 @api_.route("/auth", methods = ["GET"])
 def auth():
-    return "api: auth"
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        data = Auth.decode_auth_token(access_token)
+        return res.respond(data)
+    else:
+        return res.respond(None)
 
 # Sign In
 @api_.route("/auth", methods = ["PATCH"])
@@ -39,7 +44,6 @@ def sign_in():
                 return response
             else:
                 return make_response(res.error("密碼輸入錯誤"), 400)
-
 
 # Sign Up
 @api_.route("/auth", methods = ["POST"])
@@ -96,6 +100,15 @@ def sign_up():
             db.execute_sql(sql, sql_data, "one", commit=True)
 
             return res.ok()
+
+# Sign Out
+@api_.route("/auth", methods = ["DELETE"])
+def sign_out():
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        response = make_response(res.ok())
+        response.set_cookie("access_token", "", expires = 0)
+        return response
 
 
 @api_.app_errorhandler(500)
