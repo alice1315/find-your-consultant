@@ -1,4 +1,4 @@
-.signin-container{
+#signin-form{
     width: 700px;
     margin: 20px auto 0 auto;
     padding: 30px;
@@ -42,13 +42,13 @@ label:hover{
 }
 
 /* signin-form */
-#signin-form{
+.input-form{
     margin-top: 20px;
     padding: 40px 30px 30px 30px;
     background-color: #FFFFFF;
 }
 
-#signin-form input{
+.input-form input{
     width: 310px;
     height: 47px;
     margin: 0 auto 20px auto;
@@ -58,6 +58,6 @@ label:hover{
     padding-left: 15px;
 }
 
-#signin-form button{
+.input-form button{
     margin-top: 20px;
 }

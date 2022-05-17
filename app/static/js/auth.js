@@ -27,13 +27,23 @@ async function initAuthData(fetchOptions){
 // Sign In
 function signIn(){
     let form = document.querySelector("#signin-form");
-    // let membership = 
 
-    function handleSignInSubmit(event){
+    async function handleSignInSubmit(event){
         event.preventDefault();
 
         let reqForm = new FormData(form);
-        console.log("in signin");
+        let fetchOptions = {
+            method: "PATCH",
+            body: reqForm
+        }
+
+        await initAuthData(fetchOptions);
+
+        if (authData["ok"]){
+            location.href = "/";
+        } else{
+            showMsg("登入失敗：" + authData["message"])
+        }
     }
 
     form.addEventListener("submit", handleSignInSubmit);
@@ -78,7 +88,7 @@ function signUp(){
 
         if (authData["ok"]){
             location.href = "/signin";
-        } else if(authData["error"]){
+        } else{
             showMsg("註冊失敗：" + authData["message"])
         }
     }

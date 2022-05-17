@@ -2,6 +2,7 @@ from flask import request, make_response
 
 from . import api_
 from .. import res, db, utils
+from ..models.auth import Auth
 
 @api_.route("/auth", methods = ["GET"])
 def auth():
@@ -10,7 +11,35 @@ def auth():
 # Sign In
 @api_.route("/auth", methods = ["PATCH"])
 def sign_in():
-    return "api: sign_in"
+    membership = request.form["membership"]
+    email = request.form["email"]
+    password = request.form["password"]
+
+    if (not email or not password):
+        return make_response(res.error("請輸入登入資訊"), 400)
+
+    else:
+        if membership == "consultant":
+            sql = ("SELECT id, name, email, password FROM consultant WHERE email=%s")
+
+        elif membership == "member":
+            sql = ("SELECT id, name, email, password FROM member WHERE email=%s")
+
+        sql_data = (email, )
+        result = db.execute_sql(sql, sql_data, "one")
+
+        if not result:
+            return make_response(res.error("此Email尚未註冊"), 400)
+        else:
+            if password == result["password"]:
+                result["membership"] = membership
+                auth_token = Auth.encode_auth_token(result["membership"], result["id"], result["name"], result["email"])
+                response = make_response(res.ok())
+                response.set_cookie("access_token", auth_token)
+                return response
+            else:
+                return make_response(res.error("密碼輸入錯誤"), 400)
+
 
 # Sign Up
 @api_.route("/auth", methods = ["POST"])

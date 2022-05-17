@@ -4,14 +4,17 @@ class Response():
     def __init__(self):
         pass
 
-    def ok(self):
+    @staticmethod
+    def ok():
         dict = {"ok": True}
         return jsonify(dict)
 
-    def error(self, message):
+    @staticmethod
+    def error(message):
         dict = {"error": True, "message": message}
         return jsonify(dict)
 
-    def respond(self, data):
+    @staticmethod
+    def respond(data):
         dict = {"data": data}
         return jsonify(dict)
