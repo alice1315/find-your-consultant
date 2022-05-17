@@ -1,8 +1,7 @@
 from flask import request, make_response
 
 from . import api_
-from .. import res
-from .. import db
+from .. import res, db, utils
 
 @api_.route("/auth", methods = ["GET"])
 def auth():
@@ -20,7 +19,7 @@ def sign_up():
     email = request.form["email"]
     password = request.form["password"]
     name = request.form["name"]
-    gender = request.form["gender"]
+    gender = utils.convert_gender(request.form["gender"])
     phone = request.form["phone"]
     pic = request.files["pic"]
     pic_name = pic.filename

@@ -2,10 +2,12 @@ from flask import Flask
 
 from .models.response import Response
 from .models.database import Database
+from .models.utils import Utils
 from .config import MYSQL_CONFIG
 
 res = Response()
 db = Database(MYSQL_CONFIG)
+utils = Utils()
 
 def create_app():
     app = Flask(__name__, static_folder = "static", static_url_path = "/")

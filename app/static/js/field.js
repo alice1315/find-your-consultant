@@ -4,7 +4,7 @@ var fieldCode;
 async function fieldInit(){
     checkLocation();
     await initFieldData();
-    // renderProfile();
+    renderProfile();
 }
 
 function checkLocation(){
@@ -19,7 +19,6 @@ async function initFieldData(){
         return resp.json();
     }).then((result) => {
         fieldData = result;
-        console.log(fieldData);
     })
 }
 
@@ -30,7 +29,7 @@ function renderProfile(){
         let name = data["name"];
         let jobTitle = data["job_title"];
         let gender = data["gender"];
-        let fields = data["fields"]; // arrays
+        let fields = data["fields"];
         let price = data["price"];
         let agency = data["agency"];
 
@@ -73,7 +72,7 @@ function setProfile(picUrl, name, jobTitle, gender, fields, price, agency){
     divUp.appendChild(divFields);
     fields.forEach(function(field){
         let f = createDocElement("div", "pro-fields");
-        let s = createDocElement("span", "", field);
+        let s = createDocElement("span", "", convertFieldName(field));
         let i = document.createElement("img");
         divFields.appendChild(f);
         f.appendChild(i);

@@ -11,3 +11,7 @@ class Response():
     def error(self, message):
         dict = {"error": True, "message": message}
         return jsonify(dict)
+
+    def respond(self, data):
+        dict = {"data": data}
+        return jsonify(dict)
