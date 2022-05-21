@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/chat.css"></link>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"
+            integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    </head>
+    <body onload="chatInit();">
+        {% extends "base.html" %}
+        
+        {% block body %}
+
+        <div class="content">
+            <div class="chat-background">
+                <div class="chat-container">
+                    <div class="chat-left">
+                        <div class="left-title">
+                            <div>處理中<span>()</span></div>
+                            <div>已處理<span>()</span></div>
+                        </div>
+                        <div class="left-list">
+                            <!-- <div class="left-small">
+                                <div class="left-pic"><img src=""></div>
+                                <div class="left-container">
+                                    <div class="left-info">
+                                        <div class="left-field">民法</div>
+                                        <div class="left-name">王小明</div>
+                                        <div class="left-job-title">律師</div>
+                                    </div>
+                                    <div class="left-tag-list">
+                                        <div class="left-tag">離婚</div>
+                                        <div class="left-tag">扶養權</div>
+                                    </div>
+                                    <div class="left-time">20:07</div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="chat-right">
+                        <div class="right-title">
+                            <!-- <div><span class="right-field">民法</span>案件： <span id="case-id">CI00013</span></div> -->
+                            <div id="status">前置諮詢</div>
+                        </div>
+
+                        <div class="right-chat-window">
+                            <div id="right-chat"></div>
+                        </div>
+
+                        <div class="right-function">
+                            <ul>
+                                <li class="hide">進行報價</li>
+                                <li>進行付款</li>
+                                <li class="hide">提出結案</li>
+                                <li>案件申訴</li>
+                            </ul>
+                        </div>
+
+                        <div class="right-message">
+                            <div class="right-input">
+                                <textarea id="message" placeholder="請輸入訊息..." cols="40" rows="3"></textarea>
+                            </div>
+                            <div class="right-send">
+                                <button id="send-btn" class="btn">送出</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/chat.js"></script>   
+        {% endblock body%}
+    </body>
+</html>

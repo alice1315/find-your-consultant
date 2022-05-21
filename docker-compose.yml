@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  flask:
+    build: ./flask
+    container_name: fyc_flask
+    # networks:
+    #   - find_your_consultant
+
+  nginx:
+    build: ./nginx
+    container_name: fyc_nginx
+    depends_on:
+      - flask
+    ports:
+      - 80:80
+      - 443:443
+    # networks:
+    #   - find_your_consultant
+
+# networks:
+#   find_your_consultant:
+#     external: true

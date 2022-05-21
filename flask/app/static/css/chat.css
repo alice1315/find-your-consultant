@@ -1,0 +1,193 @@
+/* container */
+.chat-background{
+    width: 1200px;
+    margin: 74px auto 0 auto;
+    padding: 20px;
+    background-color: #EFEBE5;
+}
+
+.chat-container{
+    display: flex;
+    height: 650px;
+    background-color: #FFFFFF;
+}
+
+.chat-left{
+    flex: none;
+    width: 300px;
+    border: 1px solid black;
+}
+
+.chat-right{
+    flex: none;
+    width: 860px;
+    border: 1px solid black;
+}
+
+/* left */
+.left-title{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.left-small{
+    cursor: pointer;
+    display: flex;
+    height: 110px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.left-pic{
+    flex: none;
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.left-pic img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.left-container{
+    flex: none;
+    width: 200px;
+}
+
+.left-info{
+    display: flex;
+    padding-left: 15px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.left-field{
+    margin-right: 15px;
+}
+
+.left-name, .left-job-title{
+    margin-right: 5px;
+}
+
+.left-tag-list{
+    display: flex;
+    margin-top: 10px;
+    padding-left: 15px;
+}
+
+.left-tag{
+    margin-right: 10px;
+    padding: 3px 6px;
+    border-radius: 5px;
+    background-color: #F3F3F3;
+    color: #666666;
+}
+
+.left-time{
+    float: right;
+    bottom: -5px;
+    font-size: 12px;
+    color: #888888;
+}
+
+/* right */
+.right-title{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+.right-title div{
+    margin: 0 30px;
+}
+
+.right-chat-window{
+    height: 480px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#right-chat{
+    height: 100%;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.right-function{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.right-function ul{
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+.right-message{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 85px;
+    padding: 10px;
+}
+
+.right-input{
+    flex: none;
+    width: 718px;
+    height: 100%;
+}
+
+.right-input textarea{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border-style: none;
+    resize: none;
+}
+
+.right-send{
+    flex: none;
+    width: 100px;
+    text-align: center;
+    /* border: 1px solid black; */
+}
+
+/* chat */
+.chat-a, .chat-b{
+    display: flex;
+    width: 100%;
+    margin: 10px 0;
+    padding: 5px;
+    /* border: 1px solid black; */
+}
+
+.chat-a{
+    justify-content: flex-end;
+}
+
+.identity-a, .identity-b{
+    width: 60px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.message{
+    max-width: 450px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.chat-a .message{
+    text-align: right;
+}
