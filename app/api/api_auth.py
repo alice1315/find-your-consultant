@@ -86,20 +86,32 @@ def sign_up():
 
         if result:
             return make_response(res.error("Email 已經註冊帳戶"), 400)
+        
+        else:
+            if membership == "member":
+                # Upload pic
+                s3.upload_file(pic.read(), pic_name)
+                pic_url = s3.get_file_url(pic_name)
 
-        elif membership == "member":
-            sql = ("INSERT INTO member (email, password, pic_url, name, gender, phone) VALUES (%s, %s, %s, %s, %s, %s)")
-            sql_data = (email, password, pic_name, name, gender, phone)
-            db.execute_sql(sql, sql_data, "one", commit=True)
+                sql = ("INSERT INTO member (email, password, pic_url, name, gender, phone) VALUES (%s, %s, %s, %s, %s, %s)")
+                sql_data = (email, password, pic_url, name, gender, phone)
+                db.execute_sql(sql, sql_data, "one", commit=True)
 
-            return res.ok()
+                return res.ok()
 
-        elif membership == "consultant":
-            sql = ("INSERT INTO consultant (email, password, pic_url, name, gender, phone, fields, certificate_url, agency, job_title, price) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-            sql_data = (email, password, pic_name, name, gender, phone, fields, cert_name, agency, job_title, price)
-            db.execute_sql(sql, sql_data, "one", commit=True)
+            elif membership == "consultant":
+                # Upload pic and cert
+                s3.upload_file(pic.read(), pic_name)
+                pic_url = s3.get_file_url(pic_name)
 
-            return res.ok()
+                s3.upload_file(cert.read(), cert_name)
+                cert_url = s3.get_file_url(cert_name)
+
+                sql = ("INSERT INTO consultant (email, password, pic_url, name, gender, phone, fields, certificate_url, agency, job_title, price) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+                sql_data = (email, password, pic_name, name, gender, phone, fields, cert_url, agency, job_title, price)
+                db.execute_sql(sql, sql_data, "one", commit=True)
+
+                return res.ok()
 
 # Sign Out
 @api_.route("/auth", methods = ["DELETE"])
