@@ -2,6 +2,7 @@ var fieldData;
 var fieldCode;
 
 async function fieldInit(){
+    await baseInit();
     checkFieldPath();
     await initFieldData();
     renderProfile();
@@ -91,8 +92,13 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency){
 
     profile.appendChild(roomBtn);
     roomBtn.onclick = function(){
-        setRoom(id);
-        location.href = "/chat";
+        if (signData){
+            setRoom(id);
+            location.href = "/chat";
+        } else{
+            location.href = "/signin";
+        }
+        
     }
 }
 
