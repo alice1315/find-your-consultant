@@ -26,3 +26,6 @@ class S3():
         )
 
         return response
+
+    def get_file_url(filename):
+        return "https://dhobt9qjfs77v.cloudfront.net/find-your-consultant/" + filename
