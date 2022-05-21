@@ -108,7 +108,7 @@ def sign_up():
                 cert_url = s3.get_file_url(cert_name)
 
                 sql = ("INSERT INTO consultant (email, password, pic_url, name, gender, phone, fields, certificate_url, agency, job_title, price) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-                sql_data = (email, password, pic_name, name, gender, phone, fields, cert_url, agency, job_title, price)
+                sql_data = (email, password, pic_url, name, gender, phone, fields, cert_url, agency, job_title, price)
                 db.execute_sql(sql, sql_data, "one", commit=True)
 
                 return res.ok()
