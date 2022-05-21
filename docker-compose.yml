@@ -4,8 +4,6 @@ services:
   flask:
     build: ./flask
     container_name: fyc_flask
-    # networks:
-    #   - find_your_consultant
 
   nginx:
     build: ./nginx
@@ -15,9 +13,3 @@ services:
     ports:
       - 80:80
       - 443:443
-    # networks:
-    #   - find_your_consultant
-
-# networks:
-#   find_your_consultant:
-#     external: true
