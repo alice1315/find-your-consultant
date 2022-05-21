@@ -32,6 +32,8 @@ class Auth:
                 raise jwt.InvalidTokenError
 
         except jwt.ExpiredSignatureError:
-            return {"error": True, "message": "登入已逾時"}
+            # return {"error": True, "message": "登入已逾時"}
+            return None
         except jwt.InvalidTokenError:
-            return {"error": True, "message": "無效登入"}
+            # return {"error": True, "message": "無效登入"}
+            return None

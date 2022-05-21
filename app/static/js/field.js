@@ -2,6 +2,7 @@ var fieldData;
 var fieldCode;
 
 async function fieldInit(){
+    await baseInit();
     checkFieldPath();
     await initFieldData();
     renderProfile();
@@ -86,7 +87,20 @@ function setProfile(picUrl, name, jobTitle, gender, fields, price, agency){
     profilePro.appendChild(createDocElement("div", "case", "已處理案件數： " + " 件"));
     profilePro.appendChild(createDocElement("div", "feedback", "案件回饋： "));
 
+<<<<<<< HEAD:app/static/js/field.js
     profile.appendChild(createDocElement("button", "btn start", "尋求諮詢"));
+=======
+    profile.appendChild(roomBtn);
+    roomBtn.onclick = function(){
+        if (signData){
+            setRoom(id);
+            location.href = "/chat";
+        } else{
+            location.href = "/signin";
+        }
+        
+    }
+>>>>>>> ae30268 (Modified route when not signed in.):flask/app/static/js/field.js
 }
 
 function createDocElement(element, className, text){
