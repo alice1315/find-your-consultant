@@ -12,6 +12,7 @@ async function renderPage(){
     if (signData){
         await initChatListData();
         renderChatList();
+        renderChatWindow();
     } else{
         location.href = "/";
     }
@@ -79,6 +80,10 @@ function setChatList(picUrl, fieldCode, name, jobTitle, roomId, receiverMembersh
     })
 }
 
+function renderChatWindow(){
+    
+}
+
 // Handle rendering messages
 function renderSenderMsg(message){
     let chatA = createDocElement("div", "chat-a");
@@ -86,6 +91,7 @@ function renderSenderMsg(message){
     chatWindow.appendChild(chatA);
     chatA.appendChild(createDocElement("div", "message", message));
     chatA.appendChild(createDocElement("div", "identity-a", "我"));
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 function renderReceiverMsg(message){
@@ -94,6 +100,7 @@ function renderReceiverMsg(message){
     chatWindow.appendChild(chatB);
     chatB.appendChild(createDocElement("div", "identity-b", "對方"));
     chatB.appendChild(createDocElement("div", "message", message));
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 // Socket

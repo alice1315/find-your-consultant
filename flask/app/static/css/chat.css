@@ -118,6 +118,7 @@
     height: 100%;
     padding: 10px;
     border: 1px solid black;
+    overflow: scroll;
 }
 
 .right-function{
