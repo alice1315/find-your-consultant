@@ -79,6 +79,10 @@ function setChatList(picUrl, fieldCode, name, jobTitle, roomId, receiverMembersh
     info.appendChild(createDocElement("div", "left-job-title", jobTitle));
 
     small.addEventListener("click", function(){
+        let smalls = document.querySelectorAll(".left-small");
+        smalls.forEach(e => e.style.border = "1px solid black");
+
+        small.style.border = "3px solid #EB8528";
         let chatWindow = renderChatWindow();
         let sendBtn = renderSendBtn();
         startChat(chatWindow, sendBtn, roomId, receiverMembership, receiverId);
