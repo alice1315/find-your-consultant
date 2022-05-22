@@ -1,35 +1,38 @@
-var chatList; 
+var chatData;
 var socket;
-
-var chatWindow = document.querySelector("#right-chat");
 
 async function chatInit(){
     await baseInit();
     renderPage();
+    connect();
+}
+
+async function initChatData(fetchOptions){
+    await fetch("/api/chat", fetchOptions)
+    .then((resp) => {
+        return resp.json();
+    }).then((result) => {
+        chatData = result;
+    })
 }
 
 async function renderPage(){
     if (signData){
-        await initChatListData();
+        await getChatList();
         renderChatList();
-        renderChatWindow();
+        renderChatFunctions();
     } else{
         location.href = "/";
     }
 }
 
 // Handle chat list
-async function initChatListData(){
-    await fetch("/api/chat", {method: "GET"})
-    .then((resp) => {
-        return resp.json();
-    }).then((result) => {
-        chatList = result["data"];
-    })
+async function getChatList(){
+    await initChatData({method: "GET"});
 }
 
 function renderChatList(){
-    chatList.forEach(function(chat){
+    chatData["data"].forEach(function(chat){
         let picUrl = chat["pic_url"];
         let fieldCode = chat["field_code"];
         let name = chat["name"];
@@ -76,40 +79,22 @@ function setChatList(picUrl, fieldCode, name, jobTitle, roomId, receiverMembersh
     info.appendChild(createDocElement("div", "left-job-title", jobTitle));
 
     small.addEventListener("click", function(){
-        startChat(roomId, receiverMembership, receiverId);
+        let chatWindow = renderChatWindow();
+        let sendBtn = renderSendBtn();
+        startChat(chatWindow, sendBtn, roomId, receiverMembership, receiverId);
     })
 }
 
-function renderChatWindow(){
-    
-}
-
-// Handle rendering messages
-function renderSenderMsg(message){
-    let chatA = createDocElement("div", "chat-a");
-
-    chatWindow.appendChild(chatA);
-    chatA.appendChild(createDocElement("div", "message", message));
-    chatA.appendChild(createDocElement("div", "identity-a", "我"));
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-
-function renderReceiverMsg(message){
-    let chatB = createDocElement("div", "chat-b");
-
-    chatWindow.appendChild(chatB);
-    chatB.appendChild(createDocElement("div", "identity-b", "對方"));
-    chatB.appendChild(createDocElement("div", "message", message));
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+function renderChatFunctions(){
+    let functions = document.querySelector(".functions").children;
+    if (membership === "member"){
+        toggleBlock(functions[1]);
+    } else{
+        toggleBlock(functions[0], functions[2]);
+    }
 }
 
 // Socket
-function startChat(roomId, receiverMembership, receiverId){
-    connect();
-    sendMsg(roomId, receiverMembership, receiverId);
-    receiveMsg();
-}
-
 function connect(){
     socket = io.connect();
 }
@@ -120,7 +105,45 @@ function disconnect(){
     })
 }
 
-function sendMsg(roomId, receiverMembership, receiverId){
+async function startChat(chatWindow, sendBtn, roomId, receiverMembership, receiverId){
+    await getChatHistory(roomId);
+    renderChatHistory(chatWindow);
+    sendMsg(chatWindow, sendBtn, roomId, receiverMembership, receiverId);
+    receiveMsg(chatWindow);
+}
+
+async function getChatHistory(roomId){
+    let reqData = {
+        "room_id": roomId
+    }
+
+    let fetchOptions = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqData)
+    }
+
+    await initChatData(fetchOptions);
+}
+
+function renderChatHistory(chatWindow){
+    let lines = chatData["data"];
+
+    lines.forEach(function(line){
+        let senderMembership = line["sender_membership"];
+        let message = line["messages"];
+
+        if (senderMembership == membership){
+            renderSenderMsg(chatWindow, message);
+        } else if (senderMembership != membership){
+            renderReceiverMsg(chatWindow, message);
+        }
+    })
+}
+
+function sendMsg(chatWindow, sendBtn, roomId, receiverMembership, receiverId){
     function handleSendMsg(){
         let message = document.querySelector("#message");
         let payload = {
@@ -130,16 +153,48 @@ function sendMsg(roomId, receiverMembership, receiverId){
             "message": message.value
         }
         socket.emit("send", payload);
-        renderSenderMsg(message.value);
+        renderSenderMsg(chatWindow, message.value);
         message.value = "";
     }
 
-    let btn = document.querySelector("#send-btn");
-    btn.addEventListener("click", handleSendMsg)
+    sendBtn.addEventListener("click", handleSendMsg);
 }
 
-function receiveMsg(){
+function receiveMsg(chatWindow){
     socket.on("receive", function(message){
-        renderReceiverMsg(message);
+        renderReceiverMsg(chatWindow, message);
     })
+}
+
+// Handle rendering messages
+function renderSenderMsg(chatWindow, message){
+    let chatA = createDocElement("div", "chat-a");
+
+    chatWindow.appendChild(chatA);
+    chatA.appendChild(createDocElement("div", "message", message));
+    chatA.appendChild(createDocElement("div", "identity-a", "我"));
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function renderReceiverMsg(chatWindow, message){
+    let chatB = createDocElement("div", "chat-b");
+
+    chatWindow.appendChild(chatB);
+    chatB.appendChild(createDocElement("div", "identity-b", "對方"));
+    chatB.appendChild(createDocElement("div", "message", message));
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function renderChatWindow(){
+    document.querySelector(".right-chat-window").innerHTML = "";
+    let chatWindow = createDocElement("div", "right-chat");
+    document.querySelector(".right-chat-window").appendChild(chatWindow);
+    return chatWindow
+}
+
+function renderSendBtn(){
+    document.querySelector(".right-send").innerHTML = "";
+    let sendBtn = createDocElement("button", "btn", "送出");
+    document.querySelector(".right-send").appendChild(sendBtn);
+    return sendBtn
 }
