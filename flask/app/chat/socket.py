@@ -23,14 +23,9 @@ def connect():
         sql_data = (request.sid, id)
         db.execute_sql(sql, sql_data, "one", commit = True)
 
-
 @socketio.on("disconnect")
 def disconnect():
     print("disconnect")
-
-@socketio.on("history")
-def get_history(payload):
-    pass
 
 @socketio.on("send")
 def private_messages(payload):
@@ -40,17 +35,24 @@ def private_messages(payload):
     message = payload["message"]
 
     if receiver_membership == "consultant":
+        sender_membership = "member"
         sql = ("SELECT consultant_sid FROM room WHERE id=%s AND consultant_id=%s")
         sql_data = (room_id, receiver_id)
         result = db.execute_sql(sql, sql_data, "one")
         receiver_sid = result["consultant_sid"]
     else:
+        sender_membership = "consultant"
         sql = ("SELECT member_sid FROM room WHERE id=%s AND member_id=%s")
         sql_data = (room_id, receiver_id)
         result = db.execute_sql(sql, sql_data, "one")
         receiver_sid = result["member_sid"]
 
     emit("receive", message, room = receiver_sid)
+
+    # Store messages
+    sql = ("INSERT INTO messages (room_id, sender_membership, messages) VALUES (%s, %s, %s)")
+    sql_data = (room_id, sender_membership, message)
+    db.execute_sql(sql, sql_data, "one", commit = True)
 
 
 

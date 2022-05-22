@@ -46,6 +46,7 @@
     height: 80px;
     border: 1px solid black;
     border-radius: 50%;
+    overflow: hidden;
 }
 
 .left-pic img{
@@ -114,7 +115,7 @@
     border: 1px solid black;
 }
 
-#right-chat{
+.right-chat{
     height: 100%;
     padding: 10px;
     border: 1px solid black;
@@ -187,8 +188,6 @@
     max-width: 450px;
     padding: 5px;
     border: 1px solid black;
-}
-
-.chat-a .message{
-    text-align: right;
+    word-wrap: break-word;
+    word-break: normal;
 }

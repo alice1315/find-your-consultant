@@ -45,3 +45,16 @@ def set_room():
         return res.ok()
     else:
         return make_response(res.error("已有諮詢紀錄，請直接點選諮詢聊天室"), 400)
+
+@api_.route("chat", methods = ["PATCH"])
+def get_chat_history():
+    data = request.get_json()
+
+    room_id = data["room_id"]
+    
+    sql = ("SELECT sender_membership, messages FROM messages WHERE room_id=%s ORDER BY time")
+    sql_data = (room_id, )
+    results = db.execute_sql(sql, sql_data, "all")
+
+    return res.respond(results)
+    
