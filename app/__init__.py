@@ -22,4 +22,9 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(api_bp, url_prefix = "/api")
 
+<<<<<<< HEAD:app/__init__.py
+=======
+    socketio.init_app(app, cors_allowed_origins="*")
+
+>>>>>>> 2b6a85a (Test sodkcet 2.):flask/app/__init__.py
     return app
