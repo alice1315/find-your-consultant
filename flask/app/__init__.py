@@ -33,6 +33,6 @@ def create_app():
     app.register_blueprint(chat_bp)
     app.register_blueprint(api_bp, url_prefix = "/api")
 
-    socketio.init_app(app)
+    socketio.init_app(app, cors_allowed_origins="*")
 
     return app
