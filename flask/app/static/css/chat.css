@@ -1,8 +1,9 @@
 /* container */
 .chat-background{
+    position: fixed;
     width: 1200px;
-    margin: 74px auto 0 auto;
-    padding: 20px;
+    margin: 30px auto 0 auto;
+    padding: 40px;
     background-color: #EFEBE5;
 }
 
@@ -10,18 +11,19 @@
     display: flex;
     height: 650px;
     background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px #797D84;
+    border-radius: 10px;
 }
 
 .chat-left{
     flex: none;
-    width: 300px;
-    border: 1px solid black;
+    width: 280px;
+    border-right: 2px solid #242C3E;
 }
 
 .chat-right{
     flex: none;
-    width: 860px;
-    border: 1px solid black;
+    width: 840px;
 }
 
 /* left */
@@ -29,27 +31,29 @@
     display: flex;
     justify-content: center;
     padding: 10px;
-    border: 1px solid black;
+    border-bottom: 1px solid #242C3E;
 }
 
 .left-small{
     cursor: pointer;
     display: flex;
+    align-items: center;
     height: 110px;
     padding: 10px;
-    border: 1px solid black;
+    border-left: 5px solid white;
+    border-bottom: 0.5px solid #777777;
 }
 
 .left-pic{
     flex: none;
-    width: 80px;
-    height: 80px;
-    border: 1px solid black;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     overflow: hidden;
+    margin: 10px 0 0 10px;
 }
 
-.left-pic img{
+.left-pic img, .identity-b img{
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -63,7 +67,7 @@
 .left-info{
     display: flex;
     padding-left: 15px;
-    font-size: 19px;
+    /* font-size: 19px; */
     font-weight: bold;
 }
 
@@ -102,7 +106,7 @@
     justify-content: space-between;
     padding: 10px;
     font-weight: bold;
-    border: 1px solid black;
+    border-bottom: 1px solid #242C3E;
 }
 
 .right-title div{
@@ -112,13 +116,12 @@
 .right-chat-window{
     height: 480px;
     padding: 10px;
-    border: 1px solid black;
+    border-bottom: 1px solid #242C3E;
 }
 
 .right-chat{
     height: 100%;
     padding: 10px;
-    border: 1px solid black;
     overflow: scroll;
 }
 
@@ -127,7 +130,7 @@
     justify-content: flex-end;
     align-items: center;
     height: 40px;
-    border: 1px solid black;
+    border-bottom: 1px solid #242C3E;
 }
 
 .right-function ul{
@@ -153,16 +156,18 @@
 .right-input textarea{
     width: 100%;
     height: 100%;
-    padding: 10px;
     border-style: none;
     resize: none;
+}
+
+textarea:focus { 
+    outline: none;
 }
 
 .right-send{
     flex: none;
     width: 100px;
     text-align: center;
-    /* border: 1px solid black; */
 }
 
 /* chat */
@@ -171,23 +176,33 @@
     width: 100%;
     margin: 10px 0;
     padding: 5px;
-    /* border: 1px solid black; */
 }
 
 .chat-a{
     justify-content: flex-end;
 }
 
-.identity-a, .identity-b{
-    width: 60px;
-    margin: 0 5px;
-    text-align: center;
+.identity-b{
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .message{
     max-width: 450px;
-    padding: 5px;
-    border: 1px solid black;
+    min-height: 30px;
+    padding: 10px 15px;
+    border-radius: 15px;
     word-wrap: break-word;
     word-break: normal;
+}
+
+.chat-a .message{
+    background-color: #E2E9F2;
+}
+
+.chat-b .message{
+    background-color: #F0F0F0;
 }
