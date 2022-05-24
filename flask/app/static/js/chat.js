@@ -18,6 +18,7 @@ async function initChatData(fetchOptions){
 
 async function renderPage(){
     if (signData){
+        toggleBlock(document.querySelector(".footer"));
         await getChatList();
         renderChatList();
         renderChatFunctions();
@@ -80,12 +81,12 @@ function setChatList(picUrl, fieldCode, name, jobTitle, roomId, receiverMembersh
 
     small.addEventListener("click", function(){
         let smalls = document.querySelectorAll(".left-small");
-        smalls.forEach(e => e.style.border = "1px solid black");
+        smalls.forEach(e => e.style.borderLeft = "5px solid white");
 
-        small.style.border = "3px solid #EB8528";
+        small.style.borderLeft = "5px solid #EB8528";
         let chatWindow = renderChatWindow();
         let sendBtn = renderSendBtn();
-        startChat(chatWindow, sendBtn, roomId, receiverMembership, receiverId);
+        startChat(picUrl, chatWindow, sendBtn, roomId, receiverMembership, receiverId);
     })
 }
 
@@ -109,11 +110,11 @@ function disconnect(){
     })
 }
 
-async function startChat(chatWindow, sendBtn, roomId, receiverMembership, receiverId){
+async function startChat(picUrl, chatWindow, sendBtn, roomId, receiverMembership, receiverId){
     await getChatHistory(roomId);
-    renderChatHistory(chatWindow);
+    renderChatHistory(picUrl, chatWindow);
     sendMsg(chatWindow, sendBtn, roomId, receiverMembership, receiverId);
-    receiveMsg(chatWindow);
+    receiveMsg(picUrl, chatWindow);
 }
 
 async function getChatHistory(roomId){
@@ -132,7 +133,7 @@ async function getChatHistory(roomId){
     await initChatData(fetchOptions);
 }
 
-function renderChatHistory(chatWindow){
+function renderChatHistory(picUrl, chatWindow){
     let lines = chatData["data"];
 
     lines.forEach(function(line){
@@ -142,7 +143,7 @@ function renderChatHistory(chatWindow){
         if (senderMembership == membership){
             renderSenderMsg(chatWindow, message);
         } else if (senderMembership != membership){
-            renderReceiverMsg(chatWindow, message);
+            renderReceiverMsg(picUrl, chatWindow, message);
         }
     })
 }
@@ -164,9 +165,9 @@ function sendMsg(chatWindow, sendBtn, roomId, receiverMembership, receiverId){
     sendBtn.addEventListener("click", handleSendMsg);
 }
 
-function receiveMsg(chatWindow){
+function receiveMsg(picUrl, chatWindow){
     socket.on("receive", function(message){
-        renderReceiverMsg(chatWindow, message);
+        renderReceiverMsg(picUrl, chatWindow, message);
     })
 }
 
@@ -176,15 +177,18 @@ function renderSenderMsg(chatWindow, message){
 
     chatWindow.appendChild(chatA);
     chatA.appendChild(createDocElement("div", "message", message));
-    chatA.appendChild(createDocElement("div", "identity-a", "我"));
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-function renderReceiverMsg(chatWindow, message){
+function renderReceiverMsg(picUrl, chatWindow, message){
     let chatB = createDocElement("div", "chat-b");
+    let identityB = createDocElement("div", "identity-b");
+    let img = document.createElement("img");
+    img.src = picUrl;
 
     chatWindow.appendChild(chatB);
-    chatB.appendChild(createDocElement("div", "identity-b", "對方"));
+    chatB.appendChild(identityB);
+    identityB.appendChild(img);
     chatB.appendChild(createDocElement("div", "message", message));
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
