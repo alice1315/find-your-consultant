@@ -1,58 +1,44 @@
-from flask import request
-from flask_socketio import send, emit
+from flask_socketio import send, emit, join_room, leave_room
 
 from .. import socketio
 from .. import db
 
-from ..models.auth import Auth
-
 
 @socketio.on("connect")
 def connect():
-    access_token = request.cookies.get("access_token")
-    if access_token:
-        data = Auth.decode_auth_token(access_token)
-        membership = data["info"]["membership"]
-        id = data["info"]["id"]
-
-        if membership == "member":
-            sql = ("UPDATE room SET member_sid=%s WHERE member_id=%s")
-        else:
-            sql = ("UPDATE room SET consultant_sid=%s WHERE consultant_id=%s")
-
-        sql_data = (request.sid, id)
-        db.execute_sql(sql, sql_data, "one", commit = True)
+    print("connect")
 
 @socketio.on("disconnect")
 def disconnect():
     print("disconnect")
 
+@socketio.on("join")
+def join(payload):
+    case_id = payload["case_id"]
+    join_room(case_id)
+
+@socketio.on("leave")
+def leave(payload):
+    if payload["case_id"]:
+        case_id = payload["case_id"]
+        leave_room(case_id)
+
 @socketio.on("send")
-def private_messages(payload):
-    room_id = payload["room_id"]
-    receiver_membership = payload["receiver_membership"]
-    receiver_id = payload["receiver_id"]
+def send_messages(payload):
+    case_id = payload["case_id"]
+    membership = payload["membership"]
     message = payload["message"]
 
-    if receiver_membership == "consultant":
-        sender_membership = "member"
-        sql = ("SELECT consultant_sid FROM room WHERE id=%s AND consultant_id=%s")
-        sql_data = (room_id, receiver_id)
-        result = db.execute_sql(sql, sql_data, "one")
-        receiver_sid = result["consultant_sid"]
+    if membership == "member":
+        receiver_membership = "consultant"
     else:
-        sender_membership = "consultant"
-        sql = ("SELECT member_sid FROM room WHERE id=%s AND member_id=%s")
-        sql_data = (room_id, receiver_id)
-        result = db.execute_sql(sql, sql_data, "one")
-        receiver_sid = result["member_sid"]
+        receiver_membership = "member"
 
-    emit("receive", message, room = receiver_sid)
+    data = {"receiver_membership": receiver_membership, "message": message}
+
+    emit("receive", data, to = case_id)
 
     # Store messages
-    sql = ("INSERT INTO messages (room_id, sender_membership, messages) VALUES (%s, %s, %s)")
-    sql_data = (room_id, sender_membership, message)
+    sql = ("INSERT INTO case_messages (case_id, sender_membership, message) VALUES (%s, %s, %s)")
+    sql_data = (case_id, membership, message)
     db.execute_sql(sql, sql_data, "one", commit = True)
-
-
-

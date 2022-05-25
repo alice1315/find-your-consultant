@@ -5,7 +5,7 @@ from .. import res, db, utils
 from ..models.auth import Auth
 
 @api_.route("/chat", methods = ["GET"])
-def get_room_list():
+def get_chat_list():
     access_token = request.cookies.get("access_token")
     if access_token:
         data = Auth.decode_auth_token(access_token)
@@ -13,9 +13,9 @@ def get_room_list():
         id = data["info"]["id"]
     
         if membership == "member":
-            sql = ("SELECT r.id, r.consultant_id, r.field_code, c.pic_url, c.name, c.job_title  FROM room r, consultant c WHERE r.member_id=%s AND r.consultant_id=c.id")
+            sql = ("SELECT ca.id, ca.consultant_id, ca.field_code, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id")
         else:
-            sql = ("SELECT r.id, r.member_id, r.field_code, m.pic_url, m.name  FROM room r, member m WHERE r.consultant_id=%s AND r.member_id=m.id")
+            sql = ("SELECT ca.id, ca.member_id, ca.field_code, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id")
         
         sql_data = (id, )
 
@@ -35,11 +35,11 @@ def set_room():
     sql_data = (member_id, consultant_id, field_code)
 
     # Check if room exists
-    sql = ("SELECT id FROM room WHERE member_id=%s and consultant_id=%s and field_code=%s")
+    sql = ("SELECT id FROM `case` WHERE member_id=%s AND consultant_id=%s AND field_code=%s AND status<>'結案'")
     result = db.execute_sql(sql, sql_data, "one")
 
     if not result:
-        sql = ("INSERT INTO room (member_id, consultant_id, field_code) VALUES (%s, %s, %s)")
+        sql = ("INSERT INTO `case` (member_id, consultant_id, field_code, status) VALUES (%s, %s, %s, '前置')")
         db.execute_sql(sql, sql_data, "one", commit=True)
 
         return res.ok()
@@ -49,11 +49,11 @@ def set_room():
 @api_.route("chat", methods = ["PATCH"])
 def get_chat_history():
     data = request.get_json()
-
-    room_id = data["room_id"]
     
-    sql = ("SELECT sender_membership, messages FROM messages WHERE room_id=%s ORDER BY time")
-    sql_data = (room_id, )
+    case_id = data["case_id"]
+    
+    sql = ("SELECT sender_membership, message FROM case_messages WHERE case_id=%s ORDER BY time")
+    sql_data = (case_id, )
     results = db.execute_sql(sql, sql_data, "all")
 
     return res.respond(results)

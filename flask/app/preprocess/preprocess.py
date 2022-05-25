@@ -97,29 +97,26 @@ TABLES['member'] = (
     "  PRIMARY KEY (`id`),"
     "  UNIQUE (`email`))")
 
-TABLES['room'] = (
-    "CREATE TABLE `room` ("
+TABLES['case'] = (
+    "CREATE TABLE `case` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
     "  `field_code` varchar(50) NOT NULL,"
     "  `member_id` bigint NOT NULL,"
-    "  `member_sid` varchar(255),"
     "  `consultant_id` bigint NOT NULL,"
-    "  `consultant_sid` varchar(255),"
+    "  `status` varchar(10) NOT NULL,"
     "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`member_id`, `consultant_id`, `field_code`),"
     "  FOREIGN KEY (`member_id`) REFERENCES member(`id`),"
     "  FOREIGN KEY (`consultant_id`) REFERENCES consultant(`id`))")
 
-TABLES['messages'] = (
-    "CREATE TABLE `messages` ("
+TABLES['case_messages'] = (
+    "CREATE TABLE `case_messages` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `room_id` bigint NOT NULL,"
+    "  `case_id` bigint NOT NULL,"
     "  `sender_membership` varchar(255) NOT NULL,"
-    "  `messages` varchar(255) NOT NULL,"
+    "  `message` varchar(255) NOT NULL,"
     "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`room_id`) REFERENCES room(`id`))")
-
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
 
 
 """
