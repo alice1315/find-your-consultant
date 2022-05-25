@@ -91,6 +91,31 @@ TABLES['member'] = (
     "  PRIMARY KEY (`id`),"
     "  UNIQUE (`email`))")
 
+<<<<<<< HEAD:app/preprocess/preprocess.py
+=======
+TABLES['case'] = (
+    "CREATE TABLE `case` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `field_code` varchar(50) NOT NULL,"
+    "  `member_id` bigint NOT NULL,"
+    "  `consultant_id` bigint NOT NULL,"
+    "  `status` varchar(10) NOT NULL,"
+    "  PRIMARY KEY (`id`),"
+    "  FOREIGN KEY (`member_id`) REFERENCES member(`id`),"
+    "  FOREIGN KEY (`consultant_id`) REFERENCES consultant(`id`))")
+
+TABLES['case_messages'] = (
+    "CREATE TABLE `case_messages` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `case_id` bigint NOT NULL,"
+    "  `sender_membership` varchar(255) NOT NULL,"
+    "  `message` varchar(255) NOT NULL,"
+    "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+    "  PRIMARY KEY (`id`),"
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
+
+
+>>>>>>> 23bb570 (Reset and modified socket model of chatting.):flask/app/preprocess/preprocess.py
 """
 TABLES['shopping_cart'] = (
     "CREATE TABLE `shopping_cart` ("

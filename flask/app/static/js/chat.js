@@ -1,5 +1,6 @@
 var chatData;
 var socket;
+var windowCaseId = "";
 
 async function chatInit(){
     await baseInit();
@@ -44,22 +45,13 @@ function renderChatList(){
             jobTitle = "";
         }
 
-        let roomId = chat["id"];
-        let receiverMembership;
-        let receiverId;
-        if (membership === "member"){
-            receiverMembership = "consultant";
-            receiverId = chat["consultant_id"];
-        } else{
-            receiverMembership = "member";
-            receiverId = chat["member_id"];
-        }
+        let caseId = chat["id"];
 
-        setChatList(picUrl, fieldCode, name, jobTitle, roomId, receiverMembership, receiverId);
+        setChatList(picUrl, fieldCode, name, jobTitle, caseId);
     })
 }
 
-function setChatList(picUrl, fieldCode, name, jobTitle, roomId, receiverMembership, receiverId){
+function setChatList(picUrl, fieldCode, name, jobTitle, caseId){
     let chatListContainer = document.querySelector(".left-list");
     let small = createDocElement("div", "left-small");
     let picContainer = createDocElement("div", "left-pic");
@@ -80,13 +72,15 @@ function setChatList(picUrl, fieldCode, name, jobTitle, roomId, receiverMembersh
     info.appendChild(createDocElement("div", "left-job-title", jobTitle));
 
     small.addEventListener("click", function(){
+        socket.emit("leave", {"case_id": windowCaseId})
+
         let smalls = document.querySelectorAll(".left-small");
         smalls.forEach(e => e.style.borderLeft = "5px solid white");
 
         small.style.borderLeft = "5px solid #EB8528";
         let chatWindow = renderChatWindow();
         let sendBtn = renderSendBtn();
-        startChat(picUrl, chatWindow, sendBtn, roomId, receiverMembership, receiverId);
+        startChat(picUrl, chatWindow, sendBtn, caseId);
     })
 }
 
@@ -102,24 +96,29 @@ function renderChatFunctions(){
 // Socket
 function connect(){
     socket = io.connect();
-}
-
-function disconnect(){
     socket.on("disconnect", function(){
         console.log("disconnected!");
     })
 }
 
-async function startChat(picUrl, chatWindow, sendBtn, roomId, receiverMembership, receiverId){
-    await getChatHistory(roomId);
+async function startChat(picUrl, chatWindow, sendBtn, caseId){
+    windowCaseId = caseId
+    let payload = {
+        "membership": membership,
+        "case_id": windowCaseId
+    }
+
+    socket.emit("join", payload);
+
+    await getChatHistory(windowCaseId);
     renderChatHistory(picUrl, chatWindow);
-    sendMsg(chatWindow, sendBtn, roomId, receiverMembership, receiverId);
+    sendMsg(chatWindow, sendBtn, windowCaseId);
     receiveMsg(picUrl, chatWindow);
 }
 
-async function getChatHistory(roomId){
+async function getChatHistory(caseId){
     let reqData = {
-        "room_id": roomId
+        "case_id": caseId
     }
 
     let fetchOptions = {
@@ -138,23 +137,22 @@ function renderChatHistory(picUrl, chatWindow){
 
     lines.forEach(function(line){
         let senderMembership = line["sender_membership"];
-        let message = line["messages"];
+        let message = line["message"];
 
         if (senderMembership == membership){
             renderSenderMsg(chatWindow, message);
-        } else if (senderMembership != membership){
+        } else if (senderMembership !== membership){
             renderReceiverMsg(picUrl, chatWindow, message);
         }
     })
 }
 
-function sendMsg(chatWindow, sendBtn, roomId, receiverMembership, receiverId){
+function sendMsg(chatWindow, sendBtn, caseId){
     function handleSendMsg(){
         let message = document.querySelector("#message");
         let payload = {
-            "room_id": roomId,
-            "receiver_membership": receiverMembership,
-            "receiver_id": receiverId,
+            "case_id": caseId,
+            "membership": membership,
             "message": message.value
         }
         socket.emit("send", payload);
@@ -166,8 +164,10 @@ function sendMsg(chatWindow, sendBtn, roomId, receiverMembership, receiverId){
 }
 
 function receiveMsg(picUrl, chatWindow){
-    socket.on("receive", function(message){
-        renderReceiverMsg(picUrl, chatWindow, message);
+    socket.on("receive", function(data){
+        if (data["receiver_membership"] === membership){
+            renderReceiverMsg(picUrl, chatWindow, data["message"]);
+        }
     })
 }
 
