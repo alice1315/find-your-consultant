@@ -29,9 +29,13 @@
 /* left */
 .left-title{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     padding: 10px;
     border-bottom: 1px solid #242C3E;
+}
+
+#doing-list, #finished-list{
+    cursor: pointer;
 }
 
 .left-small{
@@ -102,15 +106,16 @@
 
 /* right */
 .right-title{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 60% 25% 15%;
+    grid-template-rows: 100%;
     padding: 10px;
     font-weight: bold;
     border-bottom: 1px solid #242C3E;
 }
 
 .right-title div{
-    margin: 0 30px;
+    margin: 0 20px;
 }
 
 .right-chat-window{

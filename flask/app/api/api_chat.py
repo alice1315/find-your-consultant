@@ -13,9 +13,9 @@ def get_chat_list():
         id = data["info"]["id"]
     
         if membership == "member":
-            sql = ("SELECT ca.id, ca.consultant_id, ca.field_code, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id")
+            sql = ("SELECT ca.id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id")
         else:
-            sql = ("SELECT ca.id, ca.member_id, ca.field_code, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id")
+            sql = ("SELECT ca.id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id")
         
         sql_data = (id, )
 
@@ -39,7 +39,7 @@ def set_room():
     result = db.execute_sql(sql, sql_data, "one")
 
     if not result:
-        sql = ("INSERT INTO `case` (member_id, consultant_id, field_code, status) VALUES (%s, %s, %s, '前置')")
+        sql = ("INSERT INTO `case` (member_id, consultant_id, field_code, status) VALUES (%s, %s, %s, '前置諮詢')")
         db.execute_sql(sql, sql_data, "one", commit=True)
 
         return res.ok()

@@ -14,10 +14,6 @@ body{
     color: #242C3E;
 }
 
-input{
-    padding-left: 5px;
-}
-
 .content{
     width: 1200px;
     margin: 54px auto 90px auto;
@@ -153,6 +149,97 @@ li{
 #member-center ul li a{
     color: inherit;
     text-decoration: none;
+}
+
+/* msg window */
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background:rgba(0, 0, 0, 0.25);
+    animation: fadebackground 0.5s;
+}
+
+@keyframes fadebackground {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
+.window-msg{
+    position: fixed;
+    top: 25%;
+    left: 0;
+    right: 0;
+    z-index: 7;
+    width: 340px;
+    margin: auto;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 60px #AAAAAA;
+    border-radius: 6px;
+    padding-bottom: 10px;
+}
+
+
+.slidein{
+    animation: appear 0.5s forwards;
+}
+
+@keyframes appear {
+    from {top: 0;}
+}
+
+/* MSG */
+.msg-border{
+    height: 10px;
+    background: linear-gradient(270deg, #242C3E 0%, #7F9BCC 100%);
+    border-radius: 6px 6px 0 0;
+}
+
+.msg-title{
+    margin: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.msg-content{
+    padding: 10px 15px;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.msg{
+    line-height: 40px;
+}
+
+.msg-input{
+    height: 47px;
+    margin: 20px;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+
+.msg-btn-con{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0 10px 0;
+}
+
+.close{
+    cursor: pointer;
+    position: absolute;
+    top: 27px;
+    right: 17px;
+    background: none;
+    border: none;
+    padding: 0;
+    width: 16px;
+    height: 16px;
 }
 
 /* footer */
