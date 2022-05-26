@@ -8,16 +8,11 @@ class Auth:
         pass
 
     @staticmethod
-    def encode_auth_token(membership, id, name, email):
+    def encode_auth_token(info):
         payload = {
             "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes = 60),
             "iat": datetime.datetime.now(datetime.timezone.utc),
-            "info": {
-                "membership": membership,
-                "id": id,
-                "name": name,
-                "email": email
-            }
+            "info": info
         }
         return jwt.encode(payload, SECRET_KEY, algorithm = "HS256")
 

@@ -13,6 +13,12 @@ MYSQL_CONFIG = {
     'host': '127.0.0.1',
 }
 
+# MYSQL_CONFIG = {
+#     'user': os.getenv("rds_user"), 
+#     'password': os.getenv("rds_password"),
+#     'host': os.getenv("rds_host")
+# }
+
 # Connecting to MySQL
 try:
     cnx = mysql.connector.connect(**MYSQL_CONFIG)

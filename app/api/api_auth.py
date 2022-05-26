@@ -25,7 +25,7 @@ def sign_in():
 
     else:
         if membership == "consultant":
-            sql = ("SELECT id, name, email, password FROM consultant WHERE email=%s")
+            sql = ("SELECT id, name, email, password, price FROM consultant WHERE email=%s")
 
         elif membership == "member":
             sql = ("SELECT id, name, email, password FROM member WHERE email=%s")
@@ -38,7 +38,7 @@ def sign_in():
         else:
             if password == result["password"]:
                 result["membership"] = membership
-                auth_token = Auth.encode_auth_token(result["membership"], result["id"], result["name"], result["email"])
+                auth_token = Auth.encode_auth_token(result)
                 response = make_response(res.ok())
                 response.set_cookie("access_token", auth_token)
                 return response

@@ -1,6 +1,7 @@
 var chatData;
 var socket;
 var windowCaseId = "";
+var messageWindow = document.querySelector("#message");
 
 async function chatInit(){
     await baseInit();
@@ -22,7 +23,6 @@ async function renderPage(){
         toggleBlock(document.querySelector(".footer"));
         await getChatList();
         renderChatList();
-        renderChatFunctions();
     } else{
         location.href = "/";
     }
@@ -46,12 +46,13 @@ function renderChatList(){
         }
 
         let caseId = chat["id"];
+        let status = chat["status"];
 
-        setChatList(picUrl, fieldCode, name, jobTitle, caseId);
+        setChatList(picUrl, fieldCode, name, jobTitle, caseId, status);
     })
 }
 
-function setChatList(picUrl, fieldCode, name, jobTitle, caseId){
+function setChatList(picUrl, fieldCode, name, jobTitle, caseId, status){
     let chatListContainer = document.querySelector(".left-list");
     let small = createDocElement("div", "left-small");
     let picContainer = createDocElement("div", "left-pic");
@@ -72,28 +73,41 @@ function setChatList(picUrl, fieldCode, name, jobTitle, caseId){
     info.appendChild(createDocElement("div", "left-job-title", jobTitle));
 
     small.addEventListener("click", function(){
-        socket.emit("leave", {"case_id": windowCaseId})
-
-        let smalls = document.querySelectorAll(".left-small");
-        smalls.forEach(e => e.style.borderLeft = "5px solid white");
-
-        small.style.borderLeft = "5px solid #EB8528";
-        let chatWindow = renderChatWindow();
-        let sendBtn = renderSendBtn();
-        startChat(picUrl, chatWindow, sendBtn, caseId);
+        handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, status);
     })
 }
 
-function renderChatFunctions(){
-    let functions = document.querySelector(".functions").children;
-    if (membership === "member"){
-        toggleBlock(functions[1]);
-    } else{
-        toggleBlock(functions[0], functions[2]);
+function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, status){
+    // Leave previous room
+    socket.emit("leave", {"case_id": windowCaseId})
+
+    // Set page
+    let smalls = document.querySelectorAll(".left-small");
+    smalls.forEach(e => e.style.borderLeft = "5px solid white");
+    small.style.borderLeft = "5px solid #EB8528";
+
+    document.querySelector("#right-name").innerText = name;
+    document.querySelector("#right-job-title").innerText = jobTitle;
+    document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件： ";
+    document.querySelector("#case-id").innerText = caseId;
+    let statusDiv = document.querySelector("#status");
+    statusDiv.innerText = status;
+
+    if (status === "前置諮詢"){
+        statusDiv.style.color = "#CF4B49";
+    } else if(status === "正式諮詢"){
+        statusDiv.style.color = "#0C874A";
     }
+
+
+    // Set chat window and send btn
+    let chatWindow = renderChatWindow();
+    let sendBtn = renderSendBtn();
+    startChat(picUrl, chatWindow, sendBtn, caseId);
+    renderChatFunctions();
 }
 
-// Socket
+// Socket & Handle chat window
 function connect(){
     socket = io.connect();
     socket.on("disconnect", function(){
@@ -149,15 +163,14 @@ function renderChatHistory(picUrl, chatWindow){
 
 function sendMsg(chatWindow, sendBtn, caseId){
     function handleSendMsg(){
-        let message = document.querySelector("#message");
         let payload = {
             "case_id": caseId,
             "membership": membership,
-            "message": message.value
+            "message": messageWindow.value
         }
         socket.emit("send", payload);
-        renderSenderMsg(chatWindow, message.value);
-        message.value = "";
+        renderSenderMsg(chatWindow, messageWindow.value);
+        messageWindow.value = "";
     }
 
     sendBtn.addEventListener("click", handleSendMsg);
@@ -193,6 +206,52 @@ function renderReceiverMsg(picUrl, chatWindow, message){
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
+// Handle chat functions
+function renderChatFunctions(){
+    let functions = document.querySelector(".functions").children;
+    if (membership === "member"){
+        toggleBlock(functions[1], functions[3]);
+    } else{
+        toggleBlock(functions[0], functions[2], functions[3]);
+        makeQuotation();
+    }
+}
+
+function makeQuotation(){
+    let btn = document.querySelector("#quotation-btn");
+    btn.addEventListener("click", function(){
+        let msgContent = renderMsgWindow("顧問進行報價");
+        let hrInput = createDocElement("input", "msg-input");
+        hrInput.id = "hr";
+        hrInput.placeholder = "請輸入正整數"
+
+        msgContent.appendChild(createDocElement("div", "msg", "請輸入此案件預計處理時數以進行報價"));
+        msgContent.appendChild(createDocElement("div", "msg", "（以小時為單位）"));
+        msgContent.appendChild(hrInput);
+
+        let submitBtn = createDocElement("button", "btn", "送出");
+        msgContent.appendChild(submitBtn);
+
+        submitBtn.addEventListener("click", function(){
+            messageWindow.value = "";
+            let hr = document.querySelector("#hr").value;
+            setQuotationMsg(hr);
+            document.querySelector(".window-msg").remove();
+            document.querySelector(".modal").remove();
+        })
+        
+    })
+}
+
+function setQuotationMsg(hr){
+    let totalPrice = hr * pricePerHour;
+    messageWindow.value = `【顧問報價】
+您好，經顧問評估後此案件的處理時數為 ${hr} 小時，
+諮詢時薪為 $ ${pricePerHour} /時，總報價為 $ ${totalPrice} ，
+若您願意繼續諮詢，請點選下方【進行付款】之按鈕以進入正式諮詢，謝謝！`;
+}
+
+// Other rendering utils
 function renderChatWindow(){
     document.querySelector(".right-chat-window").innerHTML = "";
     let chatWindow = createDocElement("div", "right-chat");

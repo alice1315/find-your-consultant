@@ -16,8 +16,9 @@
                 <div class="chat-container">
                     <div class="chat-left">
                         <div class="left-title">
-                            <div>處理中<span>()</span></div>
-                            <div>已處理<span>()</span></div>
+                            <div id="doing-list">諮詢中 ( <span></span> ) </div>
+                            <div> | </div>
+                            <div id="finished-list">已結案 ( <span></span> ) </div>
                         </div>
                         <div class="left-list">
                             <!-- <div class="left-small">
@@ -39,18 +40,19 @@
                     </div>
                     <div class="chat-right">
                         <div class="right-title">
-                            <!-- <div><span class="right-field">民法</span>案件： <span id="case-id">CI00013</span></div> -->
-                            <div id="status">前置諮詢</div>
+                            <div><span id="right-name"></span>&emsp;<span id="right-job-title"></span></div>
+                            <div><span id="right-field"></span><span id="case-id"></span></div>
+                            <div id="status"></div>
                         </div>
 
                         <div class="right-chat-window"></div>
 
                         <div class="right-function">
                             <ul class="functions">
-                                <li class="hide">進行報價</li>
-                                <li class="hide">進行付款</li>
-                                <li class="hide">提出結案</li>
-                                <li >案件申訴</li>
+                                <li id="quotation-btn" class="hide">進行報價</li>
+                                <li id="pay-btn" class="hide">進行付款</li>
+                                <li id="end-btn" class="hide">提出結案</li>
+                                <li id="help-btn" class="hide">案件申訴</li>
                             </ul>
                         </div>
 

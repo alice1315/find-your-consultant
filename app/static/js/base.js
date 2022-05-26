@@ -1,3 +1,10 @@
+<<<<<<< HEAD:app/static/js/base.js
+=======
+var signData;
+var membership;
+var pricePerHour;
+
+>>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
 
@@ -10,7 +17,16 @@ function baseInit(){
 }
 
 async function checkSignedIn(){
+<<<<<<< HEAD:app/static/js/base.js
     if (await isSignedIn()){
+=======
+    signData = await isSignedIn();
+    if (signData){
+        membership = signData["info"]["membership"];
+        if (membership === "consultant"){
+            pricePerHour = signData["info"]["price"];
+        }
+>>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
         toggleBlock(signInBtn, memberBtn);
     }
     document.body.classList.remove("hide");
@@ -34,10 +50,54 @@ function handleBtns(){
     
 }
 
+// Utils
 function toggleBlock(...targets){
     targets.forEach(target => target.classList.toggle("hide"))
 }
 
+<<<<<<< HEAD:app/static/js/base.js
+=======
+function hideBlock(...targets){
+    targets.forEach(target => target.classList.add("hide"))
+}
+
+function createDocElement(element, className, text){
+    let e = document.createElement(element);
+    if (className){e.setAttribute("class", className);}
+    if (text){e.innerText = text;}
+    return e
+}
+
+function renderMsgWindow(title, reload){
+    let modal = createDocElement("div", "modal");
+    let windowMsg = createDocElement("div", "window-msg");
+    let msgBorder = createDocElement("div", "msg-border");
+    let closeCon = createDocElement("a", "close");
+    let closeImg = createDocElement("img");
+    let msgTitle = createDocElement("div", "msg-title");
+    let msgContent = createDocElement("div", "msg-content");
+
+    closeImg.src = "/img/icon_close.png";
+    msgTitle.textContent = title;
+
+    document.body.appendChild(modal);
+    modal.appendChild(windowMsg);
+    windowMsg.appendChild(msgBorder);
+    windowMsg.appendChild(closeCon);
+    closeCon.appendChild(closeImg);
+    windowMsg.appendChild(msgTitle);
+    windowMsg.appendChild(msgContent);
+
+    closeCon.addEventListener("click", function(){
+        hideBlock(windowMsg, modal);
+        if (reload == "reload"){
+            location.reload(true);
+        }
+    })
+    return msgContent
+}
+
+>>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
 function convertFieldName(fieldCode){
     switch (fieldCode){
         case "ta":

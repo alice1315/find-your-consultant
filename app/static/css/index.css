@@ -84,10 +84,6 @@
     background-color: #F3F3F3;
 }
 
-.field-item:nth-child(3), .field-item:nth-child(4), .field-item:nth-child(5){
-    /* border-bottom: 1px solid #242C3E; */
-}
-
 .field-img img{
     height: 120px;
 }
