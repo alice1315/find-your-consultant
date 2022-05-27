@@ -120,6 +120,24 @@ TABLES['case_messages'] = (
     "  PRIMARY KEY (`id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
 
+TABLES['quotation'] = (
+    "CREATE TABLE `quotation` ("
+    "  `case_id` bigint NOT NULL,"
+    "  `price_per_hour` int NOT NULL,"
+    "  `hours` int NOT NULL,"
+    "  `total_price` int NOT NULL,"
+    "  PRIMARY KEY (`case_id`),"
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
+
+TABLES['payment'] = (
+    "CREATE TABLE `payment` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `case_id` bigint NOT NULL,"
+    "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+    "  `status` varchar(5) NOT NULL,"
+    "  PRIMARY KEY (`id`),"
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")  
+
 
 >>>>>>> 23bb570 (Reset and modified socket model of chatting.):flask/app/preprocess/preprocess.py
 """
