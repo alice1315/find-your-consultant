@@ -99,12 +99,11 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
         statusDiv.style.color = "#0C874A";
     }
 
-
     // Set chat window and send btn
     let chatWindow = renderChatWindow();
     let sendBtn = renderSendBtn();
     startChat(picUrl, chatWindow, sendBtn, caseId);
-    renderChatFunctions();
+    renderChatFunctions(caseId, sendBtn);
 }
 
 // Socket & Handle chat window
@@ -204,51 +203,6 @@ function renderReceiverMsg(picUrl, chatWindow, message){
     identityB.appendChild(img);
     chatB.appendChild(createDocElement("div", "message", message));
     chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-
-// Handle chat functions
-function renderChatFunctions(){
-    let functions = document.querySelector(".functions").children;
-    if (membership === "member"){
-        toggleBlock(functions[1], functions[3]);
-    } else{
-        toggleBlock(functions[0], functions[2], functions[3]);
-        makeQuotation();
-    }
-}
-
-function makeQuotation(){
-    let btn = document.querySelector("#quotation-btn");
-    btn.addEventListener("click", function(){
-        let msgContent = renderMsgWindow("顧問進行報價");
-        let hrInput = createDocElement("input", "msg-input");
-        hrInput.id = "hr";
-        hrInput.placeholder = "請輸入正整數"
-
-        msgContent.appendChild(createDocElement("div", "msg", "請輸入此案件預計處理時數以進行報價"));
-        msgContent.appendChild(createDocElement("div", "msg", "（以小時為單位）"));
-        msgContent.appendChild(hrInput);
-
-        let submitBtn = createDocElement("button", "btn", "送出");
-        msgContent.appendChild(submitBtn);
-
-        submitBtn.addEventListener("click", function(){
-            messageWindow.value = "";
-            let hr = document.querySelector("#hr").value;
-            setQuotationMsg(hr);
-            document.querySelector(".window-msg").remove();
-            document.querySelector(".modal").remove();
-        })
-        
-    })
-}
-
-function setQuotationMsg(hr){
-    let totalPrice = hr * pricePerHour;
-    messageWindow.value = `【顧問報價】
-您好，經顧問評估後此案件的處理時數為 ${hr} 小時，
-諮詢時薪為 $ ${pricePerHour} /時，總報價為 $ ${totalPrice} ，
-若您願意繼續諮詢，請點選下方【進行付款】之按鈕以進入正式諮詢，謝謝！`;
 }
 
 // Other rendering utils
