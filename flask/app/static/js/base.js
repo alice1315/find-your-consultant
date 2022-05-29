@@ -47,6 +47,10 @@ function toggleBlock(...targets){
     targets.forEach(target => target.classList.toggle("hide"))
 }
 
+function showBlock(...targets){
+    targets.forEach(target => target.classList.remove("hide"))
+}
+
 function hideBlock(...targets){
     targets.forEach(target => target.classList.add("hide"))
 }

@@ -1,0 +1,82 @@
+.payment-container{
+    width: 700px;
+    margin: 20px auto 0 auto;
+    padding: 30px;
+    background-color: #EFEBE5;
+}
+
+/* payment-title */
+.payment-title{
+    display: flex;
+    align-items: center;
+    margin: 20px 0 5px -25px;
+}
+
+.payment-title img{
+    height: 50px;
+    margin-top: 3px;
+}
+
+.payment-title div{
+    line-height: 25px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.info{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 33% 33% 33%;
+}
+
+.info div{
+    line-height: 30px;
+}
+
+/* payment-form */
+#payment-form{
+    margin: 20px 0;
+    padding: 10px 30px 30px 30px;
+    background-color: #FFFFFF;
+}
+
+/* signup btn*/
+.btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+#payment-form button{
+    margin-top: 20px;
+}
+
+/* Input/TPField */
+.text-input, .tpfield{
+    width: 310px;
+    height: 47px;
+    margin-left: 5px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+
+.input-box{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tappay-field-focus {
+    border: 2px solid #7A7D9B;
+    outline: 0;
+}
+
+.payment-msg{
+    margin-left: 10px;
+    color: #CF4B49;
+}
+
+#payment-msg{
+    margin-top: 10px;
+    color: #CF4B49;
+}

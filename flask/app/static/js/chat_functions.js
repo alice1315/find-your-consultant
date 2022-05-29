@@ -3,10 +3,10 @@ var funcData;
 function renderChatFunctions(caseId, sendBtn){
     let functions = document.querySelector(".functions").children;
     if (membership === "member"){
-        toggleBlock(functions[1], functions[3]);
-        makePayment();
+        showBlock(functions[1], functions[3]);
+        toMakePayment(caseId);
     } else{
-        toggleBlock(functions[0], functions[2], functions[3]);
+        showBlock(functions[0], functions[2], functions[3]);
         makeQuotation(caseId, sendBtn);
     }
 }
@@ -78,11 +78,11 @@ function setQuotationMsg(hr, totalPrice){
 若您有意願繼續諮詢，請點選下方【進行付款】之按鈕以進入正式諮詢，謝謝！`;
 }
 
-// Payment (for member)
-function makePayment(){
+// to Payment (for member)
+function toMakePayment(caseId){
     let btn = document.querySelector("#pay-btn");
     btn.addEventListener("click", function(){
-        location.href = "/payment";
+        location.href = `/payment?case=${caseId}`;
     })
 }
 

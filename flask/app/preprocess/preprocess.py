@@ -104,6 +104,9 @@ TABLES['case'] = (
     "  `member_id` bigint NOT NULL,"
     "  `consultant_id` bigint NOT NULL,"
     "  `status` varchar(10) NOT NULL,"
+    "  `price_per_hour` int,"
+    "  `hours` int,"
+    "  `total_price` int,"
     "  PRIMARY KEY (`id`),"
     "  FOREIGN KEY (`member_id`) REFERENCES member(`id`),"
     "  FOREIGN KEY (`consultant_id`) REFERENCES consultant(`id`))")
@@ -116,15 +119,6 @@ TABLES['case_messages'] = (
     "  `message` varchar(255) NOT NULL,"
     "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
-
-TABLES['quotation'] = (
-    "CREATE TABLE `quotation` ("
-    "  `case_id` bigint NOT NULL,"
-    "  `price_per_hour` int NOT NULL,"
-    "  `hours` int NOT NULL,"
-    "  `total_price` int NOT NULL,"
-    "  PRIMARY KEY (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
 
 TABLES['payment'] = (

@@ -1,5 +1,46 @@
+var caseId;
+var paymentUrl = "/api/payment";
+var paymentData;
+var paymentMsg = document.querySelector("#payment-msg");
+
 async function paymentInit(){
     await baseInit();
+    getCaseId();
+    await initPaymentData(paymentUrl + `?case=${caseId}`, {method: "GET"});
+    console.log(paymentData);
+    renderPaymentPage();
+    tappaySetUp();
+    makePayment();
+}
+
+function getCaseId(){
+    let url = new URL(window.location.href);
+    caseId = url.searchParams.get("case");
+}
+
+async function initPaymentData(url, fetchOptions){
+    await fetch(url, fetchOptions)
+    .then((resp) => {
+        return resp.json()
+    }).then((result) => {
+        paymentData = result;
+    })
+}
+
+function renderPaymentPage(){
+    // Set payment info
+    document.querySelector("#case-id").innerText = paymentData["data"]["id"];
+    document.querySelector("#field").innerText = convertFieldName(paymentData["data"]["field_code"]);
+    document.querySelector("#consultant").innerText = paymentData["data"]["name"];
+    document.querySelector("#job-title").innerText = paymentData["data"]["job_title"];
+    document.querySelector("#price-per-hour").innerText = paymentData["data"]["price_per_hour"];
+    document.querySelector("#hours").innerText = paymentData["data"]["hours"];
+    document.querySelector("#total-price").innerText = paymentData["data"]["total_price"];
+
+    // Set contact info
+    document.querySelector("#contact-name").setAttribute("value", signData["info"]["name"]);
+    document.querySelector("#contact-email").setAttribute("value", signData["info"]["email"]);
+
 }
 
 function tappaySetUp(){
@@ -59,22 +100,61 @@ function updateContactStatus(contact, msg){
     }
 }
 
-function checkOrderStatus(){
+function checkPaymentStatus(){
     let tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
-    updateCardStatus(tappayStatus.status.number, document.getElementById("number-msg"));
-    updateCardStatus(tappayStatus.status.expiry, document.getElementById("expiry-msg"));
-    updateCardStatus(tappayStatus.status.ccv, document.getElementById("ccv-msg"));
+    updateCardStatus(tappayStatus.status.number, document.querySelector("#number-msg"));
+    updateCardStatus(tappayStatus.status.expiry, document.querySelector("#expiry-msg"));
+    updateCardStatus(tappayStatus.status.ccv, document.querySelector("#ccv-msg"));
 
-    let con1 = updateContactStatus(contactName, document.getElementById("name-msg"));
-    let con2 = updateContactStatus(contactEmail, document.getElementById("email-msg"));
-    let con3 = updateContactStatus(contactPhone, document.getElementById("phone-msg"));
+    let con1 = updateContactStatus(document.querySelector("#contact-name"), document.querySelector("#name-msg"));
+    let con2 = updateContactStatus(document.querySelector("#contact-email"), document.querySelector("#email-msg"));
+    let con3 = updateContactStatus(document.querySelector("#contact-phone"), document.querySelector("#phone-msg"));
     
     if (tappayStatus.canGetPrime === false | !con1 | !con2 | !con3){
-        orderMsg.innerText = "訂購資訊有誤，請再次確認";
+        paymentMsg.innerText = "資訊有誤，請再次確認";
         return false;
     } else{
-        orderMsg.innerText = "";
+        paymentMsg.innerText = "";
         return true;
     }
+}
+
+function makePayment(){
+    let form = document.querySelector("#payment-form");
+    function handlePaymentSubmit(event){
+        event.preventDefault();
+
+        let reqForm = new FormData(form);
+        reqForm.append("case_id", caseId)
+
+        // Get prime
+        if (checkPaymentStatus()){
+            TPDirect.card.getPrime(async(result) => {
+                if (result.status !== 0){
+                    console.log("get prime error " + result.msg);
+                    return;
+                }
+
+                let prime = result.card.prime;
+                reqForm.append("prime", prime);
+
+                let fetchOptions = {
+                    method: "POST",
+                    body: reqForm
+                }
+
+                await initPaymentData("/api/payment", fetchOptions);
+                
+                // let orderNumber = orderData["data"]["number"];
+                // if (orderData["data"]["payment"]["status"] == 0){
+                //     document.body.innerHTML = "";
+                //     location.href = `/thankyou?number=${orderNumber}`;
+                // } else{
+                //     renderPaymentMsg(orderNumber);
+                // }
+            })
+        }
+    }
+    form.addEventListener("submit", handlePaymentSubmit)
 }
