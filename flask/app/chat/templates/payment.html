@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="/css/signup.css"></link>
         <link rel="stylesheet" href="/css/payment.css"></link>
         <script src="https://js.tappaysdk.com/tpdirect/v5.8.0"></script> 
     </head>
@@ -15,51 +14,69 @@
                 <img src="/img/title-mark.png"/>
                 <div class="page-title">付款頁面</div>
             </div>
-            <div class="signup-container">
-                <form id="signup-form" method="POST">
+            <div class="payment-container">
+                <form id="payment-form" method="POST">
+                    <div class="payment-title">
+                        <img src="/img/title-mark.png"/>
+                        <div>正式諮詢案件資訊</div>
+                    </div>
+                    <div class="info">
+                        <div>案件編號： <span id="case-id"></span></div>
+                        <div>諮詢時薪： $ <span id="price-per-hour"></span> /時</div>
+                        <div>案件領域： <span id="field"></span></div>
+                        <div>評估時數： <span id="hours"></span> 小時</div>
+                        <div>諮詢律師： <span id="consultant"></span>&nbsp;<span id="job-title"></span></div>
+                        <div>總計費用： $ <span id="total-price"></span> 元</div>
+                    </div>
+                   
                     <div class="signup-basic">
-                        <div class="signup-title">
+                        <div class="payment-title">
                             <img src="/img/title-mark.png"/>
-                            <div>基本資訊</div>
+                            <div>基本聯絡資訊</div>
                         </div>
-                        <div>聯絡姓名： <input type="text" name="name" class="text-input"/></div>
-                        <div>聯絡信箱： <input type="email" name="email" class="text-input"/></div>
-                        <div>聯絡電話： <input type="text" name="phone" class="text-input"/></div>
+                        <div class="input-box">
+                            <div>聯絡姓名： </div>
+                            <input id="contact-name" type="text" name="name" class="text-input"/>
+                            <div id="name-msg" class="payment-msg"></div>
+                        </div>
+                        <div class="input-box">
+                            <div>聯絡信箱： </div>
+                            <input id="contact-email" type="email" name="email" class="text-input"/>
+                            <div id="email-msg" class="payment-msg"></div>
+                        </div>
+                        <div class="input-box">
+                            <div>聯絡電話： </div>
+                            <input id="contact-phone" type="text" name="phone" class="text-input"/>
+                            <div id="phone-msg" class="payment-msg"></div>
+                        </div>
 
-                        <div class="signup-title">
+                        <div class="payment-title">
                             <img src="/img/title-mark.png"/>
                             <div>信用卡付款資訊</div>
                         </div>
-                        <div>信用卡號： <input type="text" name="name" class="text-input"/></div>
-                        <div>有效月年： <input type="email" name="email" class="text-input"/></div>
-                        <div>驗證三碼： <input type="text" name="phone" class="text-input"/></div>
-
-                        <form class="block">
-                            <div class="booking-title">信用卡付款資訊</div>
-                            <div class="input-box">
-                                <div class="text">卡片號碼： </div>
-                                <div id="card-number" class="tpfield"></div>
-                                <div id="number-msg" class="order-msg"></div>
-                            </div>
-                            <div class="input-box">
-                                <div class="text">過期時間： </div>
-                                <div id="card-expiration-date" class="tpfield"></div>
-                                <div id="expiry-msg" class="order-msg"></div>
-                            </div>
-                            <div class="input-box">
-                                <div class="text">驗證密碼： </div>
-                                <div id="card-ccv" class="tpfield"></div>
-                                <div id="ccv-msg" class="order-msg"></div>
-                            </div>
-                        </form>
+                        <div class="input-box">
+                            <div>信用卡號： </div>
+                            <div id="card-number" class="tpfield"></div>
+                            <div id="number-msg" class="payment-msg"></div>
+                        </div>
+                        <div class="input-box">
+                            <div>有效月年： </div>
+                            <div id="card-expiration-date" class="tpfield"></div>
+                            <div id="expiry-msg" class="payment-msg"></div>
+                        </div>
+                        <div class="input-box">
+                            <div>驗證三碼： </div>
+                            <div id="card-ccv" class="tpfield"></div>
+                            <div id="ccv-msg" class="payment-msg"></div>
+                        </div>
 
                     </div>
 
                     <div class="btn-container">
-                        <button type="submit" class="btn">註冊會員</button>
+                        <button type="submit" class="btn">進行付款</button>
                     </div>
                     <div class="msg-container">
-                        <div class="sign-msg"></div>
+                        <div id="payment-msg"></div>
                     </div>
                 </form>
             </div>

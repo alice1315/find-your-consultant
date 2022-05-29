@@ -5,6 +5,8 @@ load_dotenv()
 
 SECRET_KEY = os.urandom(64)
 
+TAPPAY_PARTNER_KEY = os.getenv("tappay_partner_key")
+
 MYSQL_CONFIG = {
     'user': os.getenv("user"), 
     'password': os.getenv("password"),

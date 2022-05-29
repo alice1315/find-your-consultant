@@ -56,7 +56,14 @@ function toggleBlock(...targets){
 }
 
 <<<<<<< HEAD:app/static/js/base.js
+<<<<<<< HEAD:app/static/js/base.js
 =======
+=======
+function showBlock(...targets){
+    targets.forEach(target => target.classList.remove("hide"))
+}
+
+>>>>>>> 8bc761f (Set function and view of payment.):flask/app/static/js/base.js
 function hideBlock(...targets){
     targets.forEach(target => target.classList.add("hide"))
 }
