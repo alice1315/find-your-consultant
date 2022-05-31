@@ -96,7 +96,7 @@ function renderMsgWindow(title, reload){
     windowMsg.appendChild(msgContent);
 
     closeCon.addEventListener("click", function(){
-        hideBlock(windowMsg, modal);
+        closeWindowMsg();
         if (reload == "reload"){
             location.reload(true);
         }
@@ -104,7 +104,16 @@ function renderMsgWindow(title, reload){
     return msgContent
 }
 
+<<<<<<< HEAD:app/static/js/base.js
 >>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
+=======
+// Utils
+function closeWindowMsg(){
+    document.querySelector(".window-msg").remove();
+    document.querySelector(".modal").remove();
+}
+
+>>>>>>> 277f56c (Set function of ending case.):flask/app/static/js/base.js
 function convertFieldName(fieldCode){
     switch (fieldCode){
         case "ta":

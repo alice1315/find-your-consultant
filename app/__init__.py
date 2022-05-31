@@ -16,10 +16,20 @@ def create_app():
 
     from app.main import main as main_bp
     from app.auth import auth as auth_bp
+<<<<<<< HEAD:app/__init__.py
+=======
+    from app.member import member as member_bp
+    from app.case import case as case_bp
+>>>>>>> 277f56c (Set function of ending case.):flask/app/__init__.py
     from app.api import api_ as api_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
+<<<<<<< HEAD:app/__init__.py
+=======
+    app.register_blueprint(member_bp)
+    app.register_blueprint(case_bp)
+>>>>>>> 277f56c (Set function of ending case.):flask/app/__init__.py
     app.register_blueprint(api_bp, url_prefix = "/api")
 
 <<<<<<< HEAD:app/__init__.py

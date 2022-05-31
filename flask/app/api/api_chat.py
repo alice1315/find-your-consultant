@@ -46,7 +46,7 @@ def set_room():
     else:
         return make_response(res.error("已有諮詢紀錄，請直接點選諮詢聊天室"), 400)
 
-@api_.route("chat", methods = ["PATCH"])
+@api_.route("/chat", methods = ["PATCH"])
 def get_chat_history():
     data = request.get_json()
     

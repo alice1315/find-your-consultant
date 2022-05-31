@@ -90,20 +90,24 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     document.querySelector("#right-job-title").innerText = jobTitle;
     document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件： ";
     document.querySelector("#case-id").innerText = caseId;
+    let titleDiv = document.querySelector(".right-title");
     let statusDiv = document.querySelector("#status");
     statusDiv.innerText = status;
 
     if (status === "前置諮詢"){
+        titleDiv.style.backgroundColor = "rgba(207, 75, 73, 0.2)";
         statusDiv.style.color = "#CF4B49";
     } else if(status === "正式諮詢"){
+        titleDiv.style.backgroundColor = "rgba(12, 135, 74, 0.2)";
         statusDiv.style.color = "#0C874A";
     }
 
     // Set chat window and send btn
     let chatWindow = renderChatWindow();
     let sendBtn = renderSendBtn();
+    let funcUl = renderChatFunctionList();
     startChat(picUrl, chatWindow, sendBtn, caseId);
-    renderChatFunctions(caseId, sendBtn);
+    setChatFunctions(caseId, sendBtn, funcUl);
 }
 
 // Socket & Handle chat window
@@ -160,6 +164,7 @@ function renderChatHistory(picUrl, chatWindow){
     })
 }
 
+// Send & Receive
 function sendMsg(chatWindow, sendBtn, caseId){
     function handleSendMsg(){
         let payload = {
@@ -218,4 +223,33 @@ function renderSendBtn(){
     let sendBtn = createDocElement("button", "btn", "送出");
     document.querySelector(".right-send").appendChild(sendBtn);
     return sendBtn
+}
+
+function renderChatFunctionList(){
+    document.querySelector(".right-function").innerHTML = "";
+    let funcUl = createDocElement("ul", "functions");
+
+    let quotationBtn = createDocElement("li", "hide", "進行報價");
+    quotationBtn.id = "quotation-btn";
+
+    let payBtn = createDocElement("li", "hide", "進行付款");
+    payBtn.id = "pay-btn";
+
+    let endBtn = createDocElement("li", "hide", "提出結案");
+    endBtn.id = "end-btn";
+
+    let agreeBtn = createDocElement("li", "hide", "同意結案");
+    agreeBtn.id = "agree-btn";
+    
+    let helpBtn = createDocElement("li", "hide", "案件申訴");
+    helpBtn.id = "help-btn";
+
+    document.querySelector(".right-function").appendChild(funcUl);
+    funcUl.appendChild(quotationBtn);
+    funcUl.appendChild(payBtn);
+    funcUl.appendChild(endBtn);
+    funcUl.appendChild(agreeBtn);
+    funcUl.appendChild(helpBtn);
+
+    return funcUl
 }

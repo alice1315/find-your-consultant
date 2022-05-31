@@ -1,13 +1,15 @@
 var funcData;
 
-function renderChatFunctions(caseId, sendBtn){
-    let functions = document.querySelector(".functions").children;
+function setChatFunctions(caseId, sendBtn, funcUl){
+    let functions = funcUl.children;
     if (membership === "member"){
-        showBlock(functions[1], functions[3]);
+        showBlock(functions[1], functions[3], functions[4]);
         toMakePayment(caseId);
+        agreeEndCase(caseId, sendBtn);
     } else{
-        showBlock(functions[0], functions[2], functions[3]);
+        showBlock(functions[0], functions[2], functions[4]);
         makeQuotation(caseId, sendBtn);
+        endCase(caseId, sendBtn);
     }
 }
 
@@ -73,9 +75,45 @@ function renderQuotationWindow(){
 
 function setQuotationMsg(hr, totalPrice){
     messageWindow.value = `【顧問報價】
-您好，經顧問評估後此案件的處理時數為 ${hr} 小時，
+您好，經評估後此案件的處理時數為 ${hr} 小時，
 諮詢時薪為 $ ${pricePerHour} /時，總報價為 $ ${totalPrice} ，
 若您有意願繼續諮詢，請點選下方【進行付款】之按鈕以進入正式諮詢，謝謝！`;
+}
+
+// End case (for consultant)
+function endCase(caseId, sendBtn){
+    let btn = document.querySelector("#end-btn");
+    btn.addEventListener("click", function(){
+        let submitBtn = renderEndCaseWindow();
+        submitBtn.addEventListener("click", function(){
+            messageWindow.value = "";
+            setEndCaseMsg(caseId);
+            closeWindowMsg();
+            sendBtn.click();
+        })
+    })
+}
+
+function renderEndCaseWindow(){
+    let msgContent = renderMsgWindow("顧問提出結案");
+
+    msgContent.appendChild(createDocElement("div", "msg", "提出結案請求後經客戶同意即可結案"));
+    msgContent.appendChild(createDocElement("div", "msg", "＊ 結案後無法再進行諮詢對話 ＊"));
+
+    let exitBtn = createDocElement("button", "another-btn", "返回聊天室");
+    msgContent.appendChild(exitBtn);
+    exitBtn.addEventListener("click", closeWindowMsg);
+
+    let submitBtn = createDocElement("button", "btn msg-btn", "確認結案");
+    msgContent.appendChild(submitBtn);
+
+    return submitBtn
+}
+
+function setEndCaseMsg(caseId){
+    messageWindow.value = `【顧問提出結案】
+您好，經評估後此案件 ${caseId} 已完成所有諮詢流程，
+若您同意就此結束，請點選下方【同意結案】之按鈕以正式結案，謝謝！`;
 }
 
 // to Payment (for member)
@@ -86,8 +124,38 @@ function toMakePayment(caseId){
     })
 }
 
-// Utils
-function closeWindowMsg(){
-    document.querySelector(".window-msg").remove();
-    document.querySelector(".modal").remove();
+// Agree end case (for member)
+function agreeEndCase(caseId, sendBtn){
+    let btn = document.querySelector("#agree-btn");
+    btn.addEventListener("click", function(){
+        let submitBtn = renderAgreeWindow();
+        submitBtn.addEventListener("click", function(){
+            messageWindow.value = "";
+            setAgreeMsg(caseId);
+            closeWindowMsg();
+            sendBtn.click();
+            location.href = "/feedback";
+        })
+    })
+}
+
+function renderAgreeWindow(){
+    let msgContent = renderMsgWindow("同意結案結案");
+
+    msgContent.appendChild(createDocElement("div", "msg", "感謝您此次的諮詢，點擊確認後則正式結案！"));
+    msgContent.appendChild(createDocElement("div", "msg", "＊ 結案後無法再進行諮詢對話 ＊"));
+
+    let exitBtn = createDocElement("button", "another-btn", "返回聊天室");
+    msgContent.appendChild(exitBtn);
+    exitBtn.addEventListener("click", closeWindowMsg);
+
+    let submitBtn = createDocElement("button", "btn msg-btn", "確認結案");
+    msgContent.appendChild(submitBtn);
+
+    return submitBtn
+}
+
+function setAgreeMsg(caseId){
+    messageWindow.value = `【客戶同意結案】
+您好，已有共識對此案件 ${caseId} 進行結案，感謝您的協助！`;
 }

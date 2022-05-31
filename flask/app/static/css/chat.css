@@ -112,6 +112,7 @@
     padding: 10px;
     font-weight: bold;
     border-bottom: 1px solid #242C3E;
+    border-top-right-radius: 10px;
 }
 
 .right-title div{

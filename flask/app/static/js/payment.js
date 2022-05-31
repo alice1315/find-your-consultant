@@ -7,7 +7,6 @@ async function paymentInit(){
     await baseInit();
     getCaseId();
     await initPaymentData(paymentUrl + `?case=${caseId}`, {method: "GET"});
-    console.log(paymentData);
     renderPaymentPage();
     tappaySetUp();
     makePayment();
@@ -146,15 +145,41 @@ function makePayment(){
 
                 await initPaymentData("/api/payment", fetchOptions);
                 
-                // let orderNumber = orderData["data"]["number"];
-                // if (orderData["data"]["payment"]["status"] == 0){
-                //     document.body.innerHTML = "";
-                //     location.href = `/thankyou?number=${orderNumber}`;
-                // } else{
-                //     renderPaymentMsg(orderNumber);
-                // }
+                if (paymentData["ok"]){
+                    renderPaymentOkMsg();
+                } else{
+                    renderPaymentErrorMsg();
+                }
             })
         }
     }
     form.addEventListener("submit", handlePaymentSubmit)
+}
+
+function renderPaymentOkMsg(){
+    let msgContent = renderMsgWindow("付款成功");
+    msgContent.appendChild(createDocElement("div", "msg", "感謝您的訂購，案件已轉為正式諮詢"));
+
+    let exitBtn = createDocElement("button", "btn msg-btn", "返回聊天室");
+    msgContent.appendChild(exitBtn);
+    exitBtn.addEventListener("click", function(){
+        location.href = "/chat";
+    })
+}
+
+function renderPaymentErrorMsg(){
+    let msgContent = renderMsgWindow("付款失敗");
+    msgContent.appendChild(createDocElement("div", "msg", "請重新確認信用卡資訊，或與發卡銀行確認"));
+
+    let exitBtn = createDocElement("button", "another-btn", "返回聊天室");
+    msgContent.appendChild(exitBtn);
+    exitBtn.addEventListener("click", function(){
+        location.href = "/chat";
+    })
+
+    let repayBtn = createDocElement("button", "btn", "重新付款");
+    msgContent.appendChild(repayBtn);
+    repayBtn.addEventListener("click", function(){
+        location.reload(true);
+    }) 
 }
