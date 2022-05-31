@@ -46,7 +46,7 @@ function makeQuotation(caseId, sendBtn){
                 body: JSON.stringify(reqData)
             }
 
-            await callFunctionApi("/api/booking", fetchOptions);
+            await callFunctionApi("/api/quotation", fetchOptions);
 
             if (funcData["ok"]){
                 messageWindow.value = "";
@@ -134,7 +134,7 @@ function agreeEndCase(caseId, sendBtn){
             setAgreeMsg(caseId);
             closeWindowMsg();
             sendBtn.click();
-            location.href = "/feedback";
+            location.href = `/feedback?case=${caseId}`;
         })
     })
 }
