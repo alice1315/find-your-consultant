@@ -119,7 +119,7 @@ function connect(){
 }
 
 async function startChat(picUrl, chatWindow, sendBtn, caseId){
-    windowCaseId = caseId
+    windowCaseId = caseId;
     let payload = {
         "membership": membership,
         "case_id": windowCaseId

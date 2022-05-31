@@ -1,0 +1,92 @@
+.feedback-container{
+    width: 700px;
+    margin: 20px auto 0 auto;
+    padding: 30px;
+    background-color: #EFEBE5;
+}
+
+.thanks{
+    margin: 30px 0;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+/* feedback-form */
+#feedback-form{
+    margin: 20px 0;
+    padding: 10px 30px 30px 30px;
+    background-color: #FFFFFF;
+}
+
+.block{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.block:first-child{
+    flex: none;
+    width: 100px;
+}
+
+textarea{
+    max-width: 400px;
+    height: 100%;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    margin-left: 20px;
+    padding: 15px;
+}
+
+/* star rating */
+.rating-title{
+    margin-top: 20px;
+}
+
+.rating{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-left: 15px;
+}
+
+.rating input{
+    display: none;
+}
+
+.rating label {
+    position: relative;
+    width: 50px;
+    font-size: 40px;
+    color: #EB8528;
+    cursor: pointer;
+}
+
+.rating label::before{
+    content: "\2605";
+    position: absolute;
+    opacity: 0;
+}
+
+.rating label:hover:before,
+.rating label:hover ~ label:before {
+    opacity: 1 !important;  
+}
+
+.rating input:checked ~ label:before{
+    opacity: 1;
+}
+
+.rating:hover input:checked ~ label:before{ 
+    opacity: 0.4;
+}
+
+
+/* feedback btn */
+.btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+#feedback-form button{
+    margin-top: 20px;
+}

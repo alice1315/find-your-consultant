@@ -128,6 +128,16 @@ TABLES['payment'] = (
     "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`id`),"
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
+
+TABLES['feedback'] = (
+    "CREATE TABLE `feedback` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `case_id` bigint NOT NULL,"
+    "  `consultant_rating` int,"
+    "  `consultant_feedback` varchar(255),"
+    "  `platform_feedback` varchar(255),"
+    "  PRIMARY KEY (`id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")  
 
 

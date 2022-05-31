@@ -1,7 +1,8 @@
 var authUrl = "/api/auth"
 var authData;
 
-function authInit(){
+async function authInit(){
+    await baseInit();
     checkSignPath();
 }
 
