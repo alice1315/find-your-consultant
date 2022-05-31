@@ -83,12 +83,18 @@ function renderMsgWindow(title, reload){
     windowMsg.appendChild(msgContent);
 
     closeCon.addEventListener("click", function(){
-        hideBlock(windowMsg, modal);
+        closeWindowMsg();
         if (reload == "reload"){
             location.reload(true);
         }
     })
     return msgContent
+}
+
+// Utils
+function closeWindowMsg(){
+    document.querySelector(".window-msg").remove();
+    document.querySelector(".modal").remove();
 }
 
 function convertFieldName(fieldCode){

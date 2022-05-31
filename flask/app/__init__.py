@@ -24,13 +24,13 @@ def create_app():
     from app.main import main as main_bp
     from app.auth import auth as auth_bp
     from app.member import member as member_bp
-    from app.chat import chat as chat_bp
+    from app.case import case as case_bp
     from app.api import api_ as api_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(member_bp)
-    app.register_blueprint(chat_bp)
+    app.register_blueprint(case_bp)
     app.register_blueprint(api_bp, url_prefix = "/api")
 
     socketio.init_app(app, cors_allowed_origins="*")
