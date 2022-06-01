@@ -157,5 +157,5 @@ function renderAgreeWindow(){
 
 function setAgreeMsg(caseId){
     messageWindow.value = `【客戶同意結案】
-您好，已有共識對此案件 ${caseId} 進行結案，感謝您的協助！`;
+您好，已有共識對此案件編號： ${caseId} 進行結案，感謝您的協助！`;
 }
