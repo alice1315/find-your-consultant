@@ -35,11 +35,14 @@ function renderProfile(){
         let price = data["price"];
         let agency = data["agency"];
 
-        setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency);
+        let ratings = data["ratings"];
+        let amount = data["amount"]
+
+        setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount);
     })
 }
 
-function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency){
+function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount){
     let profileContainer = document.querySelector(".profile-container");
     let profile = createDocElement("div", "profile");
     let profileBasic = createDocElement("div", "profile-basic");
@@ -47,7 +50,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency){
     let pic = createDocElement("img");
 
     let divUp= createDocElement("div");
-    let star = createDocElement("div", "star");
+    let starContainer = createDocElement("div", "star-container");
     let starImg = createDocElement("img");
     let divInfo = createDocElement("div");
     let divFields = createDocElement("div");
@@ -63,9 +66,14 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency){
     pic.src = picUrl;
 
     profileBasic.appendChild(divUp);
-    divUp.appendChild(star).appendChild(starImg);
-    starImg.src = "/img/p-star.png";
-    star.innerHTML += '&nbsp; &nbsp;';
+    divUp.appendChild(starContainer);
+
+    for(i = 0; i < ratings; i++){
+        let star = createDocElement("div", "star");
+        starContainer.appendChild(star).appendChild(starImg);
+        starImg.src = "/img/p-star.png";
+        star.innerHTML += '&nbsp;';
+    }
 
     divUp.appendChild(divInfo);
     divInfo.appendChild(createDocElement("span", "name", name));
@@ -87,7 +95,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency){
     profile.appendChild(profilePro);
     profilePro.appendChild(createDocElement("div", "price", "諮詢時薪： $ " + price + " /元"));
     profilePro.appendChild(createDocElement("div", "agency", "服務機構： " + agency));
-    profilePro.appendChild(createDocElement("div", "case", "已處理案件數： " + " 件"));
+    profilePro.appendChild(createDocElement("div", "case", "處理案件數： " + amount + " 件"));
     profilePro.appendChild(createDocElement("div", "feedback", "案件回饋： "));
 
     profile.appendChild(roomBtn);

@@ -9,8 +9,8 @@ from .. import res, db, utils
 def get_consultant_info(fieldCode):
     field_code = fieldCode
 
-    # Still need star, case and feedback
-    sql = ("SELECT id, pic_url, name, gender, fields, agency, job_title, price FROM consultant WHERE fields LIKE %s")
+    # Still need feedback
+    sql = ("SELECT con.id, con.pic_url, con.name, con.gender, con.fields, con.agency, con.job_title, con.price, COUNT(ca.id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings FROM consultant con LEFT JOIN `case` ca ON con.id=ca.consultant_id LEFT JOIN feedback fe ON ca.id=fe.case_id WHERE con.fields LIKE %s GROUP BY con.id")
     sql_data = ("%" + field_code + "%", )
     results = db.execute_sql(sql, sql_data, "all")
 

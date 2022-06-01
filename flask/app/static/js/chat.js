@@ -88,7 +88,7 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
 
     document.querySelector("#right-name").innerText = name;
     document.querySelector("#right-job-title").innerText = jobTitle;
-    document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件： ";
+    document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件編號： ";
     document.querySelector("#case-id").innerText = caseId;
     let titleDiv = document.querySelector(".right-title");
     let statusDiv = document.querySelector("#status");
@@ -100,6 +100,9 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     } else if(status === "正式諮詢"){
         titleDiv.style.backgroundColor = "rgba(12, 135, 74, 0.2)";
         statusDiv.style.color = "#0C874A";
+    } else if(status === "已結案"){
+        titleDiv.style.backgroundColor = "rgba(102, 102, 102, 0.2)";
+        statusDiv.style.color = "#666666";
     }
 
     // Set chat window and send btn

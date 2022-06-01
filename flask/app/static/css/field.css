@@ -42,6 +42,12 @@
     object-fit: cover;
 }
 
+
+.star-container{
+    height: 30px;
+    display: flex;
+}
+
 .star{
     display: flex;
     align-items: center;

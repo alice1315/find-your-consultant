@@ -4,12 +4,17 @@ var caseId;
 async function feedbackInit(){
     await baseInit();
     getCaseId();
+    renderFeedbackPage();
     sendFeedback();
 }
 
 function getCaseId(){
     let url = new URL(window.location.href);
     caseId = url.searchParams.get("case");
+}
+
+function renderFeedbackPage(){
+    document.querySelector("#member-name").innerText = signData["info"]["name"];
 }
 
 async function initFeedbackData(fetchOptions){
@@ -47,9 +52,9 @@ function sendFeedback(){
 
 function renderThankyouMsg(){
     let msgContent = renderMsgWindow("感謝您的回饋！");
-        msgContent.appendChild(createDocElement("div", "msg", "期待"));
+        msgContent.appendChild(createDocElement("div", "msg", "期待下次再為您服務！"));
 
-        let exitBtn = createDocElement("button", "btn", "返回首頁");
+        let exitBtn = createDocElement("button", "btn msg-btn", "返回首頁");
         msgContent.appendChild(exitBtn);
         exitBtn.addEventListener("click", function(){
             location.href = "/";
