@@ -42,14 +42,19 @@ function renderProfile(){
 function setProfile(picUrl, name, jobTitle, gender, fields, price, agency){
 =======
         let ratings = data["ratings"];
-        let amount = data["amount"]
+        let amount = data["amount"];
+        let feedback = data["feedback"];
 
-        setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount);
+        setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount, feedback);
     })
 }
 
+<<<<<<< HEAD:app/static/js/field.js
 function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount){
 >>>>>>> decca66 (Set rendering ratings and case amount.):flask/app/static/js/field.js
+=======
+function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount, feedback){
+>>>>>>> a62b72a (Set feedback in field.html.):flask/app/static/js/field.js
     let profileContainer = document.querySelector(".profile-container");
     let profile = createDocElement("div", "profile");
     let profileBasic = createDocElement("div", "profile-basic");
@@ -63,6 +68,8 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     let divFields = createDocElement("div");
 
     let profilePro = createDocElement("div", "profile-pro");
+    let feedbackBlock = createDocElement("div", "feedback", "案件回饋： ");
+    let feedbackContainer = createDocElement("div", "feedback-container");
 
     profileContainer.appendChild(profile);
     profile.appendChild(profileBasic);
@@ -101,7 +108,18 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     profilePro.appendChild(createDocElement("div", "price", "諮詢時薪： $ " + price + " /元"));
     profilePro.appendChild(createDocElement("div", "agency", "服務機構： " + agency));
     profilePro.appendChild(createDocElement("div", "case", "處理案件數： " + amount + " 件"));
-    profilePro.appendChild(createDocElement("div", "feedback", "案件回饋： "));
+    profilePro.appendChild(feedbackBlock);
+    feedbackBlock.appendChild(feedbackContainer);
+
+    if (feedback.length !== 0){
+        for (i = 0; i < feedback.length; i ++){
+            feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]["consultant_feedback"]));
+        }
+        feedbackContainer.appendChild(createDocElement("div", "feedback-more", "more"));
+    } else{
+        feedbackContainer.appendChild(createDocElement("div", "feedback-content", "暫無回饋"));
+    }
+    
 
 <<<<<<< HEAD:app/static/js/field.js
     profile.appendChild(createDocElement("button", "btn start", "尋求諮詢"));

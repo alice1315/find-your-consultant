@@ -22,4 +22,10 @@ def get_consultant_info(fieldCode):
     for result in results:
         result["fields"] = result["fields"].split(",")
 
+        # Select feedback
+        sql = ("SELECT fe.consultant_feedback FROM `case` ca, feedback fe WHERE ca.id=fe.case_id AND ca.consultant_id=%s ORDER BY fe.id DESC")
+        sql_data = (result["id"], )
+        feedback = db.execute_sql(sql, sql_data, "all")
+        result["feedback"] = feedback
+
     return res.respond(results)
