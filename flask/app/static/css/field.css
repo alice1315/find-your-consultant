@@ -83,6 +83,33 @@
     margin-top: 30px;
 }
 
+/* feedback */
+.feedback-container{
+    width: 300px;
+    margin-top: 10px; 
+    padding: 10px;
+    background-color: #F0F0F0;
+    
+    
+}
+
+.feedback-content{
+    word-break: break-word;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.feedback-more{
+    cursor: pointer;
+    text-align: right;
+    text-decoration: underline;
+}
+
+.feedback-more:hover{
+    color: #EB8528;
+}
+
 .start{
     float: right;
 }

@@ -138,6 +138,7 @@ TABLES['feedback'] = (
     "  `consultant_feedback` varchar(255),"
     "  `platform_feedback` varchar(255),"
     "  PRIMARY KEY (`id`),"
+    "  UNIQUE (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")  
 
 
