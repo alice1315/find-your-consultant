@@ -43,15 +43,7 @@ function handleBtns(){
 
     // Memberpage
     let memberPageBtn = document.querySelector("#memberpage-btn");
-    memberPageBtn.addEventListener("click", function(){
-        if (membership === "member"){
-            console.log(authData);
-            location.href = `/memberpage/member?id=${signData["info"]["id"]}`;
-        } else{
-            location.href = `/memberpage/consultant?id=${signData["info"]["id"]}`;
-        }
-        
-    })
+    memberPageBtn.addEventListener("click", function(){location.href = "/memberpage";})
 }
 
 // Utils
@@ -140,5 +132,14 @@ function convertFieldCode(fieldName){
             return "ci"
         case "公司法":
             return "co"
+    }
+}
+
+function convertMembership(membership){
+    switch (membership){
+        case "member":
+            return "一般會員"
+        case "consultant":
+            return "專業顧問"
     }
 }

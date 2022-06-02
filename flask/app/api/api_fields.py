@@ -4,8 +4,8 @@ from . import api_
 from .. import res, db, utils
 
 
-# Consultant info
-@api_.route("/consultant/<fieldCode>", methods = ["GET"])
+# Consultants info in field.html
+@api_.route("/fields/<fieldCode>", methods = ["GET"])
 def get_consultant_info(fieldCode):
     field_code = fieldCode
 
@@ -15,9 +15,13 @@ def get_consultant_info(fieldCode):
     results = db.execute_sql(sql, sql_data, "all")
 
     for result in results:
-        result["fields"] = result["fields"].split(",")
+        fields = []
+        for field_code in result["fields"].split(","):
+            field_name = utils.convert_field_name(field_code)
+            fields.append(field_name)
+            result["fields"] = fields
 
-        # Select feedback
+        # Handle feedback
         sql = ("SELECT fe.consultant_feedback FROM `case` ca, feedback fe WHERE ca.id=fe.case_id AND ca.consultant_id=%s ORDER BY fe.id DESC")
         sql_data = (result["id"], )
         feedback = db.execute_sql(sql, sql_data, "all")
