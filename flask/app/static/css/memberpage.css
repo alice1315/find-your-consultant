@@ -1,0 +1,172 @@
+.member-container{
+    width: 700px;
+    margin: 20px auto 0 auto;
+    padding: 30px;
+    background-color: #EFEBE5;
+}
+
+/* member-title */
+.member-title{
+    display: flex;
+    align-items: center;
+    margin: 20px 0 5px -25px;
+}
+
+.member-title img{
+    height: 50px;
+    margin-top: 3px;
+}
+
+.member-title div{
+    line-height: 25px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+/* member-basic */
+.member-basic{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.info-block{
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.info-content{
+    margin-left: 5px;
+}
+
+.edit{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.self-pic-container{
+    display: flex;
+    position: relative;
+    margin-left: 20px;
+}
+
+.self-pic{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 3px solid #242C3E;
+    overflow: hidden;
+}
+
+.self-pic img, .edit img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#pic-edit{
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    border: 1px solid #242C3E;
+    overflow: hidden;
+    
+}
+#pic-edit div{
+    width: 70%;
+    height: 70%;
+}
+
+#pic-edit img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.self-info{
+    flex: none;
+    width: auto;
+    margin-left: 80px;
+}
+
+/* member-info */
+#member-info{
+    margin: 20px 0;
+    padding: 10px 30px 30px 30px;
+    background-color: #FFFFFF;
+}
+
+.text-input{
+    width: 310px;
+    height: 47px;
+    margin: 0 auto 20px auto;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+
+.price-input{
+    width: 125px;
+    height: 47px;
+    margin: 0 auto 20px auto;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+
+/* file-input*/
+input[type="file"] {
+    display: none;
+}
+
+.file-input{
+    cursor: pointer;
+    margin: 10px auto 3px auto;
+    padding: 6px 12px;
+    border: 1px solid #CCCCCC;
+    background-color: #F3F3F3; 
+}
+
+.file-input:hover{
+    color: #EB8528;
+}
+
+/* consultant */
+.consultant-pro{
+    margin-top: 30px;
+}
+
+/* case feedback */
+.case{
+    display: flex;
+    width: 100%;
+    margin-top: 10px; 
+    padding: 10px;
+    background-color: #F0F0F0;
+}
+
+.case-id{
+    flex: none;
+    width: 100px;
+    border-right: 1px solid #242C3E;
+    text-align: center;
+}
+
+.feedback{
+    flex: none;
+    max-width: 80%;
+    margin-left: 15px;
+    word-wrap: break-word;
+    word-break: normal;
+}
