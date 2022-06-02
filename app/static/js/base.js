@@ -47,7 +47,25 @@ function handleBtns(){
         memberCenter.classList.toggle("slideshow");
     })
 
+<<<<<<< HEAD:app/static/js/base.js
     
+=======
+    // Chat
+    let chatBtn = document.querySelector("#chat-btn");
+    chatBtn.addEventListener("click", function(){location.href = "/chat";})
+
+    // Memberpage
+    let memberPageBtn = document.querySelector("#memberpage-btn");
+    memberPageBtn.addEventListener("click", function(){
+        if (membership === "member"){
+            console.log(authData);
+            location.href = `/memberpage/member?id=${signData["info"]["id"]}`;
+        } else{
+            location.href = `/memberpage/consultant?id=${signData["info"]["id"]}`;
+        }
+        
+    })
+>>>>>>> 78d0006 (Set memberpage.html.):flask/app/static/js/base.js
 }
 
 // Utils
