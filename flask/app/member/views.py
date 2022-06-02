@@ -2,6 +2,6 @@ from flask import render_template
 
 from . import member
 
-@member.route("/memberpage/<membership>")
-def member_page(membership):
+@member.route("/memberpage")
+def member_page():
     return render_template("memberpage.html")

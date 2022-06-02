@@ -15,7 +15,7 @@ function checkFieldPath(){
 }
 
 async function initFieldData(){
-    await fetch("/api/consultant/"+ fieldCode, {method: "GET"})
+    await fetch("/api/fields/"+ fieldCode, {method: "GET"})
     .then((resp) => {
         return resp.json();
     }).then((result) => {
@@ -96,7 +96,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     divUp.appendChild(divFields);
     fields.forEach(function(field){
         let f = createDocElement("div", "pro-fields");
-        let s = createDocElement("span", "", convertFieldName(field));
+        let s = createDocElement("span", "", field);
         let i = document.createElement("img");
         divFields.appendChild(f);
         f.appendChild(i);
@@ -105,13 +105,13 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     })
 
     profile.appendChild(profilePro);
-    profilePro.appendChild(createDocElement("div", "price", "諮詢時薪： $ " + price + " /元"));
-    profilePro.appendChild(createDocElement("div", "agency", "服務機構： " + agency));
-    profilePro.appendChild(createDocElement("div", "case", "處理案件數： " + amount + " 件"));
+    profilePro.appendChild(createDocElement("div", "price", `諮詢時薪： $ ${price} /元`));
+    profilePro.appendChild(createDocElement("div", "agency", `服務機構： ${agency}`));
+    profilePro.appendChild(createDocElement("div", "case", `處理案件數： ${amount} 件`));
     profilePro.appendChild(feedbackBlock);
     feedbackBlock.appendChild(feedbackContainer);
 
-    if (feedback.length !== 0){
+    if (feedback.length > 0){
         for (i = 0; i < feedback.length; i ++){
             feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]["consultant_feedback"]));
         }

@@ -1,5 +1,53 @@
+var memberData;
+
 async function memberInit(){
     await baseInit();
-    console.log("in member");
+    if (signData){
+        await initMemberData();
+    } else{
+        location.href = "/";
+    }
+    renderMemberPage();
 }
 
+async function initMemberData(){
+    await fetch("/api/memberpage", {method: "GET"})
+    .then((resp) => {
+        return resp.json();
+    }).then((result) => {
+        memberData = result["data"];
+    })
+}
+
+function renderMemberPage(){
+    document.querySelector("#pic-url").src = memberData["pic_url"];
+    document.querySelector("#membership").innerText = convertMembership(membership);
+    document.querySelector("#email").innerText = memberData["email"];
+    document.querySelector("#password").innerText = memberData["password"];
+    document.querySelector("#name").innerText = memberData["name"];
+    document.querySelector("#gender").innerText = memberData["gender"];
+    document.querySelector("#phone").innerText = memberData["phone"];
+
+    if (membership === "consultant"){
+        showBlock(document.querySelector(".consultant-pro"));
+        document.querySelector("#fields").innerText = memberData["fields"];
+        document.querySelector("#agency").innerText = memberData["agency"];
+        document.querySelector("#job-title").innerText = memberData["job_title"];
+        document.querySelector("#price").innerText = `$ ${memberData["price"]} 元 /時`;
+        document.querySelector("#amount").innerText = `${memberData["amount"]} 件`;
+        document.querySelector("#ratings").innerText = `${memberData["ratings"]} 分`;
+
+        if (memberData["feedback"].length > 0){
+            memberData["feedback"].forEach(function(e){
+                renderFeedback(e["case_id"], e["consultant_feedback"]);
+            })
+        }
+    }   
+}
+
+function renderFeedback(caseId, feedbackContent){
+    let caseCon = createDocElement("div", "case");
+    document.querySelector("#case-container").appendChild(caseCon);
+    caseCon.appendChild(createDocElement("div", "case-id", caseId));
+    caseCon.appendChild(createDocElement("div", "feedback", feedbackContent));
+}

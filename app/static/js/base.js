@@ -56,6 +56,7 @@ function handleBtns(){
 
     // Memberpage
     let memberPageBtn = document.querySelector("#memberpage-btn");
+<<<<<<< HEAD:app/static/js/base.js
     memberPageBtn.addEventListener("click", function(){
         if (membership === "member"){
             console.log(authData);
@@ -66,6 +67,9 @@ function handleBtns(){
         
     })
 >>>>>>> 78d0006 (Set memberpage.html.):flask/app/static/js/base.js
+=======
+    memberPageBtn.addEventListener("click", function(){location.href = "/memberpage";})
+>>>>>>> 7a6bc4b (Finished rendering memberpage.html.):flask/app/static/js/base.js
 }
 
 // Utils
@@ -164,4 +168,17 @@ function convertFieldCode(fieldName){
         case "公司法":
             return "co"
     }
+<<<<<<< HEAD:app/static/js/base.js
 }
+=======
+}
+
+function convertMembership(membership){
+    switch (membership){
+        case "member":
+            return "一般會員"
+        case "consultant":
+            return "專業顧問"
+    }
+}
+>>>>>>> 7a6bc4b (Finished rendering memberpage.html.):flask/app/static/js/base.js
