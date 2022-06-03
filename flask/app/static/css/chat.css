@@ -28,14 +28,34 @@
 
 /* left */
 .left-title{
+    position: relative;
     display: flex;
     justify-content: space-evenly;
     padding: 10px;
     border-bottom: 1px solid #242C3E;
 }
 
-#doing-list, #finished-list{
+label {
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+label:hover{
+    color: #EB8528;
+}
+
+.left-title input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+} 
+
+.left-title input:checked + label{
+    color: #EB8528;
 }
 
 .left-small{
