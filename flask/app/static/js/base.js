@@ -143,3 +143,10 @@ function convertMembership(membership){
             return "專業顧問"
     }
 }
+
+function getCurrentTime(){
+    let d = new Date();
+    let h = d.getHours();
+    let m = d.getMinutes();
+    return `${h}:${m}`
+}

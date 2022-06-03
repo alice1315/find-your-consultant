@@ -28,13 +28,14 @@ def send_messages(payload):
     case_id = payload["case_id"]
     membership = payload["membership"]
     message = payload["message"]
+    time = payload["time"]
 
     if membership == "member":
         receiver_membership = "consultant"
     else:
         receiver_membership = "member"
 
-    data = {"receiver_membership": receiver_membership, "message": message}
+    data = {"receiver_membership": receiver_membership, "message": message, "time": time}
 
     emit("receive", data, to = case_id)
 
