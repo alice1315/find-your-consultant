@@ -60,8 +60,10 @@ function changeChatList(){
         e.addEventListener("change", async function(e){
             cleanWindow();
             if (e.target.value == "doing"){
+                document.querySelector(".right-send").innerHTML = "";
                 renderChatList(doingData);
             } else{
+                document.querySelector(".right-send").innerHTML = "";
                 renderChatList(finishedData);
             }
         })
@@ -141,10 +143,10 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     let statusDiv = document.querySelector("#status");
     statusDiv.innerText = status;
 
-    if (status === "前置諮詢"){
+    if (status === "前置諮詢" || status === "提出報價"){
         titleDiv.style.backgroundColor = "rgba(207, 75, 73, 0.2)";
         statusDiv.style.color = "#CF4B49";
-    } else if(status === "正式諮詢"){
+    } else if(status === "正式諮詢" || status === "提出結案"){
         titleDiv.style.backgroundColor = "rgba(12, 135, 74, 0.2)";
         statusDiv.style.color = "#0C874A";
     } else if(status === "已結案"){
@@ -179,6 +181,7 @@ async function startChat(picUrl, chatWindow, sendBtn, caseId){
 
     await getChatHistory(windowCaseId);
     renderChatHistory(picUrl, chatWindow);
+
     sendMsg(chatWindow, sendBtn, windowCaseId);
     receiveMsg(picUrl, chatWindow);
 }
@@ -217,20 +220,24 @@ function renderChatHistory(picUrl, chatWindow){
 
 // Send & Receive
 function sendMsg(chatWindow, sendBtn, caseId){
-    function handleSendMsg(){
-        let time = getCurrentTime();
-        let payload = {
-            "case_id": caseId,
-            "membership": membership,
-            "message": messageWindow.value,
-            "time": time
+    async function handleSendMsg(){
+        let status = await getCaseStatus(caseId);
+        if (status !== "已結案"){
+            let time = getCurrentTime();
+            let payload = {
+                "case_id": caseId,
+                "membership": membership,
+                "message": messageWindow.value,
+                "time": time
+            }
+
+            socket.emit("send", payload);
+            renderSenderMsg(chatWindow, messageWindow.value, time);
+            messageWindow.value = "";
+        } else{
+            showPermissionError();
         }
-
-        socket.emit("send", payload);
-        renderSenderMsg(chatWindow, messageWindow.value, time);
-        messageWindow.value = "";
     }
-
     sendBtn.addEventListener("click", handleSendMsg);
 }
 
@@ -262,7 +269,7 @@ function renderReceiverMsg(picUrl, chatWindow, message, time){
     chatB.appendChild(identityB);
     identityB.appendChild(img);
     chatB.appendChild(createDocElement("div", "message", message));
-    chatB.appendChild(createDocElement("div", "time", time));
+    chatB.appendChild(createDocElement("div", "time-container")).appendChild(createDocElement("div", "time", time));
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
