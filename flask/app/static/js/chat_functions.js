@@ -3,11 +3,13 @@ var funcData;
 function setChatFunctions(caseId, sendBtn, funcUl){
     let functions = funcUl.children;
     if (membership === "member"){
-        showBlock(functions[1], functions[3], functions[4]);
+        // showBlock(functions[1], functions[3], functions[4]);
+        showBlock(functions[1], functions[3]);
         toMakePayment(caseId);
         agreeEndCase(caseId, sendBtn);
     } else{
-        showBlock(functions[0], functions[2], functions[4]);
+        // showBlock(functions[0], functions[2], functions[4]);
+        showBlock(functions[0], functions[2]);
         makeQuotation(caseId, sendBtn);
         endCase(caseId, sendBtn);
     }
@@ -25,36 +27,42 @@ async function callFunctionApi(url, fetchOptions){
 // Quotation (for consultant)
 function makeQuotation(caseId, sendBtn){
     let btn = document.querySelector("#quotation-btn");
-    btn.addEventListener("click", function(){
-        let submitBtn = renderQuotationWindow();
-        submitBtn.addEventListener("click", async function(){
-            let hr = document.querySelector("#hr").value;
-            let totalPrice = hr * pricePerHour;
+    btn.addEventListener("click", async function(){
+        let status = await getCaseStatus(caseId);
 
-            let reqData = {
-                "case_id": caseId,
-                "price_per_hour": pricePerHour,
-                "hours": hr,
-                "total_price": totalPrice
-            }
+        if (status === "前置諮詢" || status === "提出報價"){
+            let submitBtn = renderQuotationWindow();
+            submitBtn.addEventListener("click", async function(){
+                let hr = document.querySelector("#hr").value;
+                let totalPrice = hr * pricePerHour;
 
-            let fetchOptions = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(reqData)
-            }
+                let reqData = {
+                    "case_id": caseId,
+                    "price_per_hour": pricePerHour,
+                    "hours": hr,
+                    "total_price": totalPrice
+                }
 
-            await callFunctionApi("/api/quotation", fetchOptions);
+                let fetchOptions = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(reqData)
+                }
 
-            if (funcData["ok"]){
-                messageWindow.value = "";
-                setQuotationMsg(hr, totalPrice);
-                closeWindowMsg();
-                sendBtn.click();
-            }
-        })
+                await callFunctionApi("/api/quotation", fetchOptions);
+
+                if (funcData["ok"]){
+                    messageWindow.value = "";
+                    setQuotationMsg(hr, totalPrice);
+                    closeWindowMsg();
+                    sendBtn.click();
+                }
+            })
+        } else{
+            showPermissionError();
+        }
     })
 }
 
@@ -80,17 +88,49 @@ function setQuotationMsg(hr, totalPrice){
 若您有意願繼續諮詢，請點選下方【進行付款】之按鈕以進入正式諮詢，謝謝！`;
 }
 
+// to Payment (for member)
+function toMakePayment(caseId){
+    let btn = document.querySelector("#pay-btn");
+    btn.addEventListener("click", async function(){
+        let status = await getCaseStatus(caseId);
+
+        if (status === "提出報價"){
+            location.href = `/payment?case=${caseId}`;
+        } else{
+            showPermissionError();
+        }
+        
+    })
+}
+
 // End case (for consultant)
 function endCase(caseId, sendBtn){
     let btn = document.querySelector("#end-btn");
-    btn.addEventListener("click", function(){
-        let submitBtn = renderEndCaseWindow();
-        submitBtn.addEventListener("click", function(){
-            messageWindow.value = "";
-            setEndCaseMsg(caseId);
-            closeWindowMsg();
-            sendBtn.click();
-        })
+    btn.addEventListener("click", async function(){
+        let status = await getCaseStatus(caseId);
+
+        if (status === "正式諮詢"){
+            let submitBtn = renderEndCaseWindow();
+            submitBtn.addEventListener("click", async function(){
+                let fetchOptions = {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({"case_id": caseId})
+                }
+                await callFunctionApi("/api/endcase", fetchOptions);
+
+                if (funcData["ok"]){
+                    messageWindow.value = "";
+                    setEndCaseMsg(caseId);
+                    closeWindowMsg();
+                    sendBtn.click();
+                } 
+            })
+        } else{
+            showPermissionError();
+        }
     })
 }
 
@@ -116,26 +156,24 @@ function setEndCaseMsg(caseId){
 若您同意就此結束，請點選下方【同意結案】之按鈕以正式結案，謝謝！`;
 }
 
-// to Payment (for member)
-function toMakePayment(caseId){
-    let btn = document.querySelector("#pay-btn");
-    btn.addEventListener("click", function(){
-        location.href = `/payment?case=${caseId}`;
-    })
-}
-
 // Agree end case (for member)
 function agreeEndCase(caseId, sendBtn){
     let btn = document.querySelector("#agree-btn");
-    btn.addEventListener("click", function(){
-        let submitBtn = renderAgreeWindow();
-        submitBtn.addEventListener("click", function(){
-            messageWindow.value = "";
-            setAgreeMsg(caseId);
-            closeWindowMsg();
-            sendBtn.click();
-            location.href = `/feedback?case=${caseId}`;
-        })
+    btn.addEventListener("click", async function(){
+        let status = await getCaseStatus(caseId);
+
+        if (status === "提出結案"){
+            let submitBtn = renderAgreeWindow();
+            submitBtn.addEventListener("click", function(){
+                messageWindow.value = "";
+                setAgreeMsg(caseId);
+                closeWindowMsg();
+                sendBtn.click();
+                location.href = `/feedback?case=${caseId}`;
+            })
+        } else{
+            showPermissionError();
+        }
     })
 }
 
@@ -158,4 +196,24 @@ function renderAgreeWindow(){
 function setAgreeMsg(caseId){
     messageWindow.value = `【客戶同意結案】
 您好，已有共識對此案件編號： ${caseId} 進行結案，感謝您的協助！`;
+}
+
+// Utils
+async function getCaseStatus(caseId){
+    let fetchOptions = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"case_id": caseId})
+    }
+
+    await callFunctionApi("/api/status", fetchOptions);
+
+    return funcData["data"]["status"]
+}
+
+function showPermissionError(){
+    let msgContent = renderMsgWindow("錯誤訊息");
+    msgContent.innerText = "專案階段暫無法執行此功能，謝謝！"
 }
