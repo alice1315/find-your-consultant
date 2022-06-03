@@ -1,4 +1,7 @@
 var chatData;
+var doingData;
+var finishedData;
+
 var socket;
 var windowCaseId = "";
 var messageWindow = document.querySelector("#message");
@@ -9,8 +12,8 @@ async function chatInit(){
     connect();
 }
 
-async function initChatData(fetchOptions){
-    await fetch("/api/chat", fetchOptions)
+async function initChatData(url, fetchOptions){
+    await fetch(url, fetchOptions)
     .then((resp) => {
         return resp.json();
     }).then((result) => {
@@ -22,19 +25,63 @@ async function renderPage(){
     if (signData){
         toggleBlock(document.querySelector(".footer"));
         await getChatList();
-        renderChatList();
+        renderChatList(doingData);
+        changeChatList();
     } else{
         location.href = "/";
     }
 }
 
 // Handle chat list
-async function getChatList(){
-    await initChatData({method: "GET"});
+async function getChatData(status){
+    let fetchOptions = {
+        method: "PATCH",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"status": status})
+    }
+    await initChatData("/api/chatlist", fetchOptions);
+
+    return chatData["data"]
 }
 
-function renderChatList(){
-    chatData["data"].forEach(function(chat){
+async function getChatList(){
+    doingData = await getChatData("doing");
+    finishedData = await getChatData("finished");
+
+    document.querySelector("#doing-amount").innerText = doingData.length;
+    document.querySelector("#finished-amount").innerText = finishedData.length;
+}
+
+function changeChatList(){
+    let chatList = document.querySelectorAll("input[name='chat-list']");
+    chatList.forEach((e) => {
+        e.addEventListener("change", async function(e){
+            cleanWindow();
+            if (e.target.value == "doing"){
+                renderChatList(doingData);
+            } else{
+                renderChatList(finishedData);
+            }
+        })
+    })
+}
+
+function cleanWindow(){
+    document.querySelector(".left-list").innerHTML = "";
+    document.querySelector(".right-chat-window").innerHTML = "";
+
+    let rightTitle = document.querySelector(".right-title");
+    rightTitle.style.backgroundColor = "#FFFFFF";
+
+    document.querySelectorAll(".right-info").forEach((e) => {
+        e.innerText = "";
+    })
+}
+
+function renderChatList(data){
+    data.forEach(function(chat){
         let picUrl = chat["pic_url"];
         let fieldCode = chat["field_code"];
         let name = chat["name"];
@@ -149,7 +196,7 @@ async function getChatHistory(caseId){
         body: JSON.stringify(reqData)
     }
 
-    await initChatData(fetchOptions);
+    await initChatData("/api/chat", fetchOptions);
 }
 
 function renderChatHistory(picUrl, chatWindow){

@@ -16,9 +16,11 @@
                 <div class="chat-container">
                     <div class="chat-left">
                         <div class="left-title">
-                            <div id="doing-list">諮詢中 ( <span></span> ) </div>
+                            <input id="doing" type="radio" name="chat-list" value="doing" checked="checked"/>
+                            <label for="doing">諮詢中 ( <span id="doing-amount"></span> ) </label>
                             <div> | </div>
-                            <div id="finished-list">已結案 ( <span></span> ) </div>
+                            <input id="finished" type="radio" name="chat-list" value="finished" />
+                            <label for="finished">已結案 ( <span id="finished-amount"></span> ) </label>
                         </div>
                         <div class="left-list">
                             <!-- <div class="left-small">
@@ -40,9 +42,9 @@
                     </div>
                     <div class="chat-right">
                         <div class="right-title">
-                            <div><span id="right-name"></span>&emsp;<span id="right-job-title"></span></div>
-                            <div><span id="right-field"></span><span id="case-id"></span></div>
-                            <div id="status"></div>
+                            <div><span id="right-name" class="right-info"></span>&emsp;<span id="right-job-title" class="right-info"></span></div>
+                            <div><span id="right-field" class="right-info"></span><span id="case-id" class="right-info"></span></div>
+                            <div id="status" class="right-info"></div>
                         </div>
 
                         <div class="right-chat-window"></div>

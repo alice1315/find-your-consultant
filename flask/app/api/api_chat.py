@@ -4,18 +4,27 @@ from . import api_
 from .. import res, db, utils
 from ..models.auth import Auth
 
-@api_.route("/chat", methods = ["GET"])
+@api_.route("/chatlist", methods = ["PATCH"])
 def get_chat_list():
     access_token = request.cookies.get("access_token")
     if access_token:
-        data = Auth.decode_auth_token(access_token)
-        membership = data["info"]["membership"]
-        id = data["info"]["id"]
+        payload = Auth.decode_auth_token(access_token)
+        membership = payload["info"]["membership"]
+        id = payload["info"]["id"]
+
+        data = request.get_json()
+        status = data["status"]
     
         if membership == "member":
-            sql = ("SELECT ca.id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id")
+            if status == "doing":
+                sql = ("SELECT ca.id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.status<>'已結案'")
+            else:
+                sql = ("SELECT ca.id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.status='已結案'")
         else:
-            sql = ("SELECT ca.id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id")
+            if status == "doing":
+                sql = ("SELECT ca.id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.status<>'已結案'")
+            else:
+                sql = ("SELECT ca.id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.status='已結案'")
         
         sql_data = (id, )
 
