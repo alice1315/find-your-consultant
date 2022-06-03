@@ -158,11 +158,12 @@ function renderChatHistory(picUrl, chatWindow){
     lines.forEach(function(line){
         let senderMembership = line["sender_membership"];
         let message = line["message"];
+        let time = line["time"];
 
         if (senderMembership == membership){
-            renderSenderMsg(chatWindow, message);
+            renderSenderMsg(chatWindow, message, time);
         } else if (senderMembership !== membership){
-            renderReceiverMsg(picUrl, chatWindow, message);
+            renderReceiverMsg(picUrl, chatWindow, message, time);
         }
     })
 }
@@ -170,13 +171,16 @@ function renderChatHistory(picUrl, chatWindow){
 // Send & Receive
 function sendMsg(chatWindow, sendBtn, caseId){
     function handleSendMsg(){
+        let time = getCurrentTime();
         let payload = {
             "case_id": caseId,
             "membership": membership,
-            "message": messageWindow.value
+            "message": messageWindow.value,
+            "time": time
         }
+
         socket.emit("send", payload);
-        renderSenderMsg(chatWindow, messageWindow.value);
+        renderSenderMsg(chatWindow, messageWindow.value, time);
         messageWindow.value = "";
     }
 
@@ -186,21 +190,22 @@ function sendMsg(chatWindow, sendBtn, caseId){
 function receiveMsg(picUrl, chatWindow){
     socket.on("receive", function(data){
         if (data["receiver_membership"] === membership){
-            renderReceiverMsg(picUrl, chatWindow, data["message"]);
+            renderReceiverMsg(picUrl, chatWindow, data["message"], data["time"]);
         }
     })
 }
 
 // Handle rendering messages
-function renderSenderMsg(chatWindow, message){
+function renderSenderMsg(chatWindow, message, time){
     let chatA = createDocElement("div", "chat-a");
 
     chatWindow.appendChild(chatA);
+    chatA.appendChild(createDocElement("div", "time", time));
     chatA.appendChild(createDocElement("div", "message", message));
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-function renderReceiverMsg(picUrl, chatWindow, message){
+function renderReceiverMsg(picUrl, chatWindow, message, time){
     let chatB = createDocElement("div", "chat-b");
     let identityB = createDocElement("div", "identity-b");
     let img = document.createElement("img");
@@ -210,6 +215,7 @@ function renderReceiverMsg(picUrl, chatWindow, message){
     chatB.appendChild(identityB);
     identityB.appendChild(img);
     chatB.appendChild(createDocElement("div", "message", message));
+    chatB.appendChild(createDocElement("div", "time", time));
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 

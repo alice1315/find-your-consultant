@@ -181,4 +181,14 @@ function convertMembership(membership){
             return "專業顧問"
     }
 }
+<<<<<<< HEAD:app/static/js/base.js
 >>>>>>> 7a6bc4b (Finished rendering memberpage.html.):flask/app/static/js/base.js
+=======
+
+function getCurrentTime(){
+    let d = new Date();
+    let h = d.getHours();
+    let m = d.getMinutes();
+    return `${h}:${m}`
+}
+>>>>>>> c45cf3d (Set time of chatting.):flask/app/static/js/base.js

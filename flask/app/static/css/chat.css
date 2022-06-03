@@ -183,6 +183,7 @@ textarea:focus {
     width: 100%;
     margin: 10px 0;
     padding: 5px;
+    align-items: end;
 }
 
 .chat-a{
@@ -213,4 +214,8 @@ textarea:focus {
 
 .chat-b .message{
     background-color: #F0F0F0;
+}
+
+.time{
+    margin: 0 10px 5px 10px;
 }
