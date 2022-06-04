@@ -14,8 +14,12 @@ def get_consultant_info(fieldCode):
     sql = ("SELECT pic_url, name, gender, fields, agency, job_title, price FROM consultant WHERE fields LIKE %s")
 =======
     # Still need feedback
+<<<<<<< HEAD
     sql = ("SELECT con.id, con.pic_url, con.name, con.gender, con.fields, con.agency, con.job_title, con.price, COUNT(ca.id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings FROM consultant con LEFT JOIN `case` ca ON con.id=ca.consultant_id LEFT JOIN feedback fe ON ca.id=fe.case_id WHERE con.fields LIKE %s GROUP BY con.id")
 >>>>>>> decca66 (Set rendering ratings and case amount.):flask/app/api/api_consultant.py
+=======
+    sql = ("SELECT con.id, con.pic_url, con.name, con.gender, con.fields, con.agency, con.job_title, con.price, COUNT(ca.case_id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings FROM consultant con LEFT JOIN `case` ca ON con.id=ca.consultant_id LEFT JOIN feedback fe ON ca.case_id=fe.case_id WHERE con.fields LIKE %s GROUP BY con.id")
+>>>>>>> 5547fba (Change setting of case id.)
     sql_data = ("%" + field_code + "%", )
     results = db.execute_sql(sql, sql_data, "all")
 
@@ -27,7 +31,7 @@ def get_consultant_info(fieldCode):
             result["fields"] = fields
 
         # Handle feedback
-        sql = ("SELECT fe.consultant_feedback FROM `case` ca, feedback fe WHERE ca.id=fe.case_id AND ca.consultant_id=%s ORDER BY fe.id DESC")
+        sql = ("SELECT fe.consultant_feedback FROM `case` ca, feedback fe WHERE ca.case_id=fe.case_id AND ca.consultant_id=%s ORDER BY fe.id DESC")
         sql_data = (result["id"], )
         feedback = db.execute_sql(sql, sql_data, "all")
         result["feedback"] = feedback

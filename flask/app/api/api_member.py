@@ -19,7 +19,7 @@ def show_memberpage():
             return res.respond(result)
         else:
             # sql = ("SELECT email, password, pic_url, name, gender, phone, fields, agency, job_title, price FROM consultant WHERE id=%s")
-            sql = ("SELECT con.email, con.password, con.pic_url, con.name, con.gender, con.phone, con.fields, con.agency, con.job_title, con.price, COUNT(ca.id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings FROM consultant con LEFT JOIN `case` ca ON con.id=ca.consultant_id LEFT JOIN feedback fe ON ca.id=fe.case_id WHERE con.id=%s")
+            sql = ("SELECT con.email, con.password, con.pic_url, con.name, con.gender, con.phone, con.fields, con.agency, con.job_title, con.price, COUNT(ca.case_id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings FROM consultant con LEFT JOIN `case` ca ON con.id=ca.consultant_id LEFT JOIN feedback fe ON ca.case_id=fe.case_id WHERE con.id=%s")
             sql_data = (id, )       
             result = db.execute_sql(sql, sql_data, "one")
 
@@ -31,7 +31,7 @@ def show_memberpage():
             result["fields"] = fields
 
             # Handle feedback
-            sql = ("SELECT fe.case_id, fe.consultant_feedback FROM `case` ca, feedback fe WHERE ca.id=fe.case_id AND ca.consultant_id=%s ORDER BY fe.id DESC")
+            sql = ("SELECT fe.case_id, fe.consultant_feedback FROM `case` ca, feedback fe WHERE ca.case_id=fe.case_id AND ca.consultant_id=%s ORDER BY fe.id DESC")
             feedback = db.execute_sql(sql, sql_data, "all")
             result["feedback"] = feedback
 
