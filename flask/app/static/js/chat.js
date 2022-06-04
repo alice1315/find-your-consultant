@@ -9,7 +9,7 @@ var messageWindow = document.querySelector("#message");
 async function chatInit(){
     await baseInit();
     renderPage();
-    // connect();
+    connect();
 }
 
 async function initChatData(url, fetchOptions){
