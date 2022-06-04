@@ -94,7 +94,7 @@ function renderChatList(data){
             jobTitle = "";
         }
 
-        let caseId = chat["id"];
+        let caseId = chat["case_id"];
         let status = chat["status"];
 
         setChatList(picUrl, fieldCode, name, jobTitle, caseId, status);
@@ -137,7 +137,7 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
 
     document.querySelector("#right-name").innerText = name;
     document.querySelector("#right-job-title").innerText = jobTitle;
-    document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件編號： ";
+    document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件： ";
     document.querySelector("#case-id").innerText = caseId;
     let titleDiv = document.querySelector(".right-title");
     let statusDiv = document.querySelector("#status");

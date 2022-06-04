@@ -28,7 +28,7 @@ async function initPaymentData(url, fetchOptions){
 
 function renderPaymentPage(){
     // Set payment info
-    document.querySelector("#case-id").innerText = paymentData["data"]["id"];
+    document.querySelector("#case-id").innerText = paymentData["data"]["case_id"];
     document.querySelector("#field").innerText = convertFieldName(paymentData["data"]["field_code"]);
     document.querySelector("#consultant").innerText = paymentData["data"]["name"];
     document.querySelector("#job-title").innerText = paymentData["data"]["job_title"];

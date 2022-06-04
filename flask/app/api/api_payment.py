@@ -15,7 +15,7 @@ def get_payment_info():
 
         if membership == "member":
             case_id = request.args.get("case")
-            sql = ("SELECT ca.id, ca.field_code, con.name, con.job_title, ca.price_per_hour, ca.hours, ca.total_price FROM `case` ca, consultant con WHERE ca.id=%s AND ca.consultant_id=con.id")
+            sql = ("SELECT ca.case_id, ca.field_code, con.name, con.job_title, ca.price_per_hour, ca.hours, ca.total_price FROM `case` ca, consultant con WHERE ca.case_id=%s AND ca.consultant_id=con.id")
             sql_data = (case_id, )
             result = db.execute_sql(sql, sql_data, "one")
             
@@ -65,7 +65,7 @@ def make_payment():
             db.execute_sql(sql, sql_data, "one", commit = True)
 
             if y(payment_result) == "成功":
-                sql = ("UPDATE `case` SET status='正式諮詢' WHERE id=%s")
+                sql = ("UPDATE `case` SET status='正式諮詢' WHERE case_id=%s")
                 sql_data = (case_id, )
                 db.execute_sql(sql, sql_data, "one", commit = True)
 

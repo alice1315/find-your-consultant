@@ -100,6 +100,7 @@ TABLES['member'] = (
 TABLES['case'] = (
     "CREATE TABLE `case` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `case_id` varchar(50) NOT NULL,"
     "  `field_code` varchar(50) NOT NULL,"
     "  `member_id` bigint NOT NULL,"
     "  `consultant_id` bigint NOT NULL,"
@@ -108,38 +109,39 @@ TABLES['case'] = (
     "  `hours` int,"
     "  `total_price` int,"
     "  PRIMARY KEY (`id`),"
+    "  UNIQUE (`case_id`),"
     "  FOREIGN KEY (`member_id`) REFERENCES member(`id`),"
     "  FOREIGN KEY (`consultant_id`) REFERENCES consultant(`id`))")
 
 TABLES['case_messages'] = (
     "CREATE TABLE `case_messages` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `case_id` bigint NOT NULL,"
+    "  `case_id` varchar(50) NOT NULL,"
     "  `sender_membership` varchar(255) NOT NULL,"
     "  `message` varchar(255) NOT NULL,"
     "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")
 
 TABLES['payment'] = (
     "CREATE TABLE `payment` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `case_id` bigint NOT NULL,"
+    "  `case_id` varchar(50) NOT NULL,"
     "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")
 
 TABLES['feedback'] = (
     "CREATE TABLE `feedback` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `case_id` bigint NOT NULL,"
+    "  `case_id` varchar(50) NOT NULL,"
     "  `consultant_rating` int,"
     "  `consultant_feedback` varchar(255),"
     "  `platform_feedback` varchar(255),"
     "  PRIMARY KEY (`id`),"
     "  UNIQUE (`case_id`),"
-    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`id`))")  
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")  
 
 
 """

@@ -12,7 +12,7 @@ def get_status():
         data = request.get_json()
         case_id = data["case_id"]
 
-        sql = ("SELECT status FROM `case` WHERE id=%s")
+        sql = ("SELECT status FROM `case` WHERE case_id=%s")
         sql_data = (case_id, )
         result = db.execute_sql(sql, sql_data, "one")
 
@@ -35,7 +35,7 @@ def make_quotation():
             hours = data["hours"]
             total_price = data["total_price"]
 
-            sql = ("UPDATE `case` SET status='提出報價', price_per_hour=%s, hours=%s, total_price=%s WHERE id=%s")
+            sql = ("UPDATE `case` SET status='提出報價', price_per_hour=%s, hours=%s, total_price=%s WHERE case_id=%s")
             sql_data = (price_per_hour, hours, total_price, case_id)
             db.execute_sql(sql, sql_data, "one", commit = True)
 
@@ -55,7 +55,7 @@ def request_to_end_case():
             data = request.get_json()
             case_id = data["case_id"]
 
-            sql = ("UPDATE `case` SET status='提出結案' WHERE id=%s")
+            sql = ("UPDATE `case` SET status='提出結案' WHERE case_id=%s")
             sql_data = (case_id, )
             db.execute_sql(sql, sql_data, "one", commit = True)
 
@@ -82,7 +82,7 @@ def send_feedback():
             sql_data = (case_id, rating, consultant_feedback, platform_feedback)
             db.execute_sql(sql, sql_data, "one", commit = True)
 
-            sql = ("UPDATE `case` SET status='已結案' WHERE id=%s")
+            sql = ("UPDATE `case` SET status='已結案' WHERE case_id=%s")
             sql_data = (case_id, )
             db.execute_sql(sql, sql_data, "one", commit = True)
             

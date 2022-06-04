@@ -34,6 +34,8 @@ class Database:
                 result = cursor.fetchall()
             elif method == "rowcount":
                 result = cursor.rowcount
+            elif method == "count":
+                result = cursor.fetchone()["count(*)"]
 
         except:
             cnx.rollback()
