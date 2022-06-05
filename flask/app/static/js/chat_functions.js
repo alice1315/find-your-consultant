@@ -210,7 +210,11 @@ async function getCaseStatus(caseId){
 
     await callFunctionApi("/api/status", fetchOptions);
 
-    return funcData["data"]["status"]
+    if (funcData["data"]){
+        return funcData["data"]["status"]
+    } else{
+        return null
+    } 
 }
 
 function showPermissionError(){

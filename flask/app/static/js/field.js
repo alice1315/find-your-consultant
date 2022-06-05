@@ -62,6 +62,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
 
     let roomBtn = createDocElement("button", "btn start", "尋求諮詢");
 
+    // Basic
     profileContainer.appendChild(profile);
     profile.appendChild(profileBasic);
     profileBasic.appendChild(picContainer);
@@ -95,6 +96,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
         i.src = "/img/check.png";
     })
 
+    // Pro
     profile.appendChild(profilePro);
     profilePro.appendChild(createDocElement("div", "price", `諮詢時薪： $ ${price} /元`));
     profilePro.appendChild(createDocElement("div", "agency", `服務機構： ${agency}`));
@@ -102,26 +104,37 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     profilePro.appendChild(feedbackBlock);
     feedbackBlock.appendChild(feedbackContainer);
 
+    // Feedback
     if (feedback.length > 0){
-        for (i = 0; i < feedback.length; i ++){
+        for (i = 0; i < 2; i ++){
             feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]["consultant_feedback"]));
         }
-        feedbackContainer.appendChild(createDocElement("div", "feedback-more", "more"));
+
+        let more = createDocElement("div", "feedback-more", "more");
+        feedbackContainer.appendChild(more);
+        more.addEventListener("click", function(){
+            let msgContent = renderMsgWindow("案件回饋");
+            for (i = 0; i < feedback.length; i ++){
+                msgContent.appendChild(createDocElement("div", "feedback-all", " - " + feedback[i]["consultant_feedback"]));
+            }
+        })
     } else{
         feedbackContainer.appendChild(createDocElement("div", "feedback-content", "暫無回饋"));
     }
     
-
+    // Start consultanting
     profile.appendChild(roomBtn);
-    roomBtn.onclick = function(){
-        if (signData){
+    roomBtn.addEventListener("click", function(){
+        if (signData && membership === "member"){
             setRoom(id);
             location.href = "/chat";
-        } else{
+        } else if (signData && membership === "consultant"){
+            let msgContent = renderMsgWindow("權限提醒");
+            msgContent.innerText = "請以一般會員身份登入，再點選此功能與專業顧問諮詢！";
+        }else{
             location.href = "/signin";
         }
-        
-    }
+    })
 }
 
 function setRoom(consultantId){

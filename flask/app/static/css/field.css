@@ -89,6 +89,7 @@
     margin-top: 10px; 
     padding: 10px;
     background-color: #F0F0F0;
+    overflow: hidden;
 }
 
 .feedback-content{
@@ -106,6 +107,13 @@
 
 .feedback-more:hover{
     color: #EB8528;
+}
+
+.feedback-all{
+    text-align: left;
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    background-color: #F0F0F0;
 }
 
 .start{
