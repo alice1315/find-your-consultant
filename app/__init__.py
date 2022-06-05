@@ -1,7 +1,7 @@
 from flask import Flask
 
-import eventlet
-eventlet.monkey_patch()
+# import eventlet
+# eventlet.monkey_patch()
 
 from .models.response import Response
 from .models.database import Database
@@ -37,11 +37,15 @@ def create_app():
 
 <<<<<<< HEAD:app/__init__.py
 <<<<<<< HEAD:app/__init__.py
+<<<<<<< HEAD:app/__init__.py
 =======
     socketio.init_app(app, cors_allowed_origins="*")
 =======
     socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins="*")
 >>>>>>> 15e692d (Test socket.):flask/app/__init__.py
+=======
+    socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*")
+>>>>>>> f27d836 (Test internet.):flask/app/__init__.py
 
 >>>>>>> 2b6a85a (Test sodkcet 2.):flask/app/__init__.py
     return app
