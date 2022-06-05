@@ -10,6 +10,20 @@ async function chatInit(){
     await baseInit();
     renderPage();
     connect();
+    checkPaymentOk();
+}
+
+function checkPaymentOk(){
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    let caseId = getCookie("caseId")
+    if(caseId){
+        socket.emit("change_status", {"case_id": caseId, "status": "正式諮詢"});
+    }
 }
 
 async function initChatData(url, fetchOptions){
@@ -61,9 +75,11 @@ function changeChatList(){
             cleanWindow();
             if (e.target.value == "doing"){
                 document.querySelector(".right-send").innerHTML = "";
+                await getChatList();
                 renderChatList(doingData);
             } else{
                 document.querySelector(".right-send").innerHTML = "";
+                await getChatList();
                 renderChatList(finishedData);
             }
         })
@@ -88,20 +104,21 @@ function renderChatList(data){
         let fieldCode = chat["field_code"];
         let name = chat["name"];
         let jobTitle;
-        if (chat["job_title"]){
+        if (membership === "member"){
             jobTitle = chat["job_title"];
+            readStatus = chat["member"];
         } else{
             jobTitle = "";
+            readStatus = chat["consultant"];
         }
 
         let caseId = chat["case_id"];
-        let status = chat["status"];
 
-        setChatList(picUrl, fieldCode, name, jobTitle, caseId, status);
+        setChatList(picUrl, fieldCode, name, jobTitle, caseId, readStatus);
     })
 }
 
-function setChatList(picUrl, fieldCode, name, jobTitle, caseId, status){
+function setChatList(picUrl, fieldCode, name, jobTitle, caseId, readStatus){
     let chatListContainer = document.querySelector(".left-list");
     let small = createDocElement("div", "left-small");
     let notification = createDocElement("div", "left-notification hide");
@@ -114,6 +131,10 @@ function setChatList(picUrl, fieldCode, name, jobTitle, caseId, status){
     chatListContainer.appendChild(small);
     small.appendChild(notification);
     notification.id = caseId;
+    if (readStatus === "未讀"){
+        showBlock(notification);
+    }
+
     small.appendChild(picContainer);
     picContainer.appendChild(pic);
     pic.src = picUrl;
@@ -124,10 +145,12 @@ function setChatList(picUrl, fieldCode, name, jobTitle, caseId, status){
     info.appendChild(createDocElement("div", "left-name", name));
     info.appendChild(createDocElement("div", "left-job-title", jobTitle));
 
-    small.addEventListener("click", function(){
-        handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, status);
+    small.addEventListener("click", async function(){
+        let newStatus = await getCaseStatus(caseId);
+        handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, newStatus);
     })
 }
+
 
 function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, status){
     // Leave previous room
@@ -142,20 +165,7 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     document.querySelector("#right-job-title").innerText = jobTitle;
     document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件： ";
     document.querySelector("#right-case-id").innerText = caseId;
-    let titleDiv = document.querySelector(".right-title");
-    let statusDiv = document.querySelector("#status");
-    statusDiv.innerText = status;
-
-    if (status === "前置諮詢" || status === "提出報價"){
-        titleDiv.style.backgroundColor = "rgba(207, 75, 73, 0.2)";
-        statusDiv.style.color = "#CF4B49";
-    } else if(status === "正式諮詢" || status === "提出結案"){
-        titleDiv.style.backgroundColor = "rgba(12, 135, 74, 0.2)";
-        statusDiv.style.color = "#0C874A";
-    } else if(status === "已結案"){
-        titleDiv.style.backgroundColor = "rgba(102, 102, 102, 0.2)";
-        statusDiv.style.color = "#666666";
-    }
+    checkCaseStatus(status);
 
     // Set chat window and send btn
     let chatWindow = renderChatWindow();
@@ -165,6 +175,7 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     setChatFunctions(caseId, sendBtn, funcUl);
 
     // Read notificaiton
+    socket.emit("read", {"case_id": caseId, "membership": membership})
     hideBlock(document.querySelector(`#${caseId}`));
 }
 
@@ -182,7 +193,7 @@ function connect(){
     let registerId = membership + String(signData["info"]["id"]);
     socket.emit("register", {"register_id": registerId})
 
-    // Make Notification
+    // Make notification
     socket.on("notify", function(data){
         let caseId = data["case_id"];
         showBlock(document.querySelector(`#${caseId}`));
@@ -203,6 +214,7 @@ async function startChat(picUrl, chatWindow, sendBtn, caseId){
 
     sendMsg(chatWindow, sendBtn, windowCaseId);
     receiveMsg(picUrl, chatWindow);
+    renewStatus();
 }
 
 async function getChatHistory(caseId){
@@ -227,7 +239,7 @@ function renderChatHistory(picUrl, chatWindow){
     lines.forEach(function(line){
         let senderMembership = line["sender_membership"];
         let message = line["message"];
-        let time = line["time"];
+        let time = line["send_time"];
 
         if (senderMembership == membership){
             renderSenderMsg(chatWindow, message, time);
@@ -265,6 +277,13 @@ function receiveMsg(picUrl, chatWindow){
         if (data["receiver_membership"] === membership){
             renderReceiverMsg(picUrl, chatWindow, data["message"], data["time"]);
         }
+    })
+}
+
+function renewStatus(){
+    socket.on("renew_status", function(data){
+        let status = data["status"];
+        checkCaseStatus(status);
     })
 }
 
@@ -334,4 +353,23 @@ function renderChatFunctionList(){
     funcUl.appendChild(helpBtn);
 
     return funcUl
+}
+
+// Other utils
+function checkCaseStatus(status){
+    let titleDiv = document.querySelector(".right-title");
+    let statusDiv = document.querySelector("#status");
+
+    statusDiv.innerText = status;
+
+    if (status === "前置諮詢" || status === "提出報價"){
+        titleDiv.style.backgroundColor = "rgba(207, 75, 73, 0.2)";
+        statusDiv.style.color = "#CF4B49";
+    } else if(status === "正式諮詢" || status === "提出結案"){
+        titleDiv.style.backgroundColor = "rgba(12, 135, 74, 0.2)";
+        statusDiv.style.color = "#0C874A";
+    } else if(status === "已結案"){
+        titleDiv.style.backgroundColor = "rgba(102, 102, 102, 0.2)";
+        statusDiv.style.color = "#666666";
+    }
 }

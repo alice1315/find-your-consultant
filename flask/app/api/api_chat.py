@@ -18,14 +18,14 @@ def get_chat_list():
     
         if membership == "member":
             if status == "doing":
-                sql = ("SELECT ca.case_id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.status<>'已結案' ORDER BY ca.id DESC")
+                sql = ("SELECT ca.case_id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title, r.member  FROM `case` ca, consultant c, read_status r WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.case_id=r.case_id AND ca.status<>'已結案' ORDER BY ca.id DESC")
             else:
-                sql = ("SELECT ca.case_id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.status='已結案' ORDER BY ca.id DESC")
+                sql = ("SELECT ca.case_id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title, r.member  FROM `case` ca, consultant c, read_status r WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.case_id=r.case_id AND ca.status='已結案' ORDER BY ca.id DESC")
         else:
             if status == "doing":
-                sql = ("SELECT ca.case_id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.status<>'已結案' ORDER BY ca.id DESC")
+                sql = ("SELECT ca.case_id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name, r.consultant  FROM `case` ca, member m, read_status r WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.case_id=r.case_id AND ca.status<>'已結案' ORDER BY ca.id DESC")
             else:
-                sql = ("SELECT ca.case_id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.status='已結案' ORDER BY ca.id DESC")
+                sql = ("SELECT ca.case_id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name, r.consultant  FROM `case` ca, member m, read_status r WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.case_id=r.case_id AND ca.status='已結案' ORDER BY ca.id DESC")
         
         sql_data = (id, )
 
@@ -61,7 +61,11 @@ def set_room():
 
         sql = ("INSERT INTO `case` (case_id, member_id, consultant_id, field_code, status) VALUES (%s, %s, %s, %s, '前置諮詢')")
         sql_data = (case_id, member_id, consultant_id, field_code)
-        db.execute_sql(sql, sql_data, "one", commit=True)
+        db.execute_sql(sql, sql_data, "one", commit = True)
+
+        sql = ("INSERT INTO read_status (case_id) VALUES (%s)")
+        sql_data = (case_id, )
+        db.execute_sql(sql, sql_data, "one", commit = True)
 
         return res.ok()
     else:
@@ -74,7 +78,7 @@ def get_chat_history():
     
     case_id = data["case_id"]
     
-    sql = ("SELECT sender_membership, message, DATE_FORMAT(time, '%H:%i') AS time FROM case_messages WHERE case_id=%s ORDER BY time")
+    sql = ("SELECT sender_membership, message, DATE_FORMAT(time, '%H:%i') AS send_time FROM case_messages WHERE case_id=%s ORDER BY time")
     sql_data = (case_id, )
     results = db.execute_sql(sql, sql_data, "all")
 

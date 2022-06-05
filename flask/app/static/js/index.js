@@ -6,12 +6,23 @@ function indexInit(){
 function handleSignUpBtn(){
     let memberBtn = document.querySelector("#member-signup-btn");
     let consultantBtn = document.querySelector("#consultant-signup-btn");
-
+    
     memberBtn.addEventListener("click", function(){
-        location.href = "/signup/member";
+        if (signData){
+            let msgContent = renderMsgWindow("權限提醒");
+            msgContent.innerText = "您已為登入狀態";
+        } else{
+            location.href = "/signup/member";
+        }
     });
     consultantBtn.addEventListener("click", function(){
-        location.href = "/signup/consultant";
+        if (signData){
+            let msgContent = renderMsgWindow("權限提醒");
+            msgContent.innerText = "您已為登入狀態";
+        } else{
+            location.href = "/signup/consultant";
+        }
+        
     })
 }
 

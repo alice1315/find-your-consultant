@@ -58,6 +58,7 @@ function makeQuotation(caseId, sendBtn){
                     setQuotationMsg(hr, totalPrice);
                     closeWindowMsg();
                     sendBtn.click();
+                    socket.emit("change_status", {"case_id": caseId, "status": "提出報價"});
                 }
             })
         } else{
@@ -103,6 +104,11 @@ function toMakePayment(caseId){
     })
 }
 
+function emitPaymentOk(){
+    console.log("here");
+    socket.emit("change_status", {"case_id": caseId, "status": "正式諮詢"});
+}
+
 // End case (for consultant)
 function endCase(caseId, sendBtn){
     let btn = document.querySelector("#end-btn");
@@ -126,6 +132,7 @@ function endCase(caseId, sendBtn){
                     setEndCaseMsg(caseId);
                     closeWindowMsg();
                     sendBtn.click();
+                    socket.emit("change_status", {"case_id": caseId, "status": "提出結案"});
                 } 
             })
         } else{
@@ -152,7 +159,7 @@ function renderEndCaseWindow(){
 
 function setEndCaseMsg(caseId){
     messageWindow.value = `【顧問提出結案】
-您好，經評估後此案件 ${caseId} 已完成所有諮詢流程，
+您好，經評估後案件 ${caseId} 已完成所有諮詢流程，
 若您同意就此結束，請點選下方【同意結案】之按鈕以正式結案，謝謝！`;
 }
 
@@ -169,6 +176,7 @@ function agreeEndCase(caseId, sendBtn){
                 setAgreeMsg(caseId);
                 closeWindowMsg();
                 sendBtn.click();
+                socket.emit("change_status", {"case_id": caseId, "status": "同意結案"});
                 setTimeout(() => {location.href = `/feedback?case=${caseId}`;}, "1000")
             })
         } else{

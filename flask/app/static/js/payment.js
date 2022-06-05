@@ -54,7 +54,7 @@ async function renderPaymentPage(){
         })
     }else {
         showBlock(loading);
-        // location.href = "/";
+        location.href = "/";
     }
 }
 
@@ -162,6 +162,7 @@ function makePayment(){
                 await initPaymentData("/api/payment", fetchOptions);
                 
                 if (paymentData["ok"]){
+                    document.cookie = `caseId=${caseId}`;
                     renderPaymentOkMsg();
                 } else{
                     renderPaymentErrorMsg();

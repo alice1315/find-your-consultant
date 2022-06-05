@@ -59,6 +59,7 @@ label:hover{
 }
 
 .left-list{
+    height: 90%;
     overflow: scroll;
 }
 
