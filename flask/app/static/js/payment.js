@@ -18,18 +18,22 @@ function getCaseId(){
 }
 
 async function initPaymentData(url, fetchOptions){
-    await fetch(url, fetchOptions)
-    .then((resp) => {
-        return resp.json()
-    }).then((result) => {
-        paymentData = result;
-    })
+    if (signData){
+        await fetch(url, fetchOptions)
+        .then((resp) => {
+            return resp.json()
+        }).then((result) => {
+            paymentData = result;
+        })
+    } else{
+        location.href = "/";
+    }
 }
 
 async function renderPaymentPage(){
     let status = await getCaseStatus(caseId);
 
-    if (status === "提出報價"){
+    if (status && status === "提出報價"){
         showBlock(document.querySelector(".content"));
 
         // Set payment info
@@ -50,7 +54,7 @@ async function renderPaymentPage(){
         })
     }else {
         showBlock(loading);
-        location.href = "/";
+        // location.href = "/";
     }
 }
 

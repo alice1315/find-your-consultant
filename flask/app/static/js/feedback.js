@@ -16,7 +16,7 @@ function getCaseId(){
 async function renderFeedbackPage(){
     let status = await getCaseStatus(caseId);
 
-    if (status === "提出結案"){
+    if (status && status === "提出結案"){
         showBlock(document.querySelector(".content"));
 
         document.querySelector("#case-id").innerText = caseId;
