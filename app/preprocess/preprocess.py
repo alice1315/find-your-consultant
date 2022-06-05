@@ -7,17 +7,17 @@ from mysql.connector import errorcode
 
 
 load_dotenv()
-# MYSQL_CONFIG = {
-#     'user': os.getenv("user"), 
-#     'password': os.getenv("password"),
-#     'host': '127.0.0.1',
-# }
-
 MYSQL_CONFIG = {
-    'user': os.getenv("rds_user"), 
-    'password': os.getenv("rds_password"),
-    'host': os.getenv("rds_host")
+    'user': os.getenv("user"), 
+    'password': os.getenv("password"),
+    'host': '127.0.0.1',
 }
+
+# MYSQL_CONFIG = {
+#     'user': os.getenv("rds_user"), 
+#     'password': os.getenv("rds_password"),
+#     'host': os.getenv("rds_host")
+# }
 
 # Connecting to MySQL
 try:
@@ -123,6 +123,14 @@ TABLES['case_messages'] = (
     "  `message` varchar(255) NOT NULL,"
     "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")
+
+TABLES['read_status'] = (
+    "CREATE TABLE `read_status` ("
+    "  `case_id` varchar(50) NOT NULL,"
+    "  `member` varchar(5),"
+    "  `consultant` varchar(5),"
+    "  PRIMARY KEY (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")
 
 TABLES['payment'] = (

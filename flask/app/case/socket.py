@@ -57,5 +57,34 @@ def send_messages(payload):
     emit("receive", data, to = case_id)
 
     # Notify receiver
+    if membership == "member":
+        sql = ("UPDATE read_status SET consultant='未讀' WHERE case_id=%s")
+    else:
+        sql = ("UPDATE read_status SET member='未讀' WHERE case_id=%s")
+
+    sql_data = (case_id, )
+    db.execute_sql(sql, sql_data, "one", commit = True)
+
     notify_data = {"case_id": case_id}
     emit("notify", notify_data, to = receiver_id)
+
+@socketio.on("read")
+def read_messages(payload):
+    case_id = payload["case_id"]
+    membership = payload["membership"]
+
+    if membership == "member":
+        sql = ("UPDATE read_status SET member='已讀' WHERE case_id=%s")
+    else:
+        sql = ("UPDATE read_status SET consultant='已讀' WHERE case_id=%s")
+
+    sql_data = (case_id, )
+    db.execute_sql(sql, sql_data, "one", commit = True)
+
+@socketio.on("change_status")
+def change_status(payload):
+    case_id = payload["case_id"]
+    status = payload["status"]
+
+    data = {"status": status}
+    emit("renew_status", data ,to = case_id)
