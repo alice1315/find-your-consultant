@@ -36,6 +36,6 @@ def create_app():
     app.register_blueprint(case_bp)
     app.register_blueprint(api_bp, url_prefix = "/api")
 
-    socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*")
+    socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*", logger=True, engineio_logger=True)
 
     return app

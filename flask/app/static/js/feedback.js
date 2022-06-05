@@ -14,6 +14,7 @@ function getCaseId(){
 }
 
 function renderFeedbackPage(){
+    document.querySelector("#case-id").innerText = caseId;
     document.querySelector("#member-name").innerText = signData["info"]["name"];
 }
 

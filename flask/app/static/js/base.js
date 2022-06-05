@@ -146,7 +146,7 @@ function convertMembership(membership){
 
 function getCurrentTime(){
     let d = new Date();
-    let h = d.getHours();
-    let m = d.getMinutes();
+    let h = String(d.getHours()).padStart(2, '0');
+    let m = String(d.getMinutes()).padStart(2, '0');
     return `${h}:${m}`
 }

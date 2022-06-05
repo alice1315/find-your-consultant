@@ -104,6 +104,7 @@ function renderChatList(data){
 function setChatList(picUrl, fieldCode, name, jobTitle, caseId, status){
     let chatListContainer = document.querySelector(".left-list");
     let small = createDocElement("div", "left-small");
+    let notification = createDocElement("div", "left-notification hide");
     let picContainer = createDocElement("div", "left-pic");
     let pic = createDocElement("img");
 
@@ -111,6 +112,8 @@ function setChatList(picUrl, fieldCode, name, jobTitle, caseId, status){
     let info = createDocElement("div", "left-info");
 
     chatListContainer.appendChild(small);
+    small.appendChild(notification);
+    notification.id = caseId;
     small.appendChild(picContainer);
     picContainer.appendChild(pic);
     pic.src = picUrl;
@@ -138,7 +141,7 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     document.querySelector("#right-name").innerText = name;
     document.querySelector("#right-job-title").innerText = jobTitle;
     document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件： ";
-    document.querySelector("#case-id").innerText = caseId;
+    document.querySelector("#right-case-id").innerText = caseId;
     let titleDiv = document.querySelector(".right-title");
     let statusDiv = document.querySelector("#status");
     statusDiv.innerText = status;
@@ -160,13 +163,29 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     let funcUl = renderChatFunctionList();
     startChat(picUrl, chatWindow, sendBtn, caseId);
     setChatFunctions(caseId, sendBtn, funcUl);
+
+    // Read notificaiton
+    hideBlock(document.querySelector(`#${caseId}`));
 }
 
 // Socket & Handle chat window
 function connect(){
     socket = io.connect();
+    socket.on("connect", function(){
+        console.log("connect");
+    })
     socket.on("disconnect", function(){
         console.log("disconnected!");
+    })
+
+    // Register
+    let registerId = membership + String(signData["info"]["id"]);
+    socket.emit("register", {"register_id": registerId})
+
+    // Make Notification
+    socket.on("notify", function(data){
+        let caseId = data["case_id"];
+        showBlock(document.querySelector(`#${caseId}`));
     })
 }
 
