@@ -18,14 +18,14 @@ def get_chat_list():
     
         if membership == "member":
             if status == "doing":
-                sql = ("SELECT ca.case_id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.status<>'已結案'")
+                sql = ("SELECT ca.case_id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.status<>'已結案' ORDER BY ca.id DESC")
             else:
-                sql = ("SELECT ca.case_id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.status='已結案'")
+                sql = ("SELECT ca.case_id, ca.consultant_id, ca.field_code, ca.status, c.pic_url, c.name, c.job_title  FROM `case` ca, consultant c WHERE ca.member_id=%s AND ca.consultant_id=c.id AND ca.status='已結案' ORDER BY ca.id DESC")
         else:
             if status == "doing":
-                sql = ("SELECT ca.case_id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.status<>'已結案'")
+                sql = ("SELECT ca.case_id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.status<>'已結案' ORDER BY ca.id DESC")
             else:
-                sql = ("SELECT ca.case_id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.status='已結案'")
+                sql = ("SELECT ca.case_id, ca.member_id, ca.field_code, ca.status, m.pic_url, m.name  FROM `case` ca, member m WHERE ca.consultant_id=%s AND ca.member_id=m.id AND ca.status='已結案' ORDER BY ca.id DESC")
         
         sql_data = (id, )
 

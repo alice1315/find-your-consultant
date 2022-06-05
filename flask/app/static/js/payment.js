@@ -26,20 +26,32 @@ async function initPaymentData(url, fetchOptions){
     })
 }
 
-function renderPaymentPage(){
-    // Set payment info
-    document.querySelector("#case-id").innerText = paymentData["data"]["case_id"];
-    document.querySelector("#field").innerText = convertFieldName(paymentData["data"]["field_code"]);
-    document.querySelector("#consultant").innerText = paymentData["data"]["name"];
-    document.querySelector("#job-title").innerText = paymentData["data"]["job_title"];
-    document.querySelector("#price-per-hour").innerText = paymentData["data"]["price_per_hour"];
-    document.querySelector("#hours").innerText = paymentData["data"]["hours"];
-    document.querySelector("#total-price").innerText = paymentData["data"]["total_price"];
+async function renderPaymentPage(){
+    let status = await getCaseStatus(caseId);
 
-    // Set contact info
-    document.querySelector("#contact-name").setAttribute("value", signData["info"]["name"]);
-    document.querySelector("#contact-email").setAttribute("value", signData["info"]["email"]);
+    if (status === "提出報價"){
+        showBlock(document.querySelector(".content"));
 
+        // Set payment info
+        document.querySelector("#case-id").innerText = paymentData["data"]["case_id"];
+        document.querySelector("#field").innerText = convertFieldName(paymentData["data"]["field_code"]);
+        document.querySelector("#consultant").innerText = paymentData["data"]["name"];
+        document.querySelector("#job-title").innerText = paymentData["data"]["job_title"];
+        document.querySelector("#price-per-hour").innerText = paymentData["data"]["price_per_hour"];
+        document.querySelector("#hours").innerText = paymentData["data"]["hours"];
+        document.querySelector("#total-price").innerText = paymentData["data"]["total_price"];
+
+        // Set contact info
+        document.querySelector("#contact-name").setAttribute("value", signData["info"]["name"]);
+        document.querySelector("#contact-email").setAttribute("value", signData["info"]["email"]);
+
+        document.querySelector(".another-btn").addEventListener("click", function(){
+            location.href = "/chat";
+        })
+    }else {
+        showBlock(loading);
+        location.href = "/";
+    }
 }
 
 function tappaySetUp(){
@@ -156,6 +168,7 @@ function makePayment(){
     form.addEventListener("submit", handlePaymentSubmit)
 }
 
+// Rendering Msg
 function renderPaymentOkMsg(){
     let msgContent = renderMsgWindow("付款成功");
     msgContent.appendChild(createDocElement("div", "msg", "感謝您的訂購，案件已轉為正式諮詢"));

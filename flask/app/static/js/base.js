@@ -5,6 +5,8 @@ var pricePerHour;
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
 
+var loading = document.querySelector("#loading");
+
 async function baseInit(){
     await checkSignedIn();
     signOut();

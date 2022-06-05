@@ -13,9 +13,18 @@ function getCaseId(){
     caseId = url.searchParams.get("case");
 }
 
-function renderFeedbackPage(){
-    document.querySelector("#case-id").innerText = caseId;
-    document.querySelector("#member-name").innerText = signData["info"]["name"];
+async function renderFeedbackPage(){
+    let status = await getCaseStatus(caseId);
+
+    if (status === "提出結案"){
+        showBlock(document.querySelector(".content"));
+
+        document.querySelector("#case-id").innerText = caseId;
+        document.querySelector("#member-name").innerText = signData["info"]["name"];
+    } else{
+        showBlock(loading);
+        location.href = "/";
+    }
 }
 
 async function initFeedbackData(fetchOptions){

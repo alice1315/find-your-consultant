@@ -169,7 +169,7 @@ function agreeEndCase(caseId, sendBtn){
                 setAgreeMsg(caseId);
                 closeWindowMsg();
                 sendBtn.click();
-                location.href = `/feedback?case=${caseId}`;
+                setTimeout(() => {location.href = `/feedback?case=${caseId}`;}, "1000")
             })
         } else{
             showPermissionError();
