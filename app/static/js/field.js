@@ -119,11 +119,16 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     feedbackBlock.appendChild(feedbackContainer);
 
     // Feedback
-    if (feedback.length > 0){
-        for (i = 0; i < 2; i ++){
-            feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]["consultant_feedback"]));
+    if (feedback.length >0){
+        if (feedback.length >= 3){
+            for (i = 0; i < 2; i ++){
+                feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]["consultant_feedback"]));
+            }
+        } else{
+            for (i = 0; i < feedback.length; i ++){
+                feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]["consultant_feedback"]));
+            }
         }
-
         let more = createDocElement("div", "feedback-more", "more");
         feedbackContainer.appendChild(more);
         more.addEventListener("click", function(){
@@ -132,7 +137,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
                 msgContent.appendChild(createDocElement("div", "feedback-all", " - " + feedback[i]["consultant_feedback"]));
             }
         })
-    } else{
+    }else {
         feedbackContainer.appendChild(createDocElement("div", "feedback-content", "暫無回饋"));
     }
     
