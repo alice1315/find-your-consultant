@@ -12,6 +12,11 @@ def connect():
 def disconnect():
     print("disconnect")
 
+@socketio.on("register")
+def register(payload):
+    register_id = payload["register_id"]
+    join_room(register_id)
+
 @socketio.on("join")
 def join(payload):
     case_id = payload["case_id"]
@@ -30,16 +35,27 @@ def send_messages(payload):
     message = payload["message"]
     time = payload["time"]
 
+    # Get case data
+    sql = ("SELECT case_id, member_id, consultant_id FROM `case`WHERE case_id=%s")
+    sql_data = (case_id, )
+    case_data = db.execute_sql(sql, sql_data, "one")
+
     if membership == "member":
         receiver_membership = "consultant"
+        receiver_id = "consultant" + str(case_data["consultant_id"])
     else:
         receiver_membership = "member"
-
-    data = {"receiver_membership": receiver_membership, "message": message, "time": time}
-
-    emit("receive", data, to = case_id)
+        receiver_id = "member" + str(case_data["member_id"])
 
     # Store messages
     sql = ("INSERT INTO case_messages (case_id, sender_membership, message) VALUES (%s, %s, %s)")
     sql_data = (case_id, membership, message)
     db.execute_sql(sql, sql_data, "one", commit = True)
+
+    # Send messages
+    data = {"receiver_membership": receiver_membership, "message": message, "time": time}
+    emit("receive", data, to = case_id)
+
+    # Notify receiver
+    notify_data = {"case_id": case_id}
+    emit("notify", notify_data, to = receiver_id)

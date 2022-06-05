@@ -30,6 +30,10 @@ def show_memberpage():
                 fields.append(field_name)
             result["fields"] = fields
 
+            # Handle ratings
+            if not result["ratings"]:
+                result["ratings"] = 0
+
             # Handle feedback
             sql = ("SELECT fe.case_id, fe.consultant_feedback FROM `case` ca, feedback fe WHERE ca.case_id=fe.case_id AND ca.consultant_id=%s ORDER BY fe.id DESC")
             feedback = db.execute_sql(sql, sql_data, "all")

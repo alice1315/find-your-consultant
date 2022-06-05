@@ -59,6 +59,7 @@ label:hover{
 }
 
 .left-small{
+    position: relative;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -91,6 +92,7 @@ label:hover{
 
 .left-info{
     display: flex;
+    align-items: center;
     padding-left: 15px;
     /* font-size: 19px; */
     font-weight: bold;
@@ -123,6 +125,16 @@ label:hover{
     bottom: -5px;
     font-size: 12px;
     color: #888888;
+}
+
+.left-notification{
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #EB8528;
 }
 
 /* right */

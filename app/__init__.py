@@ -38,6 +38,7 @@ def create_app():
 <<<<<<< HEAD:app/__init__.py
 <<<<<<< HEAD:app/__init__.py
 <<<<<<< HEAD:app/__init__.py
+<<<<<<< HEAD:app/__init__.py
 =======
     socketio.init_app(app, cors_allowed_origins="*")
 =======
@@ -46,6 +47,9 @@ def create_app():
 =======
     socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*")
 >>>>>>> f27d836 (Test internet.):flask/app/__init__.py
+=======
+    socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*", logger=True, engineio_logger=True)
+>>>>>>> 92c0cdd (Added function of notification.):flask/app/__init__.py
 
 >>>>>>> 2b6a85a (Test sodkcet 2.):flask/app/__init__.py
     return app

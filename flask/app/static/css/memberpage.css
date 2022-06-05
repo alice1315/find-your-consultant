@@ -125,6 +125,13 @@
     padding-left: 15px;
 }
 
+#password{
+    /* visibility: hidden; */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 /* file-input*/
 input[type="file"] {
     display: none;
