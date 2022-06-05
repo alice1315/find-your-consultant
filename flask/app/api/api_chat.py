@@ -78,7 +78,7 @@ def get_chat_history():
     
     case_id = data["case_id"]
     
-    sql = ("SELECT sender_membership, message, DATE_FORMAT(time, '%H:%i') AS send_time FROM case_messages WHERE case_id=%s ORDER BY time")
+    sql = ("SELECT sender_membership, message, DATE_FORMAT(DATE_ADD(time, interval 8 hour), '%H:%i') AS send_time FROM case_messages WHERE case_id=%s ORDER BY time")
     sql_data = (case_id, )
     results = db.execute_sql(sql, sql_data, "all")
 
