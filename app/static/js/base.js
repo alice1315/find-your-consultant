@@ -8,8 +8,15 @@ var pricePerHour;
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
 
+<<<<<<< HEAD:app/static/js/base.js
 function baseInit(){
     checkSignedIn();
+=======
+var loading = document.querySelector("#loading");
+
+async function baseInit(){
+    await checkSignedIn();
+>>>>>>> 16009bf (Set permission of getting payment.html and feedback.html.):flask/app/static/js/base.js
     signOut();
     handleBtns();
     convertFieldName();

@@ -58,6 +58,10 @@ label:hover{
     color: #EB8528;
 }
 
+.left-list{
+    overflow: scroll;
+}
+
 .left-small{
     position: relative;
     cursor: pointer;
