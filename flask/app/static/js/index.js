@@ -1,6 +1,22 @@
 function indexInit(){
+    renderInfo();
     handleSignUpBtn();
     handleFieldBtns();
+}
+
+function renderInfo(){
+    let info = document.querySelectorAll("input[name='intro-list']");
+    info.forEach((e) => {
+        e.addEventListener("change", function(e){
+            if (e.target.value === "for-member"){
+                showBlock(document.querySelector("#member-intro"));
+                hideBlock(document.querySelector("#consultant-intro"));
+            } else{
+                hideBlock(document.querySelector("#member-intro"));
+                showBlock(document.querySelector("#consultant-intro"));
+            }
+        })
+    })
 }
 
 function handleSignUpBtn(){
