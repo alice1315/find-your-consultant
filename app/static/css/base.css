@@ -114,6 +114,11 @@ li{
     background-color: #EB8528;
 }
 
+a{
+    color: inherit;
+    text-decoration: none;
+}
+
 /* member-center */
 #member-center{
     position: fixed;

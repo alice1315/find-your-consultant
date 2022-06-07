@@ -73,7 +73,7 @@ function changeChatList(){
     chatList.forEach((e) => {
         e.addEventListener("change", async function(e){
             cleanWindow();
-            if (e.target.value == "doing"){
+            if (e.target.value === "doing"){
                 document.querySelector(".right-send").innerHTML = "";
                 await getChatList();
                 renderChatList(doingData);
