@@ -7,6 +7,7 @@ var pricePerHour;
 >>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
+var chatBtn = document.querySelector("#chat-btn");
 
 <<<<<<< HEAD:app/static/js/base.js
 function baseInit(){
@@ -33,10 +34,14 @@ async function checkSignedIn(){
         if (membership === "consultant"){
             pricePerHour = signData["info"]["price"];
         }
+<<<<<<< HEAD:app/static/js/base.js
 >>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
         toggleBlock(signInBtn, memberBtn);
+=======
+        toggleBlock(signInBtn, memberBtn, chatBtn);
+>>>>>>> 33df9f5 (Modified intro in index.html and checked path in sign.html.):flask/app/static/js/base.js
     }
-    document.body.classList.remove("hide");
+    showBlock(document.body);
 }
 
 function handleBtns(){
@@ -58,7 +63,6 @@ function handleBtns(){
     
 =======
     // Chat
-    let chatBtn = document.querySelector("#chat-btn");
     chatBtn.addEventListener("click", function(){location.href = "/chat";})
 
     // Memberpage

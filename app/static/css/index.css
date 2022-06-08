@@ -121,6 +121,7 @@
 
 /* intro */
 .intro{
+    height: 900px;
     margin-top: 100px;
     padding: 40px 50px;
     background-color: #EFEBE5;
@@ -138,6 +139,7 @@
     align-items: center;
     margin-bottom: 40px;
     font-size: 25px;
+    font-weight: bold;
 }
 
 .intro label {
@@ -177,23 +179,53 @@
 
 .left-block{
     cursor: pointer;
-    width: 500px;
+    position: relative;
+    width: 520px;
     margin-bottom: 20px;
     padding: 30px 20px;
     border-radius: 10px;
     background-color: #FFFFFF;
-    color: #555555;
 }
 
 .left-block:hover{
     box-shadow: 0px 0px 20px #797D84;
-    color: #242C3E;
+}
+
+.box-shadow{
+    box-shadow: 0px 0px 20px #797D84;
 }
 
 .left-title{
     font-size: 19px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+.left-content{
+    margin: 0 20px 0 25px;
+}
+
+.red{
+    color: #CF4B49;
+}
+
+.green{
+    color: #0C874A;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    border: solid #242C3E;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+  
+.right-arrow {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
 }
 
 /* intro right */

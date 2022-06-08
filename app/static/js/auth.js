@@ -17,8 +17,11 @@ async function isSignedIn(){
 
 function checkSignPath(){
     let path = window.location.pathname.split("/")[1];
-    if (path === "signin"){
+    if (signData){
+        location.href = "/";
+    } else if (path === "signin"){
         signIn();
+        handleToSignUpBtn();
     } else if (path === "signup"){
         renderSignUpPage();
         signUp();
@@ -123,4 +126,13 @@ function signOut(){
 function showMsg(message){
     let signMsg = document.querySelector(".sign-msg");
     signMsg.innerHTML = message;
+}
+
+// Others
+function handleToSignUpBtn(){
+    let toMember = document.querySelector("#to-signup-member");
+    toMember.addEventListener("click", function(){location.href = "signup/member"});
+
+    let toConsultant = document.querySelector("#to-signup-consultant");
+    toConsultant.addEventListener("click", function(){location.href = "signup/consultant"});
 }
