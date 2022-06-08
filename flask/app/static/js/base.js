@@ -4,6 +4,7 @@ var pricePerHour;
 
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
+var chatBtn = document.querySelector("#chat-btn");
 
 var loading = document.querySelector("#loading");
 
@@ -20,9 +21,9 @@ async function checkSignedIn(){
         if (membership === "consultant"){
             pricePerHour = signData["info"]["price"];
         }
-        toggleBlock(signInBtn, memberBtn);
+        toggleBlock(signInBtn, memberBtn, chatBtn);
     }
-    document.body.classList.remove("hide");
+    showBlock(document.body);
 }
 
 function handleBtns(){
@@ -40,7 +41,6 @@ function handleBtns(){
     })
 
     // Chat
-    let chatBtn = document.querySelector("#chat-btn");
     chatBtn.addEventListener("click", function(){location.href = "/chat";})
 
     // Memberpage

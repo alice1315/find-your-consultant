@@ -3,7 +3,7 @@
     <head>
         <link rel="stylesheet" href="/css/index.css"></link>
     </head>
-    <body onload="baseInit(); indexInit();">
+    <body onload="indexInit();">
         {% extends "base.html" %}
 
         {% block body %}
@@ -25,12 +25,13 @@
             </div>
         </div>
 
+        <a id="fields"></a>
         <div class="content">
             <div class="fields">
                 <div class="page-title">專業領域篩選</div>
                 <div class="field-list">
-                    <div class="left"><img src="/img/left.png" /></div>
-                    <div class="right"><img src="/img/right.png" /></div>
+                    <div class="left"></div>
+                    <div class="right"></div>
                     <div class="field-item">
                         <div class="field-img"><img src="/img/field/ta.png"/></div>
                         <div>稅務</div>
@@ -69,48 +70,51 @@
                     </div>
                     <div class="intro-content">
                         <div id="member-intro" class="intro-left">
-                            <div class="left-block">
+                            <div id="m1" class="left-block">
+                                <i class="arrow right-arrow"></i>
                                 <div class="left-title">1. 選擇想諮詢的領域及顧問</div>
                                 <div class="left-content">進入各大領域，挑選適合的顧問進行諮詢</div>
                             </div>
-                            <div class="left-block">
-                                <div class="left-title">2. 登入會員進入前置諮詢</div>
-                                <div class="left-content">前置諮詢階段，可以先提出問題讓顧問了解案件內容</div>
+                            <div id="m2" class="left-block">
+                                <i class="arrow right-arrow"></i>
+                                <div class="left-title">2. 註冊並登入會員，進入<span class="red">前置諮詢</span></div>
+                                <div class="left-content">前置諮詢階段，系統會開啟私人【諮詢聊天室】，可以先提出問題讓顧問了解案件內容</div>
                             </div>
-                            <div class="left-block">
-                                <div class="left-title">3. 付款進入正式諮詢</div>
-                                <div class="left-content">待顧問提出時數及報價，進行付款後即可在範圍內尋求建議</div>
+                            <div id="m3" class="left-block">
+                                <div class="left-title">3. 付款進入<span class="green">正式諮詢</span></div>
+                                <div class="left-content">待顧問提出報價，進行付款後即可在報價範圍內尋求建議</div>
                             </div>
-                            <div class="left-block">
+                            <div id="m4" class="left-block">
                                 <div class="left-title">4. 正式結案</div>
                                 <div class="left-content">若已得到建議及解決方法，即可同意顧問結案以結束諮詢</div>
                             </div>
                         </div>
 
                         <div id="consultant-intro" class="intro-left hide">
-                            <div class="left-block">
-                                <div class="left-title">1. 註冊成為專業顧問</div>
+                            <div id="c1" class="left-block">
+                                <i class="arrow right-arrow"></i>
+                                <div class="left-title">1. 註冊成為專業顧問 <i class="arrow right-arrow"></i></div>
                                 <div class="left-content">填寫資料成為專業顧問</div>
                             </div>
-                            <div class="left-block">
-                                <div class="left-title">2. 等待前置諮詢</div>
-                                <div class="left-content">待民眾請求諮詢後，可先針對問題做基本瞭解</div>
+                            <div id="c2" class="left-block">
+                                <div class="left-title">2. 等待<span class="red">前置諮詢</span></div>
+                                <div class="left-content">待民眾請求諮詢後，系統會開啟私人【諮詢聊天室】，可先針對問題做基本瞭解</div>
                             </div>
-                            <div class="left-block">
-                                <div class="left-title">3. 提出報價</div>
-                                <div class="left-content">待可評估出處理時數後，提出報價以供客戶付款</div>
+                            <div id="c3" class="left-block">
+                                <div class="left-title">3. 提出報價已進入<span class="green">正式諮詢</span></div>
+                                <div class="left-content">待可評估出處理時數後，提出報價以供客戶付款，付款完成後即進入正式諮詢</div>
                             </div>
-                            <div class="left-block">
+                            <div id="c4" class="left-block">
                                 <div class="left-title">4. 提出結案</div>
                                 <div class="left-content">若評估已解決民眾之問題，可提出結案</div>
                             </div>
-                            <div class="left-block">
+                            <div id="c5" class="left-block">
                                 <div class="left-title">5. 個人頁面顯示案件回饋</div>
                                 <div class="left-content">結案後民眾可針對案件給予評分及回饋，結果可於個人頁面中查看</div>
                             </div>
                         </div>
                         <div class="intro-right">
-                            <img src="/img/welcome.png" />
+                            <img id="info-img" src="/img/step/m1.png"/>
                         </div>
                     </div>
                 </div>

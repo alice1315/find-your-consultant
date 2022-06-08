@@ -186,7 +186,7 @@ function agreeEndCase(caseId, sendBtn){
 }
 
 function renderAgreeWindow(){
-    let msgContent = renderMsgWindow("同意結案結案");
+    let msgContent = renderMsgWindow("同意結案");
 
     msgContent.appendChild(createDocElement("div", "msg", "感謝您此次的諮詢，點擊確認後則正式結案！"));
     msgContent.appendChild(createDocElement("div", "msg", "＊ 結案後無法再進行諮詢對話 ＊"));

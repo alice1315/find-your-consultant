@@ -14,10 +14,6 @@
     font-size: 24px;
 }
 
-.membership img{
-    height: 25px;
-}
-
 label {
     cursor: pointer;
     -webkit-user-select: none;
@@ -60,4 +56,17 @@ label:hover{
 
 .input-form button{
     margin-top: 20px;
+}
+
+.to-signup{
+    margin-top: 10px;
+}
+
+.to-signup span{
+    cursor: pointer;
+    margin: 10px;
+}
+
+.to-signup span:hover{
+    color: #EB8528;
 }
