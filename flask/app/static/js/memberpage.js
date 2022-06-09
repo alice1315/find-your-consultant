@@ -23,7 +23,6 @@ function renderMemberPage(){
     document.querySelector("#pic-url").src = memberData["pic_url"];
     document.querySelector("#membership").innerText = convertMembership(membership);
     document.querySelector("#email").innerText = memberData["email"];
-    // document.querySelector("#password").innerText = memberData["password"];
     document.querySelector("#name").innerText = memberData["name"];
     document.querySelector("#gender").innerText = memberData["gender"];
     document.querySelector("#phone").innerText = memberData["phone"];

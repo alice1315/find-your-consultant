@@ -7,17 +7,17 @@ from mysql.connector import errorcode
 
 
 load_dotenv()
-# MYSQL_CONFIG = {
-#     'user': os.getenv("user"), 
-#     'password': os.getenv("password"),
-#     'host': '127.0.0.1',
-# }
-
 MYSQL_CONFIG = {
-    'user': os.getenv("rds_user"), 
-    'password': os.getenv("rds_password"),
-    'host': os.getenv("rds_host")
+    'user': os.getenv("user"), 
+    'password': os.getenv("password"),
+    'host': '127.0.0.1',
 }
+
+# MYSQL_CONFIG = {
+#     'user': os.getenv("rds_user"), 
+#     'password': os.getenv("rds_password"),
+#     'host': os.getenv("rds_host")
+# }
 
 # Connecting to MySQL
 try:
@@ -126,8 +126,8 @@ TABLES['case_messages'] = (
 TABLES['read_status'] = (
     "CREATE TABLE `read_status` ("
     "  `case_id` varchar(50) NOT NULL,"
-    "  `member` varchar(5),"
-    "  `consultant` varchar(5),"
+    "  `member` int,"
+    "  `consultant` int,"
     "  PRIMARY KEY (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")
 
@@ -151,49 +151,6 @@ TABLES['feedback'] = (
     "  UNIQUE (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")  
 
-
-"""
-TABLES['shopping_cart'] = (
-    "CREATE TABLE `shopping_cart` ("
-    "  `user_id` bigint NOT NULL,"
-    "  `attraction_id` bigint NOT NULL,"
-    "  `attraction_name` varchar(50) NOT NULL,"
-    "  `attraction_address` varchar(50),"
-    "  `attraction_images` varchar(3000),"
-    "  `date` date NOT NULL,"
-    "  `time` varchar(30) NOT NULL,"
-    "  `price` int NOT NULL,"
-    "  PRIMARY KEY (`user_id`),"
-    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
-
-TABLES['orders'] = (
-    "CREATE TABLE `orders` ("
-    "  `order_number` bigint NOT NULL,"
-    "  `user_id` bigint NOT NULL,"
-    "  `attraction_id` bigint NOT NULL,"
-    "  `attraction_name` varchar(50) NOT NULL,"
-    "  `attraction_address` varchar(50),"
-    "  `attraction_image` varchar(600),"
-    "  `contact_name` varchar(10) NOT NULL,"
-    "  `contact_email` varchar(100) NOT NULL,"
-    "  `contact_phone` varchar(15) NOT NULL,"
-    "  `date` date NOT NULL,"
-    "  `time` varchar(10) NOT NULL,"
-    "  `price` int NOT NULL,"
-    "  `order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
-    "  `status` varchar(5) NOT NULL,"
-    "  PRIMARY KEY (`order_number`),"
-    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
-
-TABLES['payment'] = (
-    "CREATE TABLE `payment` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `order_number` bigint NOT NULL,"
-    "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
-    "  `status` varchar(5) NOT NULL,"
-    "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`order_number`) REFERENCES orders(`order_number`))")   
-"""
 for table_name in TABLES:
     table_description = TABLES[table_name]
     try:
@@ -206,14 +163,6 @@ for table_name in TABLES:
             print(err.msg)
     else:
         print("OK")
-
-"""
-# Insert fields
-insert_field = ("INSERT INTO fields (field_name, field_code) VALUES (%s, %s)")
-field_data_list = [("稅務", "ta"), ("會計", "ac"), ("金融", "fi"), ("刑法", "ci"), ("民法", "cr"), ("公司法", "co")]
-for data in field_data_list:
-    cursor.execute(insert_field, data)
-"""
 
 cnx.commit()
 

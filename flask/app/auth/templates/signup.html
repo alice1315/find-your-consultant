@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta chartset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Find Your Consultant</title>
+        <link rel="stylesheet" href="/css/base.css"></link>
         <link rel="stylesheet" href="/css/signup.css"></link>
     </head>
     <body onload="authInit();">
@@ -10,7 +15,7 @@
 
         <div class="content">
             <div class="page-top">
-                <img src="/img/title-mark.png"/>
+                <div class="top-mark"></div>
                 <div class="page-title hide">註冊會員 - 專業顧問</div>
                 <div class="page-title hide">註冊會員 - 一般民眾</div>
             </div>
@@ -18,14 +23,14 @@
                 <form id="signup-form" method="POST" enctype="multipart/form-data">
                     <div class="signup-basic">
                         <div class="signup-title">
-                            <img src="/img/title-mark.png"/>
+                            <div class="down-mark"></div>
                             <div>註冊資訊</div>
                         </div>
                         <div>註冊信箱： <input type="email" name="email" class="text-input"/></div>
                         <div>註冊密碼： <input type="password" name="password" class="text-input"/></div>
 
                         <div class="signup-title">
-                            <img src="/img/title-mark.png"/>
+                            <div class="down-mark"></div>
                             <div>個人基本資料</div>
                         </div>
                         <div>照片： 
@@ -48,7 +53,7 @@
 
                     <div class="signup-pro hide">
                         <div class="signup-title">
-                            <img src="/img/title-mark.png"/>
+                            <div class="down-mark"></div>
                             <div>專業相關資料</div>
                         </div>
                         <div>專業領域： 

@@ -9,12 +9,7 @@
 .member-title{
     display: flex;
     align-items: center;
-    margin: 20px 0 5px -25px;
-}
-
-.member-title img{
-    height: 50px;
-    margin-top: 3px;
+    margin: 40px 0 20px -8px;
 }
 
 .member-title div{

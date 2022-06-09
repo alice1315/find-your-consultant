@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta chartset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Find Your Consultant</title>
+        <link rel="stylesheet" href="/css/base.css"></link>
         <link rel="stylesheet" href="/css/index.css"></link>
     </head>
-    <body onload="indexInit();">
+    <body onload="indexInit();" class="hidden">
         {% extends "base.html" %}
 
         {% block body %}
@@ -13,9 +18,9 @@
             </div>
             <div class="welcome-content">
                 <div class="welcome-title">尋找你的專業顧問</div>
-                <div class="welcome-text"><img src="/img/star.png" /> 專家一對一諮詢</div>
-                <div class="welcome-text"><img src="/img/star.png" /> 價格公開透明</div>
-                <div class="welcome-text"><img src="img/star.png" /> 即時解決你的問題</div>
+                <div class="welcome-text">★ &nbsp; 專家一對一諮詢</div>
+                <div class="welcome-text">★ &nbsp; 價格公開透明</div>
+                <div class="welcome-text">★ &nbsp;  即時解決你的問題</div>
                 <br/>
                 <br/>
                 <div class="signup-container">

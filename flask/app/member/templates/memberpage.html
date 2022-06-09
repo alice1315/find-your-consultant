@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta chartset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Find Your Consultant</title>
+        <link rel="stylesheet" href="/css/base.css"></link>
         <link rel="stylesheet" href="/css/memberpage.css"></link>
     </head>
     <body onload="memberInit();">
@@ -10,20 +15,19 @@
 
         <div class="content">
             <div class="page-top">
-                <img src="/img/title-mark.png"/>
+                <div class="top-mark"></div>
                 <div class="page-title">個人頁面</div>
             </div>
             <div class="member-container">
                 <div id="member-info">
                     <div>
                         <div class="member-title">
-                            <img src="/img/title-mark.png"/>
+                            <div class="down-mark"></div>
                             <div>會員基本資料</div>
                         </div>
                         <div class="member-basic">
                             <div class="self-pic-container">
                                 <div class="self-pic"><img id="pic-url"/></div>
-                                <!-- <div id="pic-edit"><div><img src="/img/edit.png" /></div></div> -->
                             </div>
                             <div class="self-info">
                                 <div class="info-block">
@@ -34,11 +38,6 @@
                                     <div>註冊信箱： </div>
                                     <div id="email" class="info-content"></div>
                                 </div>
-                                <!-- <div class="info-block">
-                                    <div>註冊密碼： </div>
-                                    <div id="password" class="info-content"></div>
-                                    <div class="edit"><img src="/img/edit.png" /></div>
-                                </div> -->
                                 <br />
                                 <div class="info-block">
                                     <div>姓名： </div>
@@ -51,7 +50,6 @@
                                 <div class="info-block">
                                     <div>電話： </div>
                                     <div id="phone" class="info-content"></div>
-                                    <!-- <div class="edit"><img src="/img/edit.png" /></div> -->
                                 </div>
                             </div>
                         </div>
@@ -59,9 +57,8 @@
 
                     <div class="consultant-pro hide">
                         <div class="member-title">
-                            <img src="/img/title-mark.png"/>
+                            <div class="down-mark"></div>
                             <div>專業相關資料</div>
-                            <!-- <div class="edit"><img src="/img/edit.png" /></div> -->
                         </div>
 
                         <div class="info-block">
@@ -82,7 +79,7 @@
                         </div>
 
                         <div class="member-title">
-                            <img src="/img/title-mark.png"/>
+                            <div class="down-mark"></div>
                             <div>案件回饋紀錄： </div>
                         </div>
                         <div class="info-block">

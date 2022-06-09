@@ -43,16 +43,29 @@ body{
     display: none;
 }
 
+.hidden{
+    visibility: hidden;
+}
+
 /* page-top */
 .page-top{
     display: flex;
     align-items: center;
-    margin-top: 40px;
+    margin: 40px 0 0 30px;
 }
 
-.page-top img{
-    height: 70px;
-    margin-top: 3px;
+.top-mark{
+    width: 5px;
+    height: 25px;
+    margin-right: 20px;
+    background-color:  #EB8528;
+}
+
+.down-mark{
+    width: 3px;
+    height: 18px;
+    margin-right: 12px;
+    background-color:  #EB8528;
 }
 
 .page-title{
@@ -90,7 +103,6 @@ body{
 }
 
 .menu{
-    position: relative;
     display: flex;
 }
 
@@ -104,13 +116,18 @@ li{
     color: #666666;
 }
 
+#chat-btn{
+    position: relative;
+}
+
 #msg-note{
     position: absolute;
-    top: -3px;
-    right: 10px;
-    width: 10px;
-    height: 10px;
+    top: -5px;
+    right: 0;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
+    border: 1px solid #FFFFFF;
     background-color: #EB8528;
 }
 
@@ -275,11 +292,29 @@ a{
     height: 16px;
 }
 
-/* loading */
-#loading{
-    margin-top: 100px;
-    height: 300px;
-    text-align: center;
+/* loader */
+#loader {
+    border: 12px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 12px solid #242C3E;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+}
+  
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+  
+.center {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 /* footer */

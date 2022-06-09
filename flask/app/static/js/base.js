@@ -1,14 +1,21 @@
+var loader = document.querySelector("#loader");
+
 var signData;
 var membership;
+var memberId;
+var memberName;
+var memberEmail;
 var pricePerHour;
+var unread;
 
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
 var chatBtn = document.querySelector("#chat-btn");
 
-var loading = document.querySelector("#loading");
+var msgNote = document.querySelector("#msg-note");
 
 async function baseInit(){
+    startLoading();
     await checkSignedIn();
     signOut();
     handleBtns();
@@ -18,10 +25,18 @@ async function checkSignedIn(){
     signData = await isSignedIn();
     if (signData){
         membership = signData["info"]["membership"];
+        memberId = signData["info"]["id"];
+        memberName = signData["info"]["name"];
+        memberEmail = signData["info"]["email"];
+        unread = signData["info"]["unread"];
         if (membership === "consultant"){
             pricePerHour = signData["info"]["price"];
         }
         toggleBlock(signInBtn, memberBtn, chatBtn);
+
+        if (unread > 0){
+            showBlock(msgNote);
+        }
     }
     showBlock(document.body);
 }
@@ -46,6 +61,16 @@ function handleBtns(){
     // Memberpage
     let memberPageBtn = document.querySelector("#memberpage-btn");
     memberPageBtn.addEventListener("click", function(){location.href = "/memberpage";})
+}
+
+// loading
+function startLoading(){
+    document.querySelector("#loader").style.visibility = "visible";
+}
+
+function endLoading(){
+    hideBlock(loader);
+    document.querySelector("body").classList.remove("hidden");
 }
 
 // Utils
@@ -97,7 +122,6 @@ function renderMsgWindow(title, reload){
     return msgContent
 }
 
-// Utils
 function closeWindowMsg(){
     document.querySelector(".window-msg").remove();
     document.querySelector(".modal").remove();
