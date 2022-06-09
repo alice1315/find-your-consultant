@@ -9,12 +9,7 @@
 .signup-title{
     display: flex;
     align-items: center;
-    margin: 20px 0 5px -25px;
-}
-
-.signup-title img{
-    height: 50px;
-    margin-top: 3px;
+    margin: 40px 0 30px -8px;
 }
 
 .signup-title div{
@@ -159,6 +154,5 @@ input[type="file"] {
 }
 
 #signup-form button{
-    /* float: right; */
     margin-top: 20px;
 }

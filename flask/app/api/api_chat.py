@@ -63,13 +63,13 @@ def set_room():
         sql_data = (case_id, member_id, consultant_id, field_code)
         db.execute_sql(sql, sql_data, "one", commit = True)
 
-        sql = ("INSERT INTO read_status (case_id) VALUES (%s)")
+        sql = ("INSERT INTO read_status (case_id, member, consultant) VALUES (%s, 0, 0)")
         sql_data = (case_id, )
         db.execute_sql(sql, sql_data, "one", commit = True)
 
         return res.ok()
     else:
-        return make_response(res.error("已有諮詢紀錄，請直接點選諮詢聊天室"), 400)
+        return make_response(res.error("經查詢，您已有諮詢此顧問的紀錄，請直接點選【諮詢聊天室】"), 400)
 
 # Get chat history
 @api_.route("/chat", methods = ["PATCH"])

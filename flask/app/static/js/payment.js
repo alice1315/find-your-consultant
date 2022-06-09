@@ -46,8 +46,8 @@ async function renderPaymentPage(){
         document.querySelector("#total-price").innerText = paymentData["data"]["total_price"];
 
         // Set contact info
-        document.querySelector("#contact-name").setAttribute("value", signData["info"]["name"]);
-        document.querySelector("#contact-email").setAttribute("value", signData["info"]["email"]);
+        document.querySelector("#contact-name").setAttribute("value", memberName);
+        document.querySelector("#contact-email").setAttribute("value", memberEmail);
 
         document.querySelector(".another-btn").addEventListener("click", function(){
             location.href = "/chat";

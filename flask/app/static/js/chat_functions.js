@@ -3,12 +3,10 @@ var funcData;
 function setChatFunctions(caseId, sendBtn, funcUl){
     let functions = funcUl.children;
     if (membership === "member"){
-        // showBlock(functions[1], functions[3], functions[4]);
         showBlock(functions[1], functions[3]);
         toMakePayment(caseId);
         agreeEndCase(caseId, sendBtn);
     } else{
-        // showBlock(functions[0], functions[2], functions[4]);
         showBlock(functions[0], functions[2]);
         makeQuotation(caseId, sendBtn);
         endCase(caseId, sendBtn);

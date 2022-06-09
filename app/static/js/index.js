@@ -4,6 +4,7 @@ async function indexInit(){
     handleFieldBtns();
     renderInfo();
     handleInfoBtns();
+    endLoading();
 }
 
 function handleSignUpBtn(){

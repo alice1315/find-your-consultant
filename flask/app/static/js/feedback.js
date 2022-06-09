@@ -20,7 +20,7 @@ async function renderFeedbackPage(){
         showBlock(document.querySelector(".content"));
 
         document.querySelector("#case-id").innerText = caseId;
-        document.querySelector("#member-name").innerText = signData["info"]["name"];
+        document.querySelector("#member-name").innerText = memberName;
     } else{
         showBlock(loading);
         location.href = "/";

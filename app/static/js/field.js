@@ -6,6 +6,7 @@ async function fieldInit(){
     checkFieldPath();
     await initFieldData();
     renderProfile();
+    endLoading();
 }
 
 function checkFieldPath(){
@@ -63,7 +64,6 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
 
     let divUp= createDocElement("div");
     let starContainer = createDocElement("div", "star-container");
-    let starImg = createDocElement("img");
     let divInfo = createDocElement("div");
     let divFields = createDocElement("div");
 
@@ -87,10 +87,8 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     divUp.appendChild(starContainer);
 
     for(i = 0; i < ratings; i++){
-        let star = createDocElement("div", "star");
-        starContainer.appendChild(star).appendChild(starImg);
-        starImg.src = "/img/p-star.png";
-        star.innerHTML += '&nbsp;';
+        let star = createDocElement("div", "star", "★");
+        starContainer.appendChild(star);
     }
 
     divUp.appendChild(divInfo);
@@ -101,13 +99,12 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     divInfo.appendChild(createDocElement("span", "gender", gender));
     divUp.appendChild(divFields);
     fields.forEach(function(field){
-        let f = createDocElement("div", "pro-fields");
-        let s = createDocElement("span", "", field);
-        let i = document.createElement("img");
-        divFields.appendChild(f);
-        f.appendChild(i);
-        f.appendChild(s);
-        i.src = "/img/check.png";
+        let fieldItem = createDocElement("div", "pro-fields");
+        let check = createDocElement("span", "check", `✔`);
+        let fieldName = createDocElement("span", "", field);
+        divFields.appendChild(fieldItem);
+        fieldItem.appendChild(check);
+        fieldItem.appendChild(fieldName);
     })
 
     // Pro
@@ -122,11 +119,11 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     if (feedback.length >0){
         if (feedback.length >= 3){
             for (i = 0; i < 3; i ++){
-                feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]["consultant_feedback"]));
+                feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]));
             }
         } else{
             for (i = 0; i < feedback.length; i ++){
-                feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]["consultant_feedback"]));
+                feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]));
             }
         }
         let more = createDocElement("div", "feedback-more", "more");
@@ -134,7 +131,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
         more.addEventListener("click", function(){
             let msgContent = renderMsgWindow("案件回饋");
             for (i = 0; i < feedback.length; i ++){
-                msgContent.appendChild(createDocElement("div", "feedback-all", " - " + feedback[i]["consultant_feedback"]));
+                msgContent.appendChild(createDocElement("div", "feedback-all", " - " + feedback[i]));
             }
         })
     }else {
@@ -150,12 +147,18 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     // Start consultanting
 >>>>>>> d5e4e3b (Modified field.html with function of feedback.):flask/app/static/js/field.js
     profile.appendChild(roomBtn);
-    roomBtn.addEventListener("click", function(){
+    roomBtn.addEventListener("click", async function(){
         if (signData && membership === "member"){
-            setRoom(id);
-            location.href = "/chat";
+            await setRoom(id);
+            if (fieldData["ok"]){
+                location.href = "/chat";
+            } else if (fieldData["error"]){
+                let msgContent = renderMsgWindow("錯誤訊息");
+                msgContent.innerText = fieldData["message"];
+            }
+            
         } else if (signData && membership === "consultant"){
-            let msgContent = renderMsgWindow("權限提醒");
+            let msgContent = renderMsgWindow("錯誤訊息");
             msgContent.innerText = "請以一般會員身份登入，再點選此功能與專業顧問諮詢！";
         }else{
             location.href = "/signin";
@@ -169,9 +172,36 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
 >>>>>>> d5e4e3b (Modified field.html with function of feedback.):flask/app/static/js/field.js
 }
 
+<<<<<<< HEAD:app/static/js/field.js
 function createDocElement(element, className, text){
     let e = document.createElement(element);
     if (className){e.setAttribute("class", className);}
     if (text){e.innerText = text;}
     return e
 }
+=======
+async function setRoom(consultantId){
+    let reqData = {
+        "member_id": memberId,
+        "consultant_id": consultantId,
+        "field_code": fieldCode
+    }
+
+    let formData = JSON.stringify(reqData);
+
+    let fetchOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: formData
+    }
+
+    await fetch("/api/chat", fetchOptions)
+    .then((resp) => {
+        return resp.json();
+    }).then((result) => {
+        fieldData = result;
+    })
+}
+>>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/field.js

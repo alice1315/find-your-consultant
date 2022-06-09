@@ -9,7 +9,7 @@ var messageWindow = document.querySelector("#message");
 async function chatInit(){
     await baseInit();
     renderPage();
-    connect();
+    connectSocket();
     checkPaymentOk();
 }
 
@@ -104,6 +104,7 @@ function renderChatList(data){
         let fieldCode = chat["field_code"];
         let name = chat["name"];
         let jobTitle;
+        let readStatus;
         if (membership === "member"){
             jobTitle = chat["job_title"];
             readStatus = chat["member"];
@@ -131,7 +132,7 @@ function setChatList(picUrl, fieldCode, name, jobTitle, caseId, readStatus){
     chatListContainer.appendChild(small);
     small.appendChild(notification);
     notification.id = caseId;
-    if (readStatus === "未讀"){
+    if (readStatus > 0){
         showBlock(notification);
     }
 
@@ -175,12 +176,12 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     setChatFunctions(caseId, sendBtn, funcUl);
 
     // Read notificaiton
-    socket.emit("read", {"case_id": caseId, "membership": membership})
+    socket.emit("read", {"case_id": caseId, "membership": membership, "id": memberId})
     hideBlock(document.querySelector(`#${caseId}`));
 }
 
 // Socket & Handle chat window
-function connect(){
+function connectSocket(){
     socket = io.connect();
     socket.on("connect", function(){
         console.log("connect");
@@ -190,13 +191,26 @@ function connect(){
     })
 
     // Register
-    let registerId = membership + String(signData["info"]["id"]);
+    let registerId = membership + String(memberId);
     socket.emit("register", {"register_id": registerId})
 
     // Make notification
     socket.on("notify", function(data){
         let caseId = data["case_id"];
-        showBlock(document.querySelector(`#${caseId}`));
+        if (caseId !== windowCaseId){
+            showBlock(document.querySelector(`#${caseId}`));
+            showBlock(msgNote);
+        }
+    })
+
+    // Renew unread
+    socket.on("renew_unread", function(data){
+        unread = data["unread"];
+        if (unread > 0){
+            showBlock(msgNote);
+        } else if (unread == 0){
+            hideBlock(msgNote);
+        }
     })
 }
 
@@ -217,6 +231,7 @@ async function startChat(picUrl, chatWindow, sendBtn, caseId){
     renewStatus();
 }
 
+// Handle chat history
 async function getChatHistory(caseId){
     let reqData = {
         "case_id": caseId
@@ -341,16 +356,12 @@ function renderChatFunctionList(){
 
     let agreeBtn = createDocElement("li", "hide", "同意結案");
     agreeBtn.id = "agree-btn";
-    
-    let helpBtn = createDocElement("li", "hide", "案件申訴");
-    helpBtn.id = "help-btn";
 
     document.querySelector(".right-function").appendChild(funcUl);
     funcUl.appendChild(quotationBtn);
     funcUl.appendChild(payBtn);
     funcUl.appendChild(endBtn);
     funcUl.appendChild(agreeBtn);
-    funcUl.appendChild(helpBtn);
 
     return funcUl
 }

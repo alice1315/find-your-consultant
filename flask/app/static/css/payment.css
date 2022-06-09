@@ -9,12 +9,7 @@
 .payment-title{
     display: flex;
     align-items: center;
-    margin: 20px 0 5px -25px;
-}
-
-.payment-title img{
-    height: 50px;
-    margin-top: 3px;
+    margin: 40px 0 30px -8px;
 }
 
 .payment-title div{

@@ -7,17 +7,17 @@ from mysql.connector import errorcode
 
 
 load_dotenv()
-# MYSQL_CONFIG = {
-#     'user': os.getenv("user"), 
-#     'password': os.getenv("password"),
-#     'host': '127.0.0.1',
-# }
-
 MYSQL_CONFIG = {
-    'user': os.getenv("rds_user"), 
-    'password': os.getenv("rds_password"),
-    'host': os.getenv("rds_host")
+    'user': os.getenv("user"), 
+    'password': os.getenv("password"),
+    'host': '127.0.0.1',
 }
+
+# MYSQL_CONFIG = {
+#     'user': os.getenv("rds_user"), 
+#     'password': os.getenv("rds_password"),
+#     'host': os.getenv("rds_host")
+# }
 
 # Connecting to MySQL
 try:
@@ -128,8 +128,8 @@ TABLES['case_messages'] = (
 TABLES['read_status'] = (
     "CREATE TABLE `read_status` ("
     "  `case_id` varchar(50) NOT NULL,"
-    "  `member` varchar(5),"
-    "  `consultant` varchar(5),"
+    "  `member` int,"
+    "  `consultant` int,"
     "  PRIMARY KEY (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")
 
@@ -153,6 +153,7 @@ TABLES['feedback'] = (
     "  UNIQUE (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")  
 
+<<<<<<< HEAD:app/preprocess/preprocess.py
 
 >>>>>>> 23bb570 (Reset and modified socket model of chatting.):flask/app/preprocess/preprocess.py
 """
@@ -197,6 +198,8 @@ TABLES['payment'] = (
     "  PRIMARY KEY (`id`),"
     "  FOREIGN KEY (`order_number`) REFERENCES orders(`order_number`))")   
 """
+=======
+>>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/preprocess/preprocess.py
 for table_name in TABLES:
     table_description = TABLES[table_name]
     try:
@@ -209,14 +212,6 @@ for table_name in TABLES:
             print(err.msg)
     else:
         print("OK")
-
-"""
-# Insert fields
-insert_field = ("INSERT INTO fields (field_name, field_code) VALUES (%s, %s)")
-field_data_list = [("稅務", "ta"), ("會計", "ac"), ("金融", "fi"), ("刑法", "ci"), ("民法", "cr"), ("公司法", "co")]
-for data in field_data_list:
-    cursor.execute(insert_field, data)
-"""
 
 cnx.commit()
 

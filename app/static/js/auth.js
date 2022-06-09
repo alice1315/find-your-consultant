@@ -4,6 +4,7 @@ var authData;
 async function authInit(){
     await baseInit();
     checkSignPath();
+    endLoading();
 }
 
 async function isSignedIn(){

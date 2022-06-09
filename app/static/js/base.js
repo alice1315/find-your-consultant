@@ -1,8 +1,17 @@
 <<<<<<< HEAD:app/static/js/base.js
+<<<<<<< HEAD:app/static/js/base.js
 =======
+=======
+var loader = document.querySelector("#loader");
+
+>>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
 var signData;
 var membership;
+var memberId;
+var memberName;
+var memberEmail;
 var pricePerHour;
+var unread;
 
 >>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
 var signInBtn = document.querySelector("#signin-btn");
@@ -10,12 +19,17 @@ var memberBtn = document.querySelector("#member-btn");
 var chatBtn = document.querySelector("#chat-btn");
 
 <<<<<<< HEAD:app/static/js/base.js
+<<<<<<< HEAD:app/static/js/base.js
 function baseInit(){
     checkSignedIn();
 =======
 var loading = document.querySelector("#loading");
+=======
+var msgNote = document.querySelector("#msg-note");
+>>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
 
 async function baseInit(){
+    startLoading();
     await checkSignedIn();
 >>>>>>> 16009bf (Set permission of getting payment.html and feedback.html.):flask/app/static/js/base.js
     signOut();
@@ -31,6 +45,10 @@ async function checkSignedIn(){
     signData = await isSignedIn();
     if (signData){
         membership = signData["info"]["membership"];
+        memberId = signData["info"]["id"];
+        memberName = signData["info"]["name"];
+        memberEmail = signData["info"]["email"];
+        unread = signData["info"]["unread"];
         if (membership === "consultant"){
             pricePerHour = signData["info"]["price"];
         }
@@ -39,7 +57,14 @@ async function checkSignedIn(){
         toggleBlock(signInBtn, memberBtn);
 =======
         toggleBlock(signInBtn, memberBtn, chatBtn);
+<<<<<<< HEAD:app/static/js/base.js
 >>>>>>> 33df9f5 (Modified intro in index.html and checked path in sign.html.):flask/app/static/js/base.js
+=======
+
+        if (unread > 0){
+            showBlock(msgNote);
+        }
+>>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
     }
     showBlock(document.body);
 }
@@ -81,6 +106,16 @@ function handleBtns(){
 =======
     memberPageBtn.addEventListener("click", function(){location.href = "/memberpage";})
 >>>>>>> 7a6bc4b (Finished rendering memberpage.html.):flask/app/static/js/base.js
+}
+
+// loading
+function startLoading(){
+    document.querySelector("#loader").style.visibility = "visible";
+}
+
+function endLoading(){
+    hideBlock(loader);
+    document.querySelector("body").classList.remove("hidden");
 }
 
 // Utils
@@ -138,9 +173,12 @@ function renderMsgWindow(title, reload){
 }
 
 <<<<<<< HEAD:app/static/js/base.js
+<<<<<<< HEAD:app/static/js/base.js
 >>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
 =======
 // Utils
+=======
+>>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
 function closeWindowMsg(){
     document.querySelector(".window-msg").remove();
     document.querySelector(".modal").remove();
