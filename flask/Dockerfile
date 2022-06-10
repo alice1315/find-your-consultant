@@ -9,4 +9,4 @@ RUN pip3 install -r requirements.txt
 COPY . .
 
 # CMD ["python3", "run.py"]
-CMD ["gunicorn" "--worker-class" "eventlet" "-w" "1" "-b" "0.0.0.1:3000" "run:app"]
+# CMD ["gunicorn" "--worker-class" "eventlet" "-w" "1" "-b" "0.0.0.0:3000" "run:app"]
