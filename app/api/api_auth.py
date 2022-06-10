@@ -25,22 +25,21 @@ def sign_in():
 
     else:
         if membership == "consultant":
-            sql = ("SELECT con.id, con.name, con.email, con.password, con.price, CAST(SUM(r.consultant) AS SIGNED) AS unread FROM consultant con LEFT JOIN `case` ca ON ca.consultant_id=con.id LEFT JOIN read_status r ON ca.case_id=r.case_id WHERE email=%s")
+            sql = ("SELECT id, name, email, password, price FROM consultant WHERE email=%s")
 
         elif membership == "member":
-            sql = ("SELECT m.id, m.name, m.email, m.password, CAST(SUM(r.member) AS SIGNED) AS unread FROM member m LEFT JOIN `case` ca ON ca.member_id=m.id LEFT JOIN read_status r ON ca.case_id=r.case_id WHERE email=%s")
+            sql = ("SELECT id, name, email, password, phone FROM member WHERE email=%s")
 
         sql_data = (email, )
         result = db.execute_sql(sql, sql_data, "one")
+        print(result)
 
-        if not result:
+        if not result["id"]:
             return make_response(res.error("此Email尚未註冊"), 400)
         else:
-            print(result["password"])
             if password == result["password"]:
                 del result["password"]
                 result["membership"] = membership
-                print(result)
                 auth_token = Auth.encode_auth_token(result)
                 response = make_response(res.ok())
                 response.set_cookie("access_token", auth_token)

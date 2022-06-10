@@ -64,8 +64,8 @@ function handleInfoImg(){
     infoBlocks.forEach((e) => {
         e.addEventListener("mouseover", function(){
             let step = e.id;
-            let infoImg = document.querySelector("#info-img");
-            infoImg.src = `/img/step/${step}.png`;
+            hideBlock(document.querySelectorAll(".info-img"));
+            showBlock(document.querySelector(`#img-${step}`));
         })
     })
 }

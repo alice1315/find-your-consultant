@@ -10,8 +10,9 @@ var membership;
 var memberId;
 var memberName;
 var memberEmail;
+var memberPhone;
 var pricePerHour;
-var unread;
+var socket;
 
 >>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
 var signInBtn = document.querySelector("#signin-btn");
@@ -61,25 +62,34 @@ async function checkSignedIn(){
         memberId = signData["info"]["id"];
         memberName = signData["info"]["name"];
         memberEmail = signData["info"]["email"];
-        unread = signData["info"]["unread"];
         if (membership === "consultant"){
             pricePerHour = signData["info"]["price"];
+        } else{
+            memberPhone = signData["info"]["phone"]
         }
+<<<<<<< HEAD:app/static/js/base.js
 <<<<<<< HEAD:app/static/js/base.js
 >>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
         toggleBlock(signInBtn, memberBtn);
 =======
+=======
+
+>>>>>>> a0d8e92 (Modified function of notification and socket.):flask/app/static/js/base.js
         toggleBlock(signInBtn, memberBtn, chatBtn);
 <<<<<<< HEAD:app/static/js/base.js
 >>>>>>> 33df9f5 (Modified intro in index.html and checked path in sign.html.):flask/app/static/js/base.js
 =======
 
+<<<<<<< HEAD:app/static/js/base.js
         if (unread > 0){
             showBlock(msgNote);
         }
 >>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
+=======
+        connectSocket();
+        socket.emit("check_unread", {"membership": membership, "id": memberId})
+>>>>>>> a0d8e92 (Modified function of notification and socket.):flask/app/static/js/base.js
     }
-    showBlock(document.body);
 }
 
 function handleBtns(){

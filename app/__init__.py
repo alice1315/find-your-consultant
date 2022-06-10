@@ -1,8 +1,5 @@
 from flask import Flask
 
-# import eventlet
-# eventlet.monkey_patch()
-
 from .models.response import Response
 from .models.database import Database
 from .models.utils import Utils
@@ -39,6 +36,7 @@ def create_app():
 <<<<<<< HEAD:app/__init__.py
 <<<<<<< HEAD:app/__init__.py
 <<<<<<< HEAD:app/__init__.py
+<<<<<<< HEAD:app/__init__.py
 =======
     socketio.init_app(app, cors_allowed_origins="*")
 =======
@@ -50,6 +48,10 @@ def create_app():
 =======
     socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*", logger=True, engineio_logger=True)
 >>>>>>> 92c0cdd (Added function of notification.):flask/app/__init__.py
+=======
+    # socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*", logger=True, engineio_logger=True)
+    socketio.init_app(app, cors_allowed_origins = "*")
+>>>>>>> a0d8e92 (Modified function of notification and socket.):flask/app/__init__.py
 
 >>>>>>> 2b6a85a (Test sodkcet 2.):flask/app/__init__.py
     return app
