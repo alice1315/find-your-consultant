@@ -32,9 +32,8 @@ def sign_in():
 
         sql_data = (email, )
         result = db.execute_sql(sql, sql_data, "one")
-        print(result)
 
-        if not result["id"]:
+        if not result:
             return make_response(res.error("此Email尚未註冊"), 400)
         else:
             if password == result["password"]:
