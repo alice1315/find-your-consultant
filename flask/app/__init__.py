@@ -1,9 +1,6 @@
 from flask import Flask
 from flask_socketio import SocketIO
 
-# import eventlet
-# eventlet.monkey_patch()
-
 from .models.response import Response
 from .models.database import Database
 from .models.s3 import S3
@@ -36,6 +33,7 @@ def create_app():
     app.register_blueprint(case_bp)
     app.register_blueprint(api_bp, url_prefix = "/api")
 
-    socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*", logger=True, engineio_logger=True)
+    # socketio.init_app(app, async_mode = "eventlet", cors_allowed_origins = "*", logger=True, engineio_logger=True)
+    socketio.init_app(app, cors_allowed_origins = "*")
 
     return app

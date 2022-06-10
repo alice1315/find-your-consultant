@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    </head>
+    <head></head>
     <body onload="baseInit();">
         <div id="loader" class="center"></div>
         <div class="header">
@@ -11,7 +10,6 @@
                     <li id="signin-btn">會員登入</li>
                     <li id="chat-btn" class="hide">諮詢聊天室<div id="msg-note" class="hide"></div></li>
                     <li id="member-btn" class="hide">會員中心</li>
-                    
                 </ul>
             </div>
             <div id="member-center">
@@ -28,7 +26,10 @@
         <div class="footer">
             COPYRIGHT © 2022 Find Your Consultant
         </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="/js/base.js"></script>
         <script src="/js/auth.js"></script>
+        <script src="/js/chat_socket.js"></script>
     </body>
 </html>

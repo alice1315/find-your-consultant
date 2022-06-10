@@ -70,10 +70,8 @@ def send_messages(payload):
 
 @socketio.on("read")
 def read_messages(payload):
-    # Read messages
     case_id = payload["case_id"]
     membership = payload["membership"]
-    id = payload["id"]
 
     if membership == "member":
         sql = ("UPDATE read_status SET member=0 WHERE case_id=%s")
@@ -83,7 +81,19 @@ def read_messages(payload):
     sql_data = (case_id, )
     db.execute_sql(sql, sql_data, "one", commit = True)
 
-    # Check if unread still exists
+@socketio.on("change_status")
+def change_status(payload):
+    case_id = payload["case_id"]
+    status = payload["status"]
+
+    data = {"status": status}
+    emit("renew_status", data ,to = case_id)
+
+@socketio.on("check_unread")
+def check_read_status(payload):
+    membership = payload["membership"]
+    id = payload["id"]
+
     if membership == "member":
         sql = ("SELECT CAST(SUM(r.member) AS SIGNED) AS unread FROM `case` ca LEFT JOIN read_status r ON ca.case_id=r.case_id WHERE ca.member_id=%s")
     else:
@@ -92,12 +102,5 @@ def read_messages(payload):
     sql_data = (id, )
     data = db.execute_sql(sql, sql_data, "one")
     register_id = membership + str(id)
+
     emit("renew_unread", data, to = register_id)
-
-@socketio.on("change_status")
-def change_status(payload):
-    case_id = payload["case_id"]
-    status = payload["status"]
-
-    data = {"status": status}
-    emit("renew_status", data ,to = case_id)

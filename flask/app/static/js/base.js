@@ -5,8 +5,9 @@ var membership;
 var memberId;
 var memberName;
 var memberEmail;
+var memberPhone;
 var pricePerHour;
-var unread;
+var socket;
 
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
@@ -41,17 +42,17 @@ async function checkSignedIn(){
         memberId = signData["info"]["id"];
         memberName = signData["info"]["name"];
         memberEmail = signData["info"]["email"];
-        unread = signData["info"]["unread"];
         if (membership === "consultant"){
             pricePerHour = signData["info"]["price"];
+        } else{
+            memberPhone = signData["info"]["phone"]
         }
+
         toggleBlock(signInBtn, memberBtn, chatBtn);
 
-        if (unread > 0){
-            showBlock(msgNote);
-        }
+        connectSocket();
+        socket.emit("check_unread", {"membership": membership, "id": memberId})
     }
-    showBlock(document.body);
 }
 
 function handleBtns(){

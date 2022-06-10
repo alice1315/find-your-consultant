@@ -21,8 +21,9 @@ def get_consultant_info(fieldCode):
 
         # Handle feedback
         feedback_list = []
-        for feedback in result["feedback"].split(";%;"):
-            feedback_list.append(feedback)
-        result["feedback"] = feedback_list
+        if result["feedback"]:
+            for feedback in result["feedback"].split(";%;"):
+                feedback_list.append(feedback)
+            result["feedback"] = feedback_list
 
     return res.respond(results)

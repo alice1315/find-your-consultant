@@ -2,14 +2,12 @@ var chatData;
 var doingData;
 var finishedData;
 
-var socket;
 var windowCaseId = "";
 var messageWindow = document.querySelector("#message");
 
 async function chatInit(){
     await baseInit();
     renderPage();
-    connectSocket();
     checkPaymentOk();
 }
 
@@ -153,7 +151,6 @@ function setChatList(picUrl, fieldCode, name, jobTitle, caseId, readStatus){
     })
 }
 
-
 function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, status){
     // Leave previous room
     socket.emit("leave", {"case_id": windowCaseId})
@@ -177,42 +174,10 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     setChatFunctions(caseId, sendBtn, funcUl);
 
     // Read notificaiton
-    socket.emit("read", {"case_id": caseId, "membership": membership, "id": memberId})
+    socket.emit("read", {"case_id": caseId, "membership": membership})
     hideBlock(document.querySelector(`#${caseId}`));
-}
 
-// Socket & Handle chat window
-function connectSocket(){
-    socket = io.connect();
-    socket.on("connect", function(){
-        console.log("connect");
-    })
-    socket.on("disconnect", function(){
-        console.log("disconnected!");
-    })
-
-    // Register
-    let registerId = membership + String(memberId);
-    socket.emit("register", {"register_id": registerId})
-
-    // Make notification
-    socket.on("notify", function(data){
-        let caseId = data["case_id"];
-        if (caseId !== windowCaseId){
-            showBlock(document.querySelector(`#${caseId}`));
-            showBlock(msgNote);
-        }
-    })
-
-    // Renew unread
-    socket.on("renew_unread", function(data){
-        unread = data["unread"];
-        if (unread > 0){
-            showBlock(msgNote);
-        } else if (unread == 0){
-            hideBlock(msgNote);
-        }
-    })
+    socket.emit("check_unread", {"membership": membership, "id": memberId})
 }
 
 async function startChat(picUrl, chatWindow, sendBtn, caseId){
@@ -293,13 +258,6 @@ function receiveMsg(picUrl, chatWindow){
         if (data["receiver_membership"] === membership){
             renderReceiverMsg(picUrl, chatWindow, data["message"], data["time"]);
         }
-    })
-}
-
-function renewStatus(){
-    socket.on("renew_status", function(data){
-        let status = data["status"];
-        checkCaseStatus(status);
     })
 }
 
@@ -384,4 +342,11 @@ function checkCaseStatus(status){
         titleDiv.style.backgroundColor = "rgba(102, 102, 102, 0.2)";
         statusDiv.style.color = "#666666";
     }
+}
+
+function renewStatus(){
+    socket.on("renew_status", function(data){
+        let status = data["status"];
+        checkCaseStatus(status);
+    })
 }

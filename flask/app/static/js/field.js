@@ -102,7 +102,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     feedbackBlock.appendChild(feedbackContainer);
 
     // Feedback
-    if (feedback.length >0){
+    if (feedback && feedback.length >0){
         if (feedback.length >= 3){
             for (i = 0; i < 3; i ++){
                 feedbackContainer.appendChild(createDocElement("div", "feedback-content", " - " + feedback[i]));

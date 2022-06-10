@@ -49,6 +49,7 @@ async function renderPaymentPage(){
         // Set contact info
         document.querySelector("#contact-name").setAttribute("value", memberName);
         document.querySelector("#contact-email").setAttribute("value", memberEmail);
+        document.querySelector("#contact-phone").setAttribute("value", memberPhone);
 
         document.querySelector(".another-btn").addEventListener("click", function(){
             location.href = "/chat";
