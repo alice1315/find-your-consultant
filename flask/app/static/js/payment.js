@@ -8,6 +8,7 @@ async function paymentInit(){
     getCaseId();
     await initPaymentData(paymentUrl + `?case=${caseId}`, {method: "GET"});
     renderPaymentPage();
+    endLoading();
     tappaySetUp();
     makePayment();
 }

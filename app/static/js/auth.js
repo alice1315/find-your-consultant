@@ -4,7 +4,6 @@ var authData;
 async function authInit(){
     await baseInit();
     checkSignPath();
-    endLoading();
 }
 
 async function isSignedIn(){
@@ -21,10 +20,12 @@ function checkSignPath(){
     if (signData){
         location.href = "/";
     } else if (path === "signin"){
+        endLoading();
         signIn();
         handleToSignUpBtn();
     } else if (path === "signup"){
         renderSignUpPage();
+        endLoading();
         signUp();
     }
 }

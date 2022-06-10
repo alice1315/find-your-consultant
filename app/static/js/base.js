@@ -28,8 +28,21 @@ var loading = document.querySelector("#loading");
 var msgNote = document.querySelector("#msg-note");
 >>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
 
+// loading
+document.onreadystatechange = function () {
+    if (document.readyState !== 'complete') {
+        document.querySelector("#loader").style.visibility = "visible";
+    }
+}
+
+function endLoading(){
+    if (document.readyState === 'complete') {
+        hideBlock(loader);
+        document.querySelector("body").classList.remove("hidden");
+    }
+}
+
 async function baseInit(){
-    startLoading();
     await checkSignedIn();
 >>>>>>> 16009bf (Set permission of getting payment.html and feedback.html.):flask/app/static/js/base.js
     signOut();
@@ -106,16 +119,6 @@ function handleBtns(){
 =======
     memberPageBtn.addEventListener("click", function(){location.href = "/memberpage";})
 >>>>>>> 7a6bc4b (Finished rendering memberpage.html.):flask/app/static/js/base.js
-}
-
-// loading
-function startLoading(){
-    document.querySelector("#loader").style.visibility = "visible";
-}
-
-function endLoading(){
-    hideBlock(loader);
-    document.querySelector("body").classList.remove("hidden");
 }
 
 // Utils

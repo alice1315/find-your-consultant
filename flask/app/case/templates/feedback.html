@@ -8,11 +8,11 @@
         <link rel="stylesheet" href="/css/base.css"></link>
         <link rel="stylesheet" href="/css/feedback.css"></link>
     </head>
-    <body onload="feedbackInit();">
+    <body onload="feedbackInit();" class="hidden">
         {% extends "base.html" %}
         
         {% block body %}
-        <div class="content hide">
+        <div class="content">
             <div class="page-top">
                 <div class="top-mark"></div>
                 <div class="page-title"><span id="case-id"></span> 結案回饋</div>
