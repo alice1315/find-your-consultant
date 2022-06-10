@@ -40,6 +40,7 @@ async function renderPage(){
         toggleBlock(document.querySelector(".footer"));
         await getChatList();
         renderChatList(doingData);
+        endLoading();
         changeChatList();
     } else{
         location.href = "/";

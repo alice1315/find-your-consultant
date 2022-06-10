@@ -8,6 +8,7 @@ async function memberInit(){
         location.href = "/";
     }
     renderMemberPage();
+    endLoading();
 }
 
 async function initMemberData(){

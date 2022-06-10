@@ -5,6 +5,7 @@ async function feedbackInit(){
     await baseInit();
     getCaseId();
     renderFeedbackPage();
+    endLoading();
     sendFeedback();
 }
 

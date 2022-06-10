@@ -14,8 +14,21 @@ var chatBtn = document.querySelector("#chat-btn");
 
 var msgNote = document.querySelector("#msg-note");
 
+// loading
+document.onreadystatechange = function () {
+    if (document.readyState !== 'complete') {
+        document.querySelector("#loader").style.visibility = "visible";
+    }
+}
+
+function endLoading(){
+    if (document.readyState === 'complete') {
+        hideBlock(loader);
+        document.querySelector("body").classList.remove("hidden");
+    }
+}
+
 async function baseInit(){
-    startLoading();
     await checkSignedIn();
     signOut();
     handleBtns();
@@ -61,16 +74,6 @@ function handleBtns(){
     // Memberpage
     let memberPageBtn = document.querySelector("#memberpage-btn");
     memberPageBtn.addEventListener("click", function(){location.href = "/memberpage";})
-}
-
-// loading
-function startLoading(){
-    document.querySelector("#loader").style.visibility = "visible";
-}
-
-function endLoading(){
-    hideBlock(loader);
-    document.querySelector("body").classList.remove("hidden");
 }
 
 // Utils

@@ -2,11 +2,11 @@ var fieldData;
 var fieldCode;
 
 async function fieldInit(){
-    await baseInit();
     checkFieldPath();
     await initFieldData();
     renderProfile();
     endLoading();
+    await baseInit();
 }
 
 function checkFieldPath(){

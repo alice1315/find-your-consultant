@@ -1,10 +1,10 @@
 async function indexInit(){
     await baseInit();
+    renderInfo();
+    endLoading();
     handleSignUpBtn();
     handleFieldBtns();
-    renderInfo();
     handleInfoBtns();
-    endLoading();
 }
 
 function handleSignUpBtn(){
