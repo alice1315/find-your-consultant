@@ -12,7 +12,6 @@ var memberName;
 var memberEmail;
 var memberPhone;
 var pricePerHour;
-var socket;
 
 >>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
 var signInBtn = document.querySelector("#signin-btn");
