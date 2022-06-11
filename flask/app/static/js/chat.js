@@ -85,18 +85,6 @@ function changeChatList(){
     })
 }
 
-function cleanWindow(){
-    document.querySelector(".left-list").innerHTML = "";
-    document.querySelector(".right-chat-window").innerHTML = "";
-
-    let rightTitle = document.querySelector(".right-title");
-    rightTitle.style.backgroundColor = "#FFFFFF";
-
-    document.querySelectorAll(".right-info").forEach((e) => {
-        e.innerText = "";
-    })
-}
-
 function renderChatList(data){
     data.forEach(function(chat){
         let picUrl = chat["pic_url"];
@@ -177,7 +165,7 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
     socket.emit("read", {"case_id": caseId, "membership": membership})
     hideBlock(document.querySelector(`#${caseId}`));
 
-    socket.emit("check_unread", {"membership": membership, "id": memberId})
+    socket.emit("check_unread", {"membership": membership, "id": memberId});
 }
 
 async function startChat(picUrl, chatWindow, sendBtn, caseId){
@@ -326,6 +314,18 @@ function renderChatFunctionList(){
 }
 
 // Other utils
+function cleanWindow(){
+    document.querySelector(".left-list").innerHTML = "";
+    document.querySelector(".right-chat-window").innerHTML = "";
+
+    let rightTitle = document.querySelector(".right-title");
+    rightTitle.style.backgroundColor = "#FFFFFF";
+
+    document.querySelectorAll(".right-info").forEach((e) => {
+        e.innerText = "";
+    })
+}
+
 function checkCaseStatus(status){
     let titleDiv = document.querySelector(".right-title");
     let statusDiv = document.querySelector("#status");

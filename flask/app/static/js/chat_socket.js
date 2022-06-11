@@ -1,3 +1,5 @@
+var socket;
+
 function connectSocket(){
     socket = io.connect();
 

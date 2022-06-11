@@ -7,7 +7,6 @@ var memberName;
 var memberEmail;
 var memberPhone;
 var pricePerHour;
-var socket;
 
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
