@@ -14,7 +14,8 @@
         {% block body %}
         <div class="welcome">
             <div class="img-container">
-                <img src="/img/welcome.png"/>
+                <!-- <img src="/img/welcome.png"/> -->
+                <img src="{{url_for('static', filename='/img/welcome.png')}}"/>
             </div>
             <div class="welcome-content">
                 <div class="welcome-title">尋找你的專業顧問</div>
