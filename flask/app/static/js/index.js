@@ -42,17 +42,14 @@ function handleFieldBtns(){
 
 function renderInfo(){
     let info = document.querySelectorAll("input[name='intro-list']");
-    let infoImg = document.querySelector("#info-img");
     info.forEach((e) => {
         e.addEventListener("change", function(e){
             if (e.target.value === "for-member"){
                 showBlock(document.querySelector("#member-intro"));
                 hideBlock(document.querySelector("#consultant-intro"));
-                infoImg.src = `/img/step/m1.png`;
             } else{
                 hideBlock(document.querySelector("#member-intro"));
                 showBlock(document.querySelector("#consultant-intro"));
-                infoImg.src = `/img/step/c1.png`;
             }
         })
     })
@@ -63,9 +60,8 @@ function handleInfoImg(){
     let infoBlocks = document.querySelectorAll(".left-block");
     infoBlocks.forEach((e) => {
         e.addEventListener("mouseover", function(){
-            let step = e.id;
-            hideBlock(document.querySelectorAll(".info-img"));
-            showBlock(document.querySelector(`#img-${step}`));
+            document.querySelectorAll(".info-img").forEach((e) => {hideBlock(e);})
+            showBlock(document.querySelector(`#img-${e.id}`));
         })
     })
 }
