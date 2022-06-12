@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Find Your Consultant</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='/css/base.css')}}"></link>
-        <link rel="stylesheet" href="{{url_for('static', filename='/css/feedback.css')}}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/feedback.css')}}"></link>
     </head>
     <body onload="feedbackInit();" class="hidden">
         {% extends "base.html" %}
@@ -54,8 +54,8 @@
             </div>
         </div>
 
-        <script src="{{url_for('static', filename='/js/chat_functions.js')}}"></script>
-        <script src="{{url_for('static', filename='/js/feedback.js')}}"></script>
+        <script src="{{url_for('static', filename='js/chat_functions.js')}}"></script>
+        <script src="{{url_for('static', filename='js/feedback.js')}}"></script>
         {% endblock body%}
     </body>
 </html>
