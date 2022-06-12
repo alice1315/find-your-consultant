@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Find Your Consultant</title>
-        <link rel="stylesheet" href="/css/base.css"></link>
-        <link rel="stylesheet" href="/css/index.css"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='/css/base.css')}}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='/css/index.css')}}"></link>
     </head>
     <body onload="indexInit();" class="hidden">
         {% extends "base.html" %}
@@ -14,7 +14,6 @@
         {% block body %}
         <div class="welcome">
             <div class="img-container">
-                <!-- <img src="/img/welcome.png"/> -->
                 <img src="{{url_for('static', filename='/img/welcome.png')}}"/>
             </div>
             <div class="welcome-content">
@@ -39,27 +38,27 @@
                     <div class="left"></div>
                     <div class="right"></div>
                     <div class="field-item">
-                        <div class="field-img"><img src="/img/field/ta.png"/></div>
+                        <div class="field-img"><img src="{{url_for('static', filename='/img/field/ta.png')}}"/></div>
                         <div>稅務</div>
                     </div>
                     <div class="field-item">
-                        <div class="field-img"><img src="/img/field/ac.png"/></div>
+                        <div class="field-img"><img src="{{url_for('static', filename='/img/field/ac.png')}}"/></div>
                         <div>會計</div>
                     </div>
                     <div class="field-item">
-                        <div class="field-img"><img src="/img/field/fi.png"/></div>
+                        <div class="field-img"><img src="{{url_for('static', filename='/img/field/fi.png')}}"/></div>
                         <div>金融</div>
                     </div>
                     <div class="field-item">
-                        <div class="field-img"><img src="/img/field/cr.png"/></div>
+                        <div class="field-img"><img src="{{url_for('static', filename='/img/field/cr.png')}}"/></div>
                         <div>刑法</div>
                     </div>
                     <div class="field-item">
-                        <div class="field-img"><img src="/img/field/ci.png"/></div>
+                        <div class="field-img"><img src="{{url_for('static', filename='/img/field/ci.png')}}"/></div>
                         <div>民法</div>
                     </div>
                     <div class="field-item">
-                        <div class="field-img"><img src="/img/field/co.png"/></div>
+                        <div class="field-img"><img src="{{url_for('static', filename='/img/field/co.png')}}"/></div>
                         <div>公司法</div>
                     </div>
                 </div>
@@ -120,22 +119,22 @@
                             </div>
                         </div>
                         <div class="intro-right">
-                            <img id="img-m1" class="info-img" src="/img/step/m1.png"/>
-                            <img id="img-m2" class="info-img hide" src="/img/step/m2.png"/>
-                            <img id="img-m3" class="info-img hide" src="/img/step/m3.png"/>
-                            <img id="img-m4" class="info-img hide" src="/img/step/m4.png"/>
-                            <img id="img-c1" class="info-img hide" src="/img/step/c1.png"/>
-                            <img id="img-c2" class="info-img hide" src="/img/step/c2.png"/>
-                            <img id="img-c3" class="info-img hide" src="/img/step/c3.png"/>
-                            <img id="img-c4" class="info-img hide" src="/img/step/c4.png"/>
-                            <img id="img-c5" class="info-img hide" src="/img/step/c5.png"/>
+                            <img id="img-m1" class="info-img" src="{{url_for('static', filename='/img/step/m1.png')}}"/>
+                            <img id="img-m2" class="info-img hide" src="{{url_for('static', filename='/img/step/m2.png')}}"/>
+                            <img id="img-m3" class="info-img hide" src="{{url_for('static', filename='/img/step/m3.png')}}"/>
+                            <img id="img-m4" class="info-img hide" src="{{url_for('static', filename='/img/step/m4.png')}}"/>
+                            <img id="img-c1" class="info-img hide" src="{{url_for('static', filename='/img/step/c1.png')}}"/>
+                            <img id="img-c2" class="info-img hide" src="{{url_for('static', filename='/img/step/c2.png')}}"/>
+                            <img id="img-c3" class="info-img hide" src="{{url_for('static', filename='/img/step/c3.png')}}"/>
+                            <img id="img-c4" class="info-img hide" src="{{url_for('static', filename='/img/step/c4.png')}}"/>
+                            <img id="img-c5" class="info-img hide" src="{{url_for('static', filename='/img/step/c5.png')}}"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script src="/js/index.js"></script>
+        <script src="{{url_for('static', filename='/js/index.js')}}"></script>
         {% endblock body%}
     </body>
 </html>
