@@ -105,7 +105,7 @@ function renderMsgWindow(title, reload){
     let msgTitle = createDocElement("div", "msg-title");
     let msgContent = createDocElement("div", "msg-content");
 
-    closeImg.src = "/img/icon_close.png";
+    closeImg.src = "/static/img/icon_close.png";
     msgTitle.textContent = title;
 
     document.body.appendChild(modal);
