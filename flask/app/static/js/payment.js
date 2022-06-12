@@ -7,9 +7,9 @@ async function paymentInit(){
     await baseInit();
     getCaseId();
     await initPaymentData(paymentUrl + `?case=${caseId}`, {method: "GET"});
+    tappaySetUp();
     renderPaymentPage();
     endLoading();
-    tappaySetUp();
     makePayment();
 }
 
@@ -35,11 +35,9 @@ async function renderPaymentPage(){
     let status = await getCaseStatus(caseId);
 
     if (status && status === "提出報價"){
-        showBlock(document.querySelector(".content"));
-
         // Set payment info
         document.querySelector("#case-id").innerText = paymentData["data"]["case_id"];
-        document.querySelector("#field").innerText = convertFieldName(paymentData["data"]["field_code"]);
+        document.querySelector("#field").innerText = paymentData["data"]["field_name"];
         document.querySelector("#consultant").innerText = paymentData["data"]["name"];
         document.querySelector("#job-title").innerText = paymentData["data"]["job_title"];
         document.querySelector("#price-per-hour").innerText = paymentData["data"]["price_per_hour"];
@@ -55,7 +53,6 @@ async function renderPaymentPage(){
             location.href = "/chat";
         })
     }else {
-        showBlock(loading);
         location.href = "/";
     }
 }
@@ -65,16 +62,16 @@ function tappaySetUp(){
 
     let fields = {
         number: {
-            element: document.getElementById('card-number'),
-            placeholder: '**** **** **** ****'
+            element: document.querySelector('#card-number'),
+            placeholder: '4242 4242 4242 4242'
         },
         expirationDate: {
-            element: document.getElementById('card-expiration-date'),
-            placeholder: 'MM / YY'
+            element: document.querySelector('#card-expiration-date'),
+            placeholder: '01 / 23'
         },
         ccv: {
-            element: document.getElementById('card-ccv'),
-            placeholder: 'ccv'
+            element: document.querySelector('#card-ccv'),
+            placeholder: '123'
         }
     }
     
@@ -103,7 +100,7 @@ function updateCardStatus(field, msg){
             msg.innerText = "";
             break;
         default:
-            console.log("field error");
+            showErrorMsg("field error");
     }
 }
 
@@ -149,7 +146,7 @@ function makePayment(){
         if (checkPaymentStatus()){
             TPDirect.card.getPrime(async(result) => {
                 if (result.status !== 0){
-                    console.log("get prime error " + result.msg);
+                    showErrorMsg(result.msg);
                     return;
                 }
 
@@ -164,7 +161,7 @@ function makePayment(){
                 await initPaymentData("/api/payment", fetchOptions);
                 
                 if (paymentData["ok"]){
-                    document.cookie = `caseId=${caseId}`;
+                    socket.emit("change_status", {"case_id": caseId, "status": "正式諮詢"});
                     renderPaymentOkMsg();
                 } else{
                     renderPaymentErrorMsg();
@@ -185,6 +182,8 @@ function renderPaymentOkMsg(){
     exitBtn.addEventListener("click", function(){
         location.href = "/chat";
     })
+
+    hideBlock(document.querySelector(".close"));
 }
 
 function renderPaymentErrorMsg(){

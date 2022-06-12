@@ -15,7 +15,11 @@ def get_payment_info():
 
         if membership == "member":
             case_id = request.args.get("case")
-            sql = ("SELECT ca.case_id, ca.field_code, con.name, con.job_title, ca.price_per_hour, ca.hours, ca.total_price FROM `case` ca, consultant con WHERE ca.case_id=%s AND ca.consultant_id=con.id")
+            sql = ("SELECT ca.case_id, f.field_name, con.name, con.job_title, ca.price_per_hour, ca.hours, ca.total_price"
+            " FROM `case` ca"
+            " LEFT JOIN fields f ON ca.field_code=f.field_code"
+            " LEFT JOIN consultant con ON ca.consultant_id=con.id"
+            " WHERE ca.case_id=%s")
             sql_data = (case_id, )
             result = db.execute_sql(sql, sql_data, "one")
             
@@ -62,12 +66,12 @@ def make_payment():
 
             sql = ("INSERT INTO payment (case_id, status) VALUES (%s, %s)")
             sql_data = (case_id, y(payment_result))
-            db.execute_sql(sql, sql_data, "one", commit = True)
+            db.execute_sql(sql, sql_data, "", commit = True)
 
             if y(payment_result) == "成功":
                 sql = ("UPDATE `case` SET status='正式諮詢' WHERE case_id=%s")
                 sql_data = (case_id, )
-                db.execute_sql(sql, sql_data, "one", commit = True)
+                db.execute_sql(sql, sql_data, "", commit = True)
 
                 return res.ok()
             else: 

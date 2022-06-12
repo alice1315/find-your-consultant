@@ -32,35 +32,42 @@ function makeQuotation(caseId, sendBtn){
             let submitBtn = renderQuotationWindow();
             submitBtn.addEventListener("click", async function(){
                 let hr = document.querySelector("#hr").value;
-                let totalPrice = hr * pricePerHour;
+                if (hr === "" || ! Number.isInteger(Number(hr))){
+                    showBlock(document.querySelector(".red"));
 
-                let reqData = {
-                    "case_id": caseId,
-                    "price_per_hour": pricePerHour,
-                    "hours": hr,
-                    "total_price": totalPrice
-                }
+                } else{
+                    let totalPrice = Number(hr) * pricePerHour;
 
-                let fetchOptions = {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(reqData)
-                }
+                    let reqData = {
+                        "case_id": caseId,
+                        "price_per_hour": pricePerHour,
+                        "hours": hr,
+                        "total_price": totalPrice
+                    }
 
-                await callFunctionApi("/api/quotation", fetchOptions);
+                    let fetchOptions = {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(reqData)
+                    }
 
-                if (funcData["ok"]){
-                    messageWindow.value = "";
-                    setQuotationMsg(hr, totalPrice);
-                    closeWindowMsg();
-                    sendBtn.click();
-                    socket.emit("change_status", {"case_id": caseId, "status": "提出報價"});
+                    await callFunctionApi("/api/quotation", fetchOptions);
+
+                    if (funcData["ok"]){
+                        messageWindow.value = "";
+                        setQuotationMsg(hr, totalPrice);
+                        closeMsgWindow();
+                        sendBtn.click();
+                        socket.emit("change_status", {"case_id": caseId, "status": "提出報價"});
+                    } else if (funcData["error"]){
+                        showErrorMsg(funcData["message"]);
+                    }
                 }
             })
         } else{
-            showPermissionError();
+            showErrorMsg("專案階段暫無法執行此功能，謝謝！");
         }
     })
 }
@@ -77,6 +84,8 @@ function renderQuotationWindow(){
 
     let submitBtn = createDocElement("button", "btn", "送出");
     msgContent.appendChild(submitBtn);
+    msgContent.appendChild(createDocElement("div", "msg red hide", "請輸入正確資訊"))
+
     return submitBtn
 }
 
@@ -96,15 +105,10 @@ function toMakePayment(caseId){
         if (status === "提出報價"){
             location.href = `/payment?case=${caseId}`;
         } else{
-            showPermissionError();
+            showErrorMsg("專案階段暫無法執行此功能，謝謝！");
         }
         
     })
-}
-
-function emitPaymentOk(){
-    console.log("here");
-    socket.emit("change_status", {"case_id": caseId, "status": "正式諮詢"});
 }
 
 // End case (for consultant)
@@ -128,13 +132,16 @@ function endCase(caseId, sendBtn){
                 if (funcData["ok"]){
                     messageWindow.value = "";
                     setEndCaseMsg(caseId);
-                    closeWindowMsg();
+                    closeMsgWindow();
                     sendBtn.click();
+
                     socket.emit("change_status", {"case_id": caseId, "status": "提出結案"});
-                } 
+                } else if (funcData["error"]){
+                    showErrorMsg(funcData["message"]);
+                }
             })
         } else{
-            showPermissionError();
+            showErrorMsg("專案階段暫無法執行此功能，謝謝！");
         }
     })
 }
@@ -147,7 +154,7 @@ function renderEndCaseWindow(){
 
     let exitBtn = createDocElement("button", "another-btn", "返回聊天室");
     msgContent.appendChild(exitBtn);
-    exitBtn.addEventListener("click", closeWindowMsg);
+    exitBtn.addEventListener("click", closeMsgWindow);
 
     let submitBtn = createDocElement("button", "btn msg-btn", "確認結案");
     msgContent.appendChild(submitBtn);
@@ -169,16 +176,24 @@ function agreeEndCase(caseId, sendBtn){
 
         if (status === "提出結案"){
             let submitBtn = renderAgreeWindow();
-            submitBtn.addEventListener("click", function(){
-                messageWindow.value = "";
-                setAgreeMsg(caseId);
-                closeWindowMsg();
-                sendBtn.click();
-                socket.emit("change_status", {"case_id": caseId, "status": "同意結案"});
-                setTimeout(() => {location.href = `/feedback?case=${caseId}`;}, "1000")
+            submitBtn.addEventListener("click", async function(){
+                await patchAgreeEndCase(caseId);
+
+                if (funcData["ok"]){
+                    messageWindow.value = "";
+                    setAgreeMsg(caseId);
+                    closeMsgWindow();
+                    sendBtn.click();
+
+                    socket.emit("change_status", {"case_id": caseId, "status": "同意結案"});
+                    setTimeout(() => {location.href = `/feedback?case=${caseId}`;}, "1000");
+
+                } else if (funcData["error"]){
+                    showErrorMsg(funcData["message"]);
+                }
             })
         } else{
-            showPermissionError();
+            showErrorMsg("專案階段暫無法執行此功能，謝謝！");
         }
     })
 }
@@ -191,7 +206,7 @@ function renderAgreeWindow(){
 
     let exitBtn = createDocElement("button", "another-btn", "返回聊天室");
     msgContent.appendChild(exitBtn);
-    exitBtn.addEventListener("click", closeWindowMsg);
+    exitBtn.addEventListener("click", closeMsgWindow);
 
     let submitBtn = createDocElement("button", "btn msg-btn", "確認結案");
     msgContent.appendChild(submitBtn);
@@ -202,6 +217,18 @@ function renderAgreeWindow(){
 function setAgreeMsg(caseId){
     messageWindow.value = `【客戶同意結案】
 您好，已有共識對此案件編號： ${caseId} 進行結案，感謝您的協助！`;
+}
+
+async function patchAgreeEndCase(caseId){
+    let fetchOptions = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"case_id": caseId})
+    }
+
+    await callFunctionApi("/api/agree", fetchOptions);
 }
 
 // Utils
@@ -223,7 +250,3 @@ async function getCaseStatus(caseId){
     } 
 }
 
-function showPermissionError(){
-    let msgContent = renderMsgWindow("錯誤訊息");
-    msgContent.innerText = "專案階段暫無法執行此功能，謝謝！"
-}

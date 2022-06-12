@@ -292,6 +292,10 @@ a{
     height: 16px;
 }
 
+.red{
+    color: #CF4B49;
+}
+
 /* loader */
 #loader {
     border: 12px solid #f3f3f3;

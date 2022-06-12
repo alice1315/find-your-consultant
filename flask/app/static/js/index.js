@@ -13,16 +13,14 @@ function handleSignUpBtn(){
     
     memberBtn.addEventListener("click", function(){
         if (signData){
-            let msgContent = renderMsgWindow("權限提醒");
-            msgContent.innerText = "您已為登入狀態";
+            showErrorMsg("您已為登入狀態");
         } else{
             location.href = "/signup/member";
         }
     });
     consultantBtn.addEventListener("click", function(){
         if (signData){
-            let msgContent = renderMsgWindow("權限提醒");
-            msgContent.innerText = "您已為登入狀態";
+            showErrorMsg("您已為登入狀態");
         } else{
             location.href = "/signup/consultant";
         }
@@ -73,8 +71,7 @@ function handleInfoBtns(){
     let toSignIn = document.querySelector("#m2");
     toSignIn.addEventListener("click", function(){
         if (signData){
-            let msgContent = renderMsgWindow("權限提醒");
-            msgContent.innerText = "您已為登入狀態";
+            showErrorMsg("您已為登入狀態");
         } else{
             location.href = "/signup/member";
         }
@@ -83,8 +80,7 @@ function handleInfoBtns(){
     let toSignUp = document.querySelector("#c1");
     toSignUp.addEventListener("click", function(){
         if (signData){
-            let msgContent = renderMsgWindow("權限提醒");
-            msgContent.innerText = "您已為登入狀態";
+            showErrorMsg("您已為登入狀態");
         } else{
             location.href = "/signup/consultant";
         }

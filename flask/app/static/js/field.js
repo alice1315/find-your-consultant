@@ -131,14 +131,11 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
             if (fieldData["ok"]){
                 location.href = "/chat";
             } else if (fieldData["error"]){
-                let msgContent = renderMsgWindow("錯誤訊息");
-                msgContent.innerText = fieldData["message"];
+                showErrorMsg(fieldData["message"]);
             }
-            
         } else if (signData && membership === "consultant"){
-            let msgContent = renderMsgWindow("錯誤訊息");
-            msgContent.innerText = "請以一般會員身份登入，再點選此功能與專業顧問諮詢！";
-        }else{
+            showErrorMsg("請以一般會員身份登入，再點選此功能與專業顧問諮詢！");
+        } else{
             location.href = "/signin";
         }
     })

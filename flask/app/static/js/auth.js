@@ -57,7 +57,7 @@ function signIn(){
         if (authData["ok"]){
             location.href = "/";
         } else{
-            showMsg("登入失敗：" + authData["message"])
+            showSignMsg("登入失敗：" + authData["message"])
         }
     }
 
@@ -104,7 +104,7 @@ function signUp(){
         if (authData["ok"]){
             location.href = "/";
         } else{
-            showMsg("註冊失敗：" + authData["message"])
+            showSignMsg("註冊失敗：" + authData["message"])
         }
     }
 
@@ -125,7 +125,7 @@ function signOut(){
     btn.addEventListener("click", handleSignOutSubmit);
 }
 
-function showMsg(message){
+function showSignMsg(message){
     let signMsg = document.querySelector(".sign-msg");
     signMsg.innerHTML = message;
 }

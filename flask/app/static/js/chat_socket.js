@@ -1,4 +1,5 @@
 var socket;
+var windowCaseId = "";
 
 function connectSocket(){
     socket = io.connect();
@@ -11,19 +12,18 @@ function connectSocket(){
 }
 
 function socketOn(){
-    socket.on("connect", function(){
-        console.log("connect");
-    })
-    socket.on("disconnect", function(){
-        console.log("disconnected!");
-    })
-
     // Make notification
     socket.on("notify", function(data){
         let caseId = data["case_id"];
+
         if (caseId !== windowCaseId){
-            showBlock(document.querySelector(`#${caseId}`));
+            if (document.querySelector(`#${caseId}`)){
+                showBlock(document.querySelector(`#${caseId}`));
+            }
             showBlock(msgNote);
+
+        } else{
+            socket.emit("read", {"case_id": caseId, "membership": membership})
         }
     })
 

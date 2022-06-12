@@ -2,26 +2,11 @@ var chatData;
 var doingData;
 var finishedData;
 
-var windowCaseId = "";
 var messageWindow = document.querySelector("#message");
 
 async function chatInit(){
     await baseInit();
     renderPage();
-    checkPaymentOk();
-}
-
-function checkPaymentOk(){
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-
-    let caseId = getCookie("caseId")
-    if(caseId){
-        socket.emit("change_status", {"case_id": caseId, "status": "正式諮詢"});
-    }
 }
 
 async function initChatData(url, fetchOptions){
@@ -67,28 +52,10 @@ async function getChatList(){
     document.querySelector("#finished-amount").innerText = finishedData.length;
 }
 
-function changeChatList(){
-    let chatList = document.querySelectorAll("input[name='chat-list']");
-    chatList.forEach((e) => {
-        e.addEventListener("change", async function(e){
-            cleanWindow();
-            if (e.target.value === "doing"){
-                document.querySelector(".right-send").innerHTML = "";
-                await getChatList();
-                renderChatList(doingData);
-            } else{
-                document.querySelector(".right-send").innerHTML = "";
-                await getChatList();
-                renderChatList(finishedData);
-            }
-        })
-    })
-}
-
 function renderChatList(data){
     data.forEach(function(chat){
         let picUrl = chat["pic_url"];
-        let fieldCode = chat["field_code"];
+        let field = chat["field_name"];
         let name = chat["name"];
         let jobTitle;
         let readStatus;
@@ -102,11 +69,11 @@ function renderChatList(data){
 
         let caseId = chat["case_id"];
 
-        setChatList(picUrl, fieldCode, name, jobTitle, caseId, readStatus);
+        setChatList(picUrl, field, name, jobTitle, caseId, readStatus);
     })
 }
 
-function setChatList(picUrl, fieldCode, name, jobTitle, caseId, readStatus){
+function setChatList(picUrl, field, name, jobTitle, caseId, readStatus){
     let chatListContainer = document.querySelector(".left-list");
     let small = createDocElement("div", "left-small");
     let notification = createDocElement("div", "left-notification hide");
@@ -129,17 +96,17 @@ function setChatList(picUrl, fieldCode, name, jobTitle, caseId, readStatus){
 
     small.appendChild(infoContainer);
     infoContainer.appendChild(info);
-    info.appendChild(createDocElement("div", "left-field", convertFieldName(fieldCode)));
+    info.appendChild(createDocElement("div", "left-field", field));
     info.appendChild(createDocElement("div", "left-name", name));
     info.appendChild(createDocElement("div", "left-job-title", jobTitle));
 
     small.addEventListener("click", async function(){
         let newStatus = await getCaseStatus(caseId);
-        handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, newStatus);
+        handleSmallClick(small, name, jobTitle, field, picUrl, caseId, newStatus);
     })
 }
 
-function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, status){
+function handleSmallClick(small, name, jobTitle, field, picUrl, caseId, status){
     // Leave previous room
     socket.emit("leave", {"case_id": windowCaseId})
 
@@ -150,7 +117,7 @@ function handleSmallClick(small, name, jobTitle, fieldCode, picUrl, caseId, stat
 
     document.querySelector("#right-name").innerText = name;
     document.querySelector("#right-job-title").innerText = jobTitle;
-    document.querySelector("#right-field").innerText = convertFieldName(fieldCode) + "案件： ";
+    document.querySelector("#right-field").innerText = field + "案件： ";
     document.querySelector("#right-case-id").innerText = caseId;
     checkCaseStatus(status);
 
@@ -185,18 +152,32 @@ async function startChat(picUrl, chatWindow, sendBtn, caseId){
     renewStatus();
 }
 
+function changeChatList(){
+    let chatList = document.querySelectorAll("input[name='chat-list']");
+    chatList.forEach((e) => {
+        e.addEventListener("change", async function(e){
+            cleanWindow();
+            if (e.target.value === "doing"){
+                document.querySelector(".right-send").innerHTML = "";
+                await getChatList();
+                renderChatList(doingData);
+            } else{
+                document.querySelector(".right-send").innerHTML = "";
+                await getChatList();
+                renderChatList(finishedData);
+            }
+        })
+    })
+}
+
 // Handle chat history
 async function getChatHistory(caseId){
-    let reqData = {
-        "case_id": caseId
-    }
-
     let fetchOptions = {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(reqData)
+        body: JSON.stringify({"case_id": caseId})
     }
 
     await initChatData("/api/chat", fetchOptions);
@@ -234,8 +215,9 @@ function sendMsg(chatWindow, sendBtn, caseId){
             socket.emit("send", payload);
             renderSenderMsg(chatWindow, messageWindow.value, time);
             messageWindow.value = "";
+
         } else{
-            showPermissionError();
+            showErrorMsg("專案階段暫無法執行此功能，謝謝！");
         }
     }
     sendBtn.addEventListener("click", handleSendMsg);

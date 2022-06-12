@@ -14,27 +14,28 @@ function getCaseId(){
     caseId = url.searchParams.get("case");
 }
 
-async function renderFeedbackPage(){
-    let status = await getCaseStatus(caseId);
-
-    if (status && status === "提出結案"){
-        showBlock(document.querySelector(".content"));
-
-        document.querySelector("#case-id").innerText = caseId;
-        document.querySelector("#member-name").innerText = memberName;
+async function initFeedbackData(fetchOptions){
+    if (signData){
+        await fetch(`/api/feedback`, fetchOptions)
+        .then((resp) => {
+            return resp.json();
+        }).then((result) => {
+            feedbackData = result;
+        })
     } else{
-        showBlock(loading);
         location.href = "/";
     }
 }
 
-async function initFeedbackData(fetchOptions){
-    await fetch(`/api/feedback`, fetchOptions)
-    .then((resp) => {
-        return resp.json();
-    }).then((result) => {
-        feedbackData = result;
-    })
+async function renderFeedbackPage(){
+    let status = await getCaseStatus(caseId);
+
+    if (status && status === "已結案"){
+        document.querySelector("#case-id").innerText = caseId;
+        document.querySelector("#member-name").innerText = memberName;
+    } else{
+        location.href = "/";
+    }
 }
 
 function sendFeedback(){
@@ -55,7 +56,6 @@ function sendFeedback(){
         if (feedbackData["ok"]){
             renderThankyouMsg();
         }
-
     }
 
     form.addEventListener("submit", handleSendFeedback);

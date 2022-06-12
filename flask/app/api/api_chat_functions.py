@@ -37,7 +37,7 @@ def make_quotation():
 
             sql = ("UPDATE `case` SET status='提出報價', price_per_hour=%s, hours=%s, total_price=%s WHERE case_id=%s")
             sql_data = (price_per_hour, hours, total_price, case_id)
-            db.execute_sql(sql, sql_data, "one", commit = True)
+            db.execute_sql(sql, sql_data, "", commit = True)
 
             return res.ok()
         else:
@@ -57,7 +57,7 @@ def request_to_end_case():
 
             sql = ("UPDATE `case` SET status='提出結案' WHERE case_id=%s")
             sql_data = (case_id, )
-            db.execute_sql(sql, sql_data, "one", commit = True)
+            db.execute_sql(sql, sql_data, "", commit = True)
 
             return res.ok()
             
@@ -66,7 +66,28 @@ def request_to_end_case():
     else:
         return make_response(res.error("未登入系統"), 403)
 
-# Agree end case and send feedback (for member)
+# Agree end case (for member)
+@api_.route("/agree", methods = ["PATCH"])
+def agree_end_case():
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        membership = Auth.decode_auth_token(access_token)["info"]["membership"]
+        if membership == "member":
+            data = request.get_json()
+            case_id = data["case_id"]
+
+            sql = ("UPDATE `case` SET status='已結案' WHERE case_id=%s")
+            sql_data = (case_id, )
+            db.execute_sql(sql, sql_data, "", commit = True)
+
+            return res.ok()
+
+        else:
+            return make_response(res.error("無權限進行此動作"), 403)
+    else:
+        return make_response(res.error("未登入系統"), 403)
+
+# Send feedback
 @api_.route("/feedback", methods = ["POST"])
 def send_feedback():
     access_token = request.cookies.get("access_token")
@@ -80,11 +101,7 @@ def send_feedback():
 
             sql = ("INSERT INTO feedback (case_id, consultant_rating, consultant_feedback, platform_feedback) VALUES (%s, %s, %s, %s)")
             sql_data = (case_id, rating, consultant_feedback, platform_feedback)
-            db.execute_sql(sql, sql_data, "one", commit = True)
-
-            sql = ("UPDATE `case` SET status='已結案' WHERE case_id=%s")
-            sql_data = (case_id, )
-            db.execute_sql(sql, sql_data, "one", commit = True)
+            db.execute_sql(sql, sql_data, "", commit = True)
             
             return res.ok()
 

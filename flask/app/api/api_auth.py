@@ -1,4 +1,4 @@
-from flask import request, make_response, jsonify
+from flask import request, make_response
 
 from . import api_
 from .. import res, db, utils, s3
@@ -96,7 +96,7 @@ def sign_up():
 
                 sql = ("INSERT INTO member (email, password, pic_url, name, gender, phone) VALUES (%s, %s, %s, %s, %s, %s)")
                 sql_data = (email, password, pic_url, name, gender, phone)
-                db.execute_sql(sql, sql_data, "one", commit=True)
+                db.execute_sql(sql, sql_data, "", commit=True)
 
                 return res.ok()
 
@@ -116,7 +116,7 @@ def sign_up():
                 for field in fields.split(","):
                     sql = ("INSERT INTO consultant_fields (consultant_id, field_code) VALUES (%s, %s)")
                     sql_data = (consultant_id, field)
-                    db.execute_sql(sql, sql_data, "one", commit = True)
+                    db.execute_sql(sql, sql_data, "", commit = True)
 
                 return res.ok()
             

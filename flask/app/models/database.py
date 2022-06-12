@@ -10,7 +10,7 @@ class Database:
         try:
             cnxpool = pooling.MySQLConnectionPool(
                 pool_name = "cnxpool",
-                pool_size = 5,
+                pool_size = 8,
                 **self.config
             )
         except mysql.connector.Error as err:
@@ -38,6 +38,8 @@ class Database:
                 result = cursor.fetchone()["count(*)"]
             elif method == "lastid":
                 result = cursor.lastrowid
+            elif method == "":
+                result = None
 
         except:
             cnx.rollback()

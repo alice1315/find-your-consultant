@@ -28,6 +28,7 @@ function endLoading(){
     }
 }
 
+// Base function
 async function baseInit(){
     await checkSignedIn();
     signOut();
@@ -117,7 +118,7 @@ function renderMsgWindow(title, reload){
     windowMsg.appendChild(msgContent);
 
     closeCon.addEventListener("click", function(){
-        closeWindowMsg();
+        closeMsgWindow();
         if (reload == "reload"){
             location.reload(true);
         }
@@ -125,7 +126,12 @@ function renderMsgWindow(title, reload){
     return msgContent
 }
 
-function closeWindowMsg(){
+function showErrorMsg(message){
+    let msgContent = renderMsgWindow("錯誤訊息");
+    msgContent.innerText = message;
+}
+
+function closeMsgWindow(){
     document.querySelector(".window-msg").remove();
     document.querySelector(".modal").remove();
 }
