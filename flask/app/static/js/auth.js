@@ -9,7 +9,7 @@ async function authInit(){
 async function isSignedIn(){
     await initAuthData({method: "GET"});
     if (authData["data"]){
-        return true;
+        return authData["data"];
     } else{
         return false;
     }

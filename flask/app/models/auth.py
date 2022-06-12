@@ -10,7 +10,7 @@ class Auth:
     @staticmethod
     def encode_auth_token(info):
         payload = {
-            "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes = 60),
+            "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes = 3600),
             "iat": datetime.datetime.now(datetime.timezone.utc),
             "info": info
         }

@@ -1,10 +1,5 @@
-<<<<<<< HEAD:app/static/js/base.js
-<<<<<<< HEAD:app/static/js/base.js
-=======
-=======
 var loader = document.querySelector("#loader");
 
->>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
 var signData;
 var membership;
 var memberId;
@@ -13,20 +8,11 @@ var memberEmail;
 var memberPhone;
 var pricePerHour;
 
->>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
 var signInBtn = document.querySelector("#signin-btn");
 var memberBtn = document.querySelector("#member-btn");
 var chatBtn = document.querySelector("#chat-btn");
 
-<<<<<<< HEAD:app/static/js/base.js
-<<<<<<< HEAD:app/static/js/base.js
-function baseInit(){
-    checkSignedIn();
-=======
-var loading = document.querySelector("#loading");
-=======
 var msgNote = document.querySelector("#msg-note");
->>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
 
 // loading
 document.onreadystatechange = function () {
@@ -44,17 +30,11 @@ function endLoading(){
 
 async function baseInit(){
     await checkSignedIn();
->>>>>>> 16009bf (Set permission of getting payment.html and feedback.html.):flask/app/static/js/base.js
     signOut();
     handleBtns();
-    convertFieldName();
-    convertFieldCode();
 }
 
 async function checkSignedIn(){
-<<<<<<< HEAD:app/static/js/base.js
-    if (await isSignedIn()){
-=======
     signData = await isSignedIn();
     if (signData){
         membership = signData["info"]["membership"];
@@ -66,68 +46,34 @@ async function checkSignedIn(){
         } else{
             memberPhone = signData["info"]["phone"]
         }
-<<<<<<< HEAD:app/static/js/base.js
-<<<<<<< HEAD:app/static/js/base.js
->>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
-        toggleBlock(signInBtn, memberBtn);
-=======
-=======
 
->>>>>>> a0d8e92 (Modified function of notification and socket.):flask/app/static/js/base.js
         toggleBlock(signInBtn, memberBtn, chatBtn);
-<<<<<<< HEAD:app/static/js/base.js
->>>>>>> 33df9f5 (Modified intro in index.html and checked path in sign.html.):flask/app/static/js/base.js
-=======
 
-<<<<<<< HEAD:app/static/js/base.js
-        if (unread > 0){
-            showBlock(msgNote);
-        }
->>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
-=======
         connectSocket();
         socket.emit("check_unread", {"membership": membership, "id": memberId})
->>>>>>> a0d8e92 (Modified function of notification and socket.):flask/app/static/js/base.js
     }
 }
 
 function handleBtns(){
+    // Logo
     let logo = document.querySelector(".web-title");
-    logo.addEventListener("click", function(){
-        location.href = "/";
-    })
+    logo.addEventListener("click", function(){location.href = "/";})
 
-    signInBtn.addEventListener("click", function(){
-        location.href = "/signin";
-    })
+    // Sign In
+    signInBtn.addEventListener("click", function(){location.href = "/signin";})
 
+    // Member
     memberBtn.addEventListener("click", function(){
         let memberCenter = document.querySelector("#member-center");
         memberCenter.classList.toggle("slideshow");
     })
 
-<<<<<<< HEAD:app/static/js/base.js
-    
-=======
     // Chat
     chatBtn.addEventListener("click", function(){location.href = "/chat";})
 
     // Memberpage
     let memberPageBtn = document.querySelector("#memberpage-btn");
-<<<<<<< HEAD:app/static/js/base.js
-    memberPageBtn.addEventListener("click", function(){
-        if (membership === "member"){
-            console.log(authData);
-            location.href = `/memberpage/member?id=${signData["info"]["id"]}`;
-        } else{
-            location.href = `/memberpage/consultant?id=${signData["info"]["id"]}`;
-        }
-        
-    })
->>>>>>> 78d0006 (Set memberpage.html.):flask/app/static/js/base.js
-=======
     memberPageBtn.addEventListener("click", function(){location.href = "/memberpage";})
->>>>>>> 7a6bc4b (Finished rendering memberpage.html.):flask/app/static/js/base.js
 }
 
 // Utils
@@ -135,15 +81,10 @@ function toggleBlock(...targets){
     targets.forEach(target => target.classList.toggle("hide"))
 }
 
-<<<<<<< HEAD:app/static/js/base.js
-<<<<<<< HEAD:app/static/js/base.js
-=======
-=======
 function showBlock(...targets){
     targets.forEach(target => target.classList.remove("hide"))
 }
 
->>>>>>> 8bc761f (Set function and view of payment.):flask/app/static/js/base.js
 function hideBlock(...targets){
     targets.forEach(target => target.classList.add("hide"))
 }
@@ -184,19 +125,11 @@ function renderMsgWindow(title, reload){
     return msgContent
 }
 
-<<<<<<< HEAD:app/static/js/base.js
-<<<<<<< HEAD:app/static/js/base.js
->>>>>>> 3da3ffc (Set function of making quotation.):flask/app/static/js/base.js
-=======
-// Utils
-=======
->>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/base.js
 function closeWindowMsg(){
     document.querySelector(".window-msg").remove();
     document.querySelector(".modal").remove();
 }
 
->>>>>>> 277f56c (Set function of ending case.):flask/app/static/js/base.js
 function convertFieldName(fieldCode){
     switch (fieldCode){
         case "ta":
@@ -229,9 +162,6 @@ function convertFieldCode(fieldName){
         case "公司法":
             return "co"
     }
-<<<<<<< HEAD:app/static/js/base.js
-}
-=======
 }
 
 function convertMembership(membership){
@@ -242,9 +172,6 @@ function convertMembership(membership){
             return "專業顧問"
     }
 }
-<<<<<<< HEAD:app/static/js/base.js
->>>>>>> 7a6bc4b (Finished rendering memberpage.html.):flask/app/static/js/base.js
-=======
 
 function getCurrentTime(){
     let d = new Date();
@@ -252,4 +179,3 @@ function getCurrentTime(){
     let m = String(d.getMinutes()).padStart(2, '0');
     return `${h}:${m}`
 }
->>>>>>> c45cf3d (Set time of chatting.):flask/app/static/js/base.js

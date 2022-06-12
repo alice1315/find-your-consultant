@@ -1,7 +1,7 @@
 from flask import request, make_response, jsonify
 
 from . import api_
-from .. import res, db, utils
+from .. import res, db, utils, s3
 from ..models.auth import Auth
 
 @api_.route("/auth", methods = ["GET"])

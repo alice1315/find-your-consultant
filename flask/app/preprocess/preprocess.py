@@ -97,8 +97,6 @@ TABLES['member'] = (
     "  PRIMARY KEY (`id`),"
     "  UNIQUE (`email`))")
 
-<<<<<<< HEAD:app/preprocess/preprocess.py
-=======
 TABLES['case'] = (
     "CREATE TABLE `case` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
@@ -132,6 +130,7 @@ TABLES['read_status'] = (
     "  `consultant` int,"
     "  PRIMARY KEY (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")
+<<<<<<< HEAD:app/preprocess/preprocess.py
 
 TABLES['payment'] = (
     "CREATE TABLE `payment` ("
@@ -188,18 +187,36 @@ TABLES['orders'] = (
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`order_number`),"
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
+=======
+>>>>>>> 8756bb4fda407b33805ac8742c5414ee7ee680ad:flask/app/preprocess/preprocess.py
 
 TABLES['payment'] = (
     "CREATE TABLE `payment` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `order_number` bigint NOT NULL,"
+    "  `case_id` varchar(50) NOT NULL,"
     "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`id`),"
+<<<<<<< HEAD:app/preprocess/preprocess.py
     "  FOREIGN KEY (`order_number`) REFERENCES orders(`order_number`))")   
 """
 =======
 >>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/preprocess/preprocess.py
+=======
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")
+
+TABLES['feedback'] = (
+    "CREATE TABLE `feedback` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `case_id` varchar(50) NOT NULL,"
+    "  `consultant_rating` int,"
+    "  `consultant_feedback` varchar(255),"
+    "  `platform_feedback` varchar(255),"
+    "  PRIMARY KEY (`id`),"
+    "  UNIQUE (`case_id`),"
+    "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")  
+
+>>>>>>> 8756bb4fda407b33805ac8742c5414ee7ee680ad:flask/app/preprocess/preprocess.py
 for table_name in TABLES:
     table_description = TABLES[table_name]
     try:

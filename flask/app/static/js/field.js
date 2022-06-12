@@ -27,6 +27,7 @@ async function initFieldData(){
 function renderProfile(){
     let datas = fieldData["data"];
     datas.forEach(function(data){
+        let id = data["id"];
         let picUrl = data["pic_url"];
         let name = data["name"];
         let jobTitle = data["job_title"];
@@ -35,13 +36,6 @@ function renderProfile(){
         let price = data["price"];
         let agency = data["agency"];
 
-<<<<<<< HEAD:app/static/js/field.js
-        setProfile(picUrl, name, jobTitle, gender, fields, price, agency);
-    })
-}
-
-function setProfile(picUrl, name, jobTitle, gender, fields, price, agency){
-=======
         let ratings = data["ratings"];
         let amount = data["amount"];
         let feedback = data["feedback"];
@@ -50,12 +44,7 @@ function setProfile(picUrl, name, jobTitle, gender, fields, price, agency){
     })
 }
 
-<<<<<<< HEAD:app/static/js/field.js
-function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount){
->>>>>>> decca66 (Set rendering ratings and case amount.):flask/app/static/js/field.js
-=======
 function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount, feedback){
->>>>>>> a62b72a (Set feedback in field.html.):flask/app/static/js/field.js
     let profileContainer = document.querySelector(".profile-container");
     let profile = createDocElement("div", "profile");
     let profileBasic = createDocElement("div", "profile-basic");
@@ -71,12 +60,9 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     let feedbackBlock = createDocElement("div", "feedback", "案件回饋： ");
     let feedbackContainer = createDocElement("div", "feedback-container");
 
-<<<<<<< HEAD:app/static/js/field.js
-=======
     let roomBtn = createDocElement("button", "btn start", "尋求諮詢");
 
     // Basic
->>>>>>> d5e4e3b (Modified field.html with function of feedback.):flask/app/static/js/field.js
     profileContainer.appendChild(profile);
     profile.appendChild(profileBasic);
     profileBasic.appendChild(picContainer);
@@ -138,14 +124,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
         feedbackContainer.appendChild(createDocElement("div", "feedback-content", "暫無回饋"));
     }
     
-<<<<<<< HEAD:app/static/js/field.js
-
-<<<<<<< HEAD:app/static/js/field.js
-    profile.appendChild(createDocElement("button", "btn start", "尋求諮詢"));
-=======
-=======
     // Start consultanting
->>>>>>> d5e4e3b (Modified field.html with function of feedback.):flask/app/static/js/field.js
     profile.appendChild(roomBtn);
     roomBtn.addEventListener("click", async function(){
         if (signData && membership === "member"){
@@ -163,23 +142,9 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
         }else{
             location.href = "/signin";
         }
-<<<<<<< HEAD:app/static/js/field.js
-        
-    }
->>>>>>> ae30268 (Modified route when not signed in.):flask/app/static/js/field.js
-=======
     })
->>>>>>> d5e4e3b (Modified field.html with function of feedback.):flask/app/static/js/field.js
 }
 
-<<<<<<< HEAD:app/static/js/field.js
-function createDocElement(element, className, text){
-    let e = document.createElement(element);
-    if (className){e.setAttribute("class", className);}
-    if (text){e.innerText = text;}
-    return e
-}
-=======
 async function setRoom(consultantId){
     let reqData = {
         "member_id": memberId,
@@ -204,4 +169,3 @@ async function setRoom(consultantId){
         fieldData = result;
     })
 }
->>>>>>> bc23fa4 (Modified sql and coding style.):flask/app/static/js/field.js
