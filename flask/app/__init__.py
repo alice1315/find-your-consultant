@@ -16,7 +16,7 @@ s3 = S3()
 socketio = SocketIO()
 
 def create_app():
-    app = Flask(__name__, static_folder = "static", static_url_path = "/")
+    app = Flask(__name__, static_folder = "static", static_url_path = "/static")
     app.config["SECRET_KEY"] = SECRET_KEY
     app.config["JSON_AS_ASCII"] = False
     app.config["TEMPLATES_AUTO_RELOAD"] = True
