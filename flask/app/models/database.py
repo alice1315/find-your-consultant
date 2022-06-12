@@ -36,6 +36,8 @@ class Database:
                 result = cursor.rowcount
             elif method == "count":
                 result = cursor.fetchone()["count(*)"]
+            elif method == "lastid":
+                result = cursor.lastrowid
 
         except:
             cnx.rollback()

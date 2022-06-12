@@ -69,7 +69,7 @@ def sign_up():
         job_title = request.form["job-title"]
         price = request.form["price"]
 
-        form_list.extend([fields, cert_name, agency, job_title, price])
+        form_list.extend([cert_name, agency, job_title, price])
 
         check_sql = ("SELECT id FROM consultant WHERE email=%s")
 
@@ -108,11 +108,18 @@ def sign_up():
                 s3.upload_file(cert.read(), cert_name)
                 cert_url = s3.get_file_url(cert_name)
 
-                sql = ("INSERT INTO consultant (email, password, pic_url, name, gender, phone, fields, certificate_url, agency, job_title, price) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-                sql_data = (email, password, pic_url, name, gender, phone, fields, cert_url, agency, job_title, price)
-                db.execute_sql(sql, sql_data, "one", commit=True)
+                sql = ("INSERT INTO consultant (email, password, pic_url, name, gender, phone, certificate_url, agency, job_title, price) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+                sql_data = (email, password, pic_url, name, gender, phone, cert_url, agency, job_title, price)
+                consultant_id = db.execute_sql(sql, sql_data, "lastid", commit = True)
+
+                # Sign up with fields
+                for field in fields.split(","):
+                    sql = ("INSERT INTO consultant_fields (consultant_id, field_code) VALUES (%s, %s)")
+                    sql_data = (consultant_id, field)
+                    db.execute_sql(sql, sql_data, "one", commit = True)
 
                 return res.ok()
+            
 
 # Sign Out
 @api_.route("/auth", methods = ["DELETE"])

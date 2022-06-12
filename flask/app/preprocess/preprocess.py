@@ -7,17 +7,17 @@ from mysql.connector import errorcode
 
 
 load_dotenv()
-# MYSQL_CONFIG = {
-#     'user': os.getenv("user"), 
-#     'password': os.getenv("password"),
-#     'host': '127.0.0.1',
-# }
-
 MYSQL_CONFIG = {
-    'user': os.getenv("rds_user"), 
-    'password': os.getenv("rds_password"),
-    'host': os.getenv("rds_host")
+    'user': os.getenv("user"), 
+    'password': os.getenv("password"),
+    'host': '127.0.0.1',
 }
+
+# MYSQL_CONFIG = {
+#     'user': os.getenv("rds_user"), 
+#     'password': os.getenv("rds_password"),
+#     'host': os.getenv("rds_host")
+# }
 
 # Connecting to MySQL
 try:
@@ -32,7 +32,7 @@ cursor = cnx.cursor()
 
 
 # Using/Creating database
-DB_NAME = "find_your_consultant"
+DB_NAME = "find_your_consultant_test"
 
 def create_database(cursor):
     try:
@@ -59,12 +59,10 @@ except mysql.connector.Error as err:
 TABLES = {}
 TABLES['fields'] = (
     "CREATE TABLE `fields` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `field_name` varchar(50) NOT NULL,"
-    "  `field_code` varchar(50) NOT NULL,"
-    "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`field_name`),"
-    "  UNIQUE (`field_code`))")
+    "  `field_code` varchar(10) NOT NULL,"
+    "  `field_name` varchar(10) NOT NULL,"
+    "  PRIMARY KEY (`field_code`),"
+    "  UNIQUE (`field_name`))")
 
 TABLES['consultant'] = (
     "CREATE TABLE `consultant` ("
@@ -74,15 +72,23 @@ TABLES['consultant'] = (
     "  `pic_url` varchar(255) NOT NULL,"
     "  `name` varchar(50) NOT NULL,"
     "  `gender` varchar(10) NOT NULL,"
-    "  `phone` varchar(15),"
-    "  `fields` varchar(255) NOT NULL,"
+    "  `phone` varchar(15) NOT NULL,"
     "  `certificate_url` varchar(255) NOT NULL,"
-    "  `agency` varchar(20),"
-    "  `job_title` varchar(20),"
+    "  `agency` varchar(20) NOT NULL,"
+    "  `job_title` varchar(20) NOT NULL,"
     "  `price` int NOT NULL,"
     "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  PRIMARY KEY (`id`),"
     "  UNIQUE (`email`))")
+
+TABLES['consultant_fields'] = (
+    "CREATE TABLE `consultant_fields` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `consultant_id` bigint NOT NULL,"
+    "  `field_code` varchar(10) NOT NULL,"
+    "  PRIMARY KEY (`id`),"
+    "  FOREIGN KEY (`consultant_id`) REFERENCES consultant(`id`),"
+    "  FOREIGN KEY (`field_code`) REFERENCES fields(`field_code`))")
 
 TABLES['member'] = (
     "CREATE TABLE `member` ("
@@ -99,7 +105,6 @@ TABLES['member'] = (
 
 TABLES['case'] = (
     "CREATE TABLE `case` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
     "  `case_id` varchar(50) NOT NULL,"
     "  `field_code` varchar(50) NOT NULL,"
     "  `member_id` bigint NOT NULL,"
@@ -108,8 +113,8 @@ TABLES['case'] = (
     "  `price_per_hour` int,"
     "  `hours` int,"
     "  `total_price` int,"
-    "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`case_id`),"
+    "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+    "  PRIMARY KEY (`case_id`),"
     "  FOREIGN KEY (`member_id`) REFERENCES member(`id`),"
     "  FOREIGN KEY (`consultant_id`) REFERENCES consultant(`id`))")
 
@@ -142,13 +147,12 @@ TABLES['payment'] = (
 
 TABLES['feedback'] = (
     "CREATE TABLE `feedback` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
     "  `case_id` varchar(50) NOT NULL,"
     "  `consultant_rating` int,"
     "  `consultant_feedback` varchar(255),"
     "  `platform_feedback` varchar(255),"
-    "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`case_id`),"
+    "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+    "  PRIMARY KEY (`case_id`),"
     "  FOREIGN KEY (`case_id`) REFERENCES `case`(`case_id`))")  
 
 for table_name in TABLES:

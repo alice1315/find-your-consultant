@@ -11,8 +11,7 @@ async function fieldInit(){
 
 function checkFieldPath(){
     fieldCode = window.location.pathname.split("/")[2];
-    let fieldName = convertFieldName(fieldCode);
-    document.querySelector("#field-name").innerText = fieldName;
+    document.querySelector("#field-name").innerText = convertFieldName(fieldCode);
 }
 
 async function initFieldData(){

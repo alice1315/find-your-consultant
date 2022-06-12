@@ -22,10 +22,10 @@ class Utils():
     @staticmethod
     def convert_field_name(field_code):
         return {
-            "ta": "稅務",
-            "ac": "會計",
-            "fi": "金融",
-            "cr": "刑法",
-            "ci": "民法",
-            "co": "公司法"
+            "TA": "稅務",
+            "AC": "會計",
+            "FI": "金融",
+            "CR": "刑法",
+            "CI": "民法",
+            "CO": "公司法"
         }[field_code]

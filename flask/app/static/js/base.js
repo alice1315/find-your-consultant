@@ -132,17 +132,17 @@ function closeWindowMsg(){
 
 function convertFieldName(fieldCode){
     switch (fieldCode){
-        case "ta":
+        case "TA":
             return "稅務"
-        case "ac":
+        case "AC":
             return "會計"
-        case "fi":
+        case "FI":
             return "金融"
-        case "cr":
+        case "CR":
             return "刑法"
-        case "ci":
+        case "CI":
             return "民法"
-        case "co":
+        case "CO":
             return "公司法"
     }
 }
@@ -150,17 +150,17 @@ function convertFieldName(fieldCode){
 function convertFieldCode(fieldName){
     switch (fieldName){
         case "稅務":
-            return "ta"
+            return "TA"
         case "會計":
-            return "ac"
+            return "AC"
         case "金融":
-            return "fi"
+            return "FI"
         case "刑法":
-            return "cr"
+            return "CR"
         case "民法":
-            return "ci"
+            return "CI"
         case "公司法":
-            return "co"
+            return "CO"
     }
 }
 
