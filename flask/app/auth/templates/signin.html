@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta chartset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Find Your Consultant</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/signin.css')}}"></link>
+    </head>
+    <body onload="authInit();" class="hidden">
+        {% extends "base.html" %}
+        
+        {% block body %}
+
+        <div class="content">
+            <div class="page-top">
+                <div class="top-mark"></div>
+                <div class="page-title">會員登入</div>
+            </div>
+            
+            <form id="signin-form" method="PATCH">
+                <div class="membership">
+                    <input id="member" type="radio" name="membership" value="member" checked="checked"/>
+                    <label for="member">一般會員登入</label>
+
+                    <div>|</div>
+
+                    <input id="consultant" type="radio" name="membership" value="consultant"/>
+                    <label for="consultant">專業顧問登入</label>
+                </div>
+                <div class="input-form">
+                    <div>信箱： <input type="email" name="email" placeholder="請輸入電子信箱"/></div>
+                    <div>密碼： <input type="password" name="password" placeholder="請輸入密碼"/></div>
+                    <button class="btn" type="submit">登入會員</button>
+                    <div class="msg-container">
+                        <div class="sign-msg"></div>
+                    </div>
+                    <div>還沒有帳號？</div>
+                    <div class="to-signup">
+                        <span id="to-signup-member">註冊一般會員</span>
+                        <span id="to-signup-consultant">註冊專業顧問</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script src="{{url_for('static', filename='js/auth.js')}}"></script>
+        {% endblock body%}
+    </body>
+</html>

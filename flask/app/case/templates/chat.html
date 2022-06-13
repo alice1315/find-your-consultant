@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta chartset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Find Your Consultant</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/chat.css')}}"></link>
+    </head>
+    <body onload="chatInit();" class="hidden">
+        {% extends "base.html" %}
+        
+        {% block body %}
+
+        <div class="content">
+            <div class="chat-background">
+                <div class="chat-container">
+                    <div class="chat-left">
+                        <div class="left-title">
+                            <input id="doing" type="radio" name="chat-list" value="doing" checked="checked"/>
+                            <label for="doing">諮詢中 ( <span id="doing-amount"></span> ) </label>
+                            <div> | </div>
+                            <input id="finished" type="radio" name="chat-list" value="finished" />
+                            <label for="finished">已結案 ( <span id="finished-amount"></span> ) </label>
+                        </div>
+                        <div class="left-list"></div>
+                    </div>
+                    <div class="chat-right">
+                        <div class="right-title">
+                            <div><span id="right-name" class="right-info"></span>&emsp;<span id="right-job-title" class="right-info"></span></div>
+                            <div><span id="right-field" class="right-info"></span><span id="right-case-id" class="right-info"></span></div>
+                            <div id="status" class="right-info"></div>
+                        </div>
+
+                        <div class="right-chat-window"></div>
+
+                        <div class="right-function"></div>
+
+                        <div class="right-message">
+                            <div class="right-input">
+                                <textarea id="message" placeholder="請輸入訊息..." cols="40" rows="3"></textarea>
+                            </div>
+                            <div class="right-send">
+                                <button class="btn">送出</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom"></div>
+
+        <script src="{{url_for('static', filename='js/chat_socket.js')}}"></script>
+        <script src="{{url_for('static', filename='js/chat.js')}}"></script>
+        <script src="{{url_for('static', filename='js/chat_functions.js')}}"></script>  
+        {% endblock body%}
+    </body>
+</html>

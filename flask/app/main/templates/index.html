@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta chartset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Find Your Consultant</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}"></link>
+    </head>
+    <body onload="indexInit();" class="hidden">
+        {% extends "base.html" %}
+
+        {% block body %}
+        <div class="welcome">
+            <div class="img-container">
+                <img src="{{url_for('static', filename='img/welcome.png')}}"/>
+            </div>
+            <div class="welcome-content">
+                <div class="welcome-title">尋找你的專業顧問</div>
+                <div class="welcome-text">★ &nbsp; 專家一對一諮詢</div>
+                <div class="welcome-text">★ &nbsp; 價格公開透明</div>
+                <div class="welcome-text">★ &nbsp;  即時解決你的問題</div>
+                <br/>
+                <br/>
+                <div class="signup-container">
+                    <button id="member-signup-btn" class="btn sign-btn">一般民眾註冊</button>
+                    <button id="consultant-signup-btn" class="sign-btn">專業顧問註冊</button>
+                </div>
+            </div>
+        </div>
+
+        <a id="fields"></a>
+        <div class="content">
+            <div class="fields">
+                <div class="page-title">專業領域篩選</div>
+                <div class="field-list">
+                    <div class="left"></div>
+                    <div class="right"></div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="{{url_for('static', filename='img/field/ta.png')}}"/></div>
+                        <div>稅務</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="{{url_for('static', filename='img/field/ac.png')}}"/></div>
+                        <div>會計</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="{{url_for('static', filename='img/field/fi.png')}}"/></div>
+                        <div>金融</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="{{url_for('static', filename='img/field/cr.png')}}"/></div>
+                        <div>刑法</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="{{url_for('static', filename='img/field/ci.png')}}"/></div>
+                        <div>民法</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-img"><img src="{{url_for('static', filename='img/field/co.png')}}"/></div>
+                        <div>公司法</div>
+                    </div>
+                </div>
+            </div>
+            <a id="intro"></a>
+            <div class="intro">
+                <div>
+                    <div class="intro-title">
+                        <input id="for-member" type="radio" name="intro-list" value="for-member" checked="checked"/>
+                        <label for="for-member">我是一般民眾</label>
+                        <div> | </div>
+                        <input id="for-consultant" type="radio" name="intro-list" value="for-consultant" />
+                        <label for="for-consultant">我是專業顧問</label>
+                    </div>
+                    <div class="intro-content">
+                        <div id="member-intro" class="intro-left">
+                            <div id="m1" class="left-block">
+                                <i class="arrow right-arrow"></i>
+                                <div class="left-title">1. 選擇想諮詢的領域及顧問</div>
+                                <div class="left-content">進入各大領域，挑選適合的顧問進行諮詢</div>
+                            </div>
+                            <div id="m2" class="left-block">
+                                <i class="arrow right-arrow"></i>
+                                <div class="left-title">2. 註冊並登入會員，進入<span class="red">前置諮詢</span></div>
+                                <div class="left-content">前置諮詢階段，系統會開啟私人【諮詢聊天室】，可以先提出問題讓顧問了解案件內容</div>
+                            </div>
+                            <div id="m3" class="left-block">
+                                <div class="left-title">3. 付款進入<span class="green">正式諮詢</span></div>
+                                <div class="left-content">待顧問提出報價，進行付款後即可在報價範圍內尋求建議</div>
+                            </div>
+                            <div id="m4" class="left-block">
+                                <div class="left-title">4. 正式結案</div>
+                                <div class="left-content">若已得到建議及解決方法，即可同意顧問結案以結束諮詢</div>
+                            </div>
+                        </div>
+
+                        <div id="consultant-intro" class="intro-left hide">
+                            <div id="c1" class="left-block">
+                                <i class="arrow right-arrow"></i>
+                                <div class="left-title">1. 註冊成為專業顧問 <i class="arrow right-arrow"></i></div>
+                                <div class="left-content">填寫資料成為專業顧問</div>
+                            </div>
+                            <div id="c2" class="left-block">
+                                <div class="left-title">2. 等待<span class="red">前置諮詢</span></div>
+                                <div class="left-content">待民眾請求諮詢後，系統會開啟私人【諮詢聊天室】，可先針對問題做基本瞭解</div>
+                            </div>
+                            <div id="c3" class="left-block">
+                                <div class="left-title">3. 提出報價已進入<span class="green">正式諮詢</span></div>
+                                <div class="left-content">待可評估出處理時數後，提出報價以供客戶付款，付款完成後即進入正式諮詢</div>
+                            </div>
+                            <div id="c4" class="left-block">
+                                <div class="left-title">4. 提出結案</div>
+                                <div class="left-content">若評估已解決民眾之問題，可提出結案</div>
+                            </div>
+                            <div id="c5" class="left-block">
+                                <div class="left-title">5. 個人頁面顯示案件回饋</div>
+                                <div class="left-content">結案後民眾可針對案件給予評分及回饋，結果可於個人頁面中查看</div>
+                            </div>
+                        </div>
+                        <div class="intro-right">
+                            <img id="img-m1" class="info-img" src="{{url_for('static', filename='img/step/m1.png')}}"/>
+                            <img id="img-m2" class="info-img hide" src="{{url_for('static', filename='img/step/m2.png')}}"/>
+                            <img id="img-m3" class="info-img hide" src="{{url_for('static', filename='img/step/m3.png')}}"/>
+                            <img id="img-m4" class="info-img hide" src="{{url_for('static', filename='img/step/m4.png')}}"/>
+                            <img id="img-c1" class="info-img hide" src="{{url_for('static', filename='img/step/c1.png')}}"/>
+                            <img id="img-c2" class="info-img hide" src="{{url_for('static', filename='img/step/c2.png')}}"/>
+                            <img id="img-c3" class="info-img hide" src="{{url_for('static', filename='img/step/c3.png')}}"/>
+                            <img id="img-c4" class="info-img hide" src="{{url_for('static', filename='img/step/c4.png')}}"/>
+                            <img id="img-c5" class="info-img hide" src="{{url_for('static', filename='img/step/c5.png')}}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{url_for('static', filename='js/index.js')}}"></script>
+        {% endblock body%}
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body onload="baseInit();">
+        <div id="loader" class="center"></div>
+        <div class="header">
+            <div class="header-container">
+                <div class="web-title">Find Your Consultant</div>
+                <ul class="menu">
+                    <li id="signin-btn">會員登入</li>
+                    <li id="chat-btn" class="hide">諮詢聊天室<div id="msg-note" class="hide"></div></li>
+                    <li id="member-btn" class="hide">會員中心</li>
+                </ul>
+            </div>
+            <div id="member-center">
+                <ul>
+                    <li id="memberpage-btn">個人頁面</li>
+                    <li id="signout-btn">登出系統</li>
+                </ul>
+            </div>
+        </div>
+
+        {% block body %}
+        {% endblock body %}
+        
+        <div class="footer">
+            COPYRIGHT © 2022 Find Your Consultant
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="{{url_for('static', filename='js/base.js')}}"></script>
+        <script src="{{url_for('static', filename='js/auth.js')}}"></script>
+        <script src="{{url_for('static', filename='js/chat_socket.js')}}"></script>
+    </body>
+</html>

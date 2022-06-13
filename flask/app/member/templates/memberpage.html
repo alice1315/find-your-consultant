@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta chartset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Find Your Consultant</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/memberpage.css')}}"></link>
+    </head>
+    <body onload="memberInit();" class="hidden">
+        {% extends "base.html" %}
+        
+        {% block body %}
+
+        <div class="content">
+            <div class="page-top">
+                <div class="top-mark"></div>
+                <div class="page-title">個人頁面</div>
+            </div>
+            <div class="member-container">
+                <div id="member-info">
+                    <div>
+                        <div class="member-title">
+                            <div class="down-mark"></div>
+                            <div>會員基本資料</div>
+                        </div>
+                        <div class="member-basic">
+                            <div class="self-pic-container">
+                                <div class="self-pic"><img id="pic-url"/></div>
+                            </div>
+                            <div class="self-info">
+                                <div class="info-block">
+                                    <div>會員身份： </div>
+                                    <div id="membership" class="info-content">專業顧問</div>
+                                </div>
+                                <div class="info-block">
+                                    <div>註冊信箱： </div>
+                                    <div id="email" class="info-content"></div>
+                                </div>
+                                <br />
+                                <div class="info-block">
+                                    <div>姓名： </div>
+                                    <div id="name" class="info-content"></div>
+                                </div>
+                                <div class="info-block">
+                                    <div>性別： </div>
+                                    <div id="gender" class="info-content"></div>
+                                </div>
+                                <div class="info-block">
+                                    <div>電話： </div>
+                                    <div id="phone" class="info-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="consultant-pro hide">
+                        <div class="member-title">
+                            <div class="down-mark"></div>
+                            <div>專業相關資料</div>
+                        </div>
+
+                        <div class="info-block">
+                            <div>專業領域： </div>
+                            <div id="fields" class="info-content">稅務、會計</div>
+                        </div>
+                        <div class="info-block">
+                            <div>服務機構： </div>
+                            <div id="agency" class="info-content">造景會計事務所</div>
+                        </div>
+                        <div class="info-block">
+                            <div>職稱頭銜： </div>
+                            <div id="job-title" class="info-content">會計師</div>
+                        </div>
+                        <div class="info-block">
+                            <div>時薪報價： </div>
+                            <div id="price" class="info-content">$ 1300 /元</div>
+                        </div>
+
+                        <div class="member-title">
+                            <div class="down-mark"></div>
+                            <div>案件回饋紀錄： </div>
+                        </div>
+                        <div class="info-block">
+                            <div>處理案件數： </div>
+                            <div id="amount" class="info-content"></div>
+                        </div>
+                        <div class="info-block">
+                            <div>平均評分： </div>
+                            <div id="ratings" class="info-content"></div>
+                        </div>
+                        <div class="info-block">
+                            <div>案件回饋： </div>
+                        </div>
+                        <div id="case-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{url_for('static', filename='js/memberpage.js')}}"></script>
+        {% endblock body%}
+    </body>
+</html>

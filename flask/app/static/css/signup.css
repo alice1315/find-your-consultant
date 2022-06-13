@@ -1,0 +1,158 @@
+.signup-container{
+    width: 700px;
+    margin: 20px auto 0 auto;
+    padding: 30px;
+    background-color: #EFEBE5;
+}
+
+/* signup-title */
+.signup-title{
+    display: flex;
+    align-items: center;
+    margin: 40px 0 30px -8px;
+}
+
+.signup-title div{
+    line-height: 25px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+/* signup-form */
+#signup-form{
+    margin: 20px 0;
+    padding: 10px 30px 30px 30px;
+    background-color: #FFFFFF;
+}
+
+.text-input{
+    width: 310px;
+    height: 47px;
+    margin: 0 auto 20px auto;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+
+.price-input{
+    width: 125px;
+    height: 47px;
+    margin: 0 auto 20px auto;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+
+/* file-input*/
+input[type="file"] {
+    display: none;
+}
+
+.file-input{
+    cursor: pointer;
+    margin: 10px auto 3px auto;
+    padding: 6px 12px;
+    border: 1px solid #CCCCCC;
+    background-color: #F3F3F3; 
+}
+
+.file-input:hover{
+    color: #EB8528;
+}
+
+/* gender */
+.gender, .field{
+    position: relative;
+    padding-left: 35px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.gender input, .field input{
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.gender-checkmark {
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    left: 7px;
+    height: 22px;
+    width: 22px;
+    background-color: #F3F3F3;
+    border-radius: 50%;
+}
+  
+.gender-checkmark:after{
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+.gender input:checked + .gender-checkmark:after {
+    display: block;
+}
+
+.gender .gender-checkmark:after {
+    top: 4px;
+    left: 4px;
+    width: 14px;
+    height: 14px;
+    background-color: #EB8528;
+    border-radius: 50%;
+}
+
+/* phone */
+#name, #phone, #agency{
+    margin-top: 20px; 
+}
+
+/* field */
+.field-checkmark {
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    left: 7px;
+    height: 18px;
+    width: 18px;
+    background-color: #F3F3F3;
+}
+
+.field-checkmark:after{
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+.field input:checked + .field-checkmark:after {
+    display: block;
+}
+
+.field .field-checkmark:after {
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    background-color: #EB8528;
+}
+
+#to-intro:hover{
+    cursor: pointer;
+    color: #EB8528;
+    text-decoration: underline;
+}
+
+/* signup btn*/
+.btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+#signup-form button{
+    margin-top: 20px;
+}

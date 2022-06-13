@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta chartset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Find Your Consultant</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/payment.css')}}"></link>
+    </head>
+    <body onload="paymentInit();" class="hidden">
+        {% extends "base.html" %}
+        
+        {% block body %}
+
+        <div class="content">
+            <div class="page-top">
+                <div class="top-mark"></div>
+                <div class="page-title">付款頁面</div>
+            </div>
+            <div class="payment-container">
+                <form id="payment-form" method="POST">
+                    <div class="payment-title">
+                        <div class="down-mark"></div>
+                        <div>正式諮詢案件資訊</div>
+                    </div>
+                    <div class="info">
+                        <div>案件編號： <span id="case-id"></span></div>
+                        <div>諮詢時薪： $ <span id="price-per-hour"></span> /時</div>
+                        <div>案件領域： <span id="field"></span></div>
+                        <div>評估時數： <span id="hours"></span> 小時</div>
+                        <div>諮詢律師： <span id="consultant"></span>&nbsp;<span id="job-title"></span></div>
+                        <div>總計費用： $ <span id="total-price"></span> 元</div>
+                    </div>
+                   
+                    <div class="signup-basic">
+                        <div class="payment-title">
+                            <div class="down-mark"></div>
+                            <div>基本聯絡資訊</div>
+                        </div>
+                        <div class="input-box">
+                            <div>聯絡姓名： </div>
+                            <input id="contact-name" type="text" name="name" class="text-input"/>
+                            <div id="name-msg" class="payment-msg"></div>
+                        </div>
+                        <div class="input-box">
+                            <div>聯絡信箱： </div>
+                            <input id="contact-email" type="email" name="email" class="text-input"/>
+                            <div id="email-msg" class="payment-msg"></div>
+                        </div>
+                        <div class="input-box">
+                            <div>聯絡電話： </div>
+                            <input id="contact-phone" type="text" name="phone" class="text-input"/>
+                            <div id="phone-msg" class="payment-msg"></div>
+                        </div>
+
+                        <div class="payment-title">
+                            <div class="down-mark"></div>
+                            <div>信用卡付款資訊</div>
+                        </div>
+                        <div class="input-box">
+                            <div>信用卡號： </div>
+                            <div id="card-number" class="tpfield"></div>
+                            <div id="number-msg" class="payment-msg"></div>
+                        </div>
+                        <div class="input-box">
+                            <div>有效月年： </div>
+                            <div id="card-expiration-date" class="tpfield"></div>
+                            <div id="expiry-msg" class="payment-msg"></div>
+                        </div>
+                        <div class="input-box">
+                            <div>驗證三碼： </div>
+                            <div id="card-ccv" class="tpfield"></div>
+                            <div id="ccv-msg" class="payment-msg"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="btn-container">
+                        <div class="another-btn">返回聊天室</div>
+                        <button type="submit" name="to-pay" class="btn">進行付款</button>
+                    </div>
+                    <div class="msg-container">
+                        <div id="payment-msg"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="https://js.tappaysdk.com/tpdirect/v5.8.0"></script> 
+        <script src="{{url_for('static', filename='js/chat.js')}}"></script>
+        <script src="{{url_for('static', filename='js/chat_functions.js')}}"></script>
+        <script src="{{url_for('static', filename='js/payment.js')}}"></script>
+        {% endblock body%}
+    </body>
+</html>
