@@ -7,18 +7,18 @@ https://findyourconsultant.online
 # Test Account
 Find your consultant provides two membership. 'Regular member' is for people who are looking for advice, and 'consultant' is for people who could provide expert advice with professional fields.
 
-Regular member:
-email: test_member@gmail.com
-password: test
+| membership     | email                     | password |
+| -------------- | ------------------------- | -------- |
+| Regular member | test_member@gmail.com     | test     |
+| Consultant     | test_consultant@gmail.com | test     |
 
-Consultant:
-email: test_consultant@gmail.com
-password: test
 
-Credit card for test:
-card number: 4242424242424242
-valid date: 01/23
-cvv: 123
+- Credit card For test:
+| ----------- | ---------------- |
+| card number | 4242424242424242 |
+| valid date  | 01/23            |
+| cvv         | 123              |
+
 
 # Features
 1. SignUp & SignIn
