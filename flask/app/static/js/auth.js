@@ -22,6 +22,7 @@ function checkSignPath(){
     } else if (path === "signin"){
         endLoading();
         signIn();
+        setTestAccount();
         handleToSignUpBtn();
     } else if (path === "signup"){
         renderSignUpPage();
@@ -137,4 +138,22 @@ function handleToSignUpBtn(){
 
     let toConsultant = document.querySelector("#to-signup-consultant");
     toConsultant.addEventListener("click", function(){location.href = "signup/consultant"});
+}
+
+function setTestAccount(){
+    let email = document.querySelector("input[name='email']");
+    email.setAttribute("value", "test_member@gmail.com");
+    let password = document.querySelector("input[name='password']");
+    password.setAttribute("value", "test");
+
+    let signInMembership = document.querySelectorAll("input[name='membership']");
+    signInMembership.forEach((e) => {
+        e.addEventListener("change", function(e){
+            if (e.target.value === "member"){
+                email.setAttribute("value", "test_member@gmail.com");
+            } else{
+                email.setAttribute("value", "test_consultant@gmail.com");
+            }
+        })
+    })
 }
