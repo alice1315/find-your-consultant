@@ -34,10 +34,14 @@ function renderMemberPage(){
         document.querySelector("#agency").innerText = memberData["agency"];
         document.querySelector("#job-title").innerText = memberData["job_title"];
         document.querySelector("#price").innerText = `$ ${memberData["price"]} 元 /時`;
-        document.querySelector("#amount").innerText = `${memberData["amount"]} 件`;
+        if ( !memberData["amount"]){
+            document.querySelector("#amount").innerText = `0 件`;
+        } else{
+            document.querySelector("#amount").innerText = `${memberData["amount"]} 件`;
+        }
         document.querySelector("#ratings").innerText = `${memberData["ratings"]} 分`;
 
-        if (memberData["feedback"].length > 0){
+        if (memberData["feedback"] && memberData["feedback"].length > 0){
             memberData["feedback"].forEach(function(e){
                 renderFeedback(e[0], e[1]);
             })

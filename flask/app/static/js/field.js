@@ -38,7 +38,6 @@ function renderProfile(){
         let ratings = data["ratings"];
         let amount = data["amount"];
         let feedback = data["feedback"];
-        console.log(feedback);
 
         setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount, feedback);
     })
@@ -97,6 +96,7 @@ function setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, r
     profile.appendChild(profilePro);
     profilePro.appendChild(createDocElement("div", "price", `諮詢時薪： $ ${price} /元`));
     profilePro.appendChild(createDocElement("div", "agency", `服務機構： ${agency}`));
+    if (!amount){amount = 0;}
     profilePro.appendChild(createDocElement("div", "case", `處理案件數： ${amount} 件`));
     profilePro.appendChild(feedbackBlock);
     feedbackBlock.appendChild(feedbackContainer);
