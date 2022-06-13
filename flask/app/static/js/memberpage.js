@@ -39,7 +39,7 @@ function renderMemberPage(){
 
         if (memberData["feedback"].length > 0){
             memberData["feedback"].forEach(function(e){
-                renderFeedback(e["case_id"], e["consultant_feedback"]);
+                renderFeedback(e[0], e[1]);
             })
         } else{
             document.querySelector("#case-container").appendChild(createDocElement("div", "case", "暫無回饋紀錄"));

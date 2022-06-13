@@ -177,20 +177,14 @@ function agreeEndCase(caseId, sendBtn){
         if (status === "提出結案"){
             let submitBtn = renderAgreeWindow();
             submitBtn.addEventListener("click", async function(){
+                messageWindow.value = "";
+                setAgreeMsg(caseId);
+                closeMsgWindow();
+                sendBtn.click();
+                socket.emit("change_status", {"case_id": caseId, "status": "同意結案"});
+
                 await patchAgreeEndCase(caseId);
-
-                if (funcData["ok"]){
-                    messageWindow.value = "";
-                    setAgreeMsg(caseId);
-                    closeMsgWindow();
-                    sendBtn.click();
-
-                    socket.emit("change_status", {"case_id": caseId, "status": "同意結案"});
-                    setTimeout(() => {location.href = `/feedback?case=${caseId}`;}, "1000");
-
-                } else if (funcData["error"]){
-                    showErrorMsg(funcData["message"]);
-                }
+                setTimeout(() => {location.href = `/feedback?case=${caseId}`;}, "1000");
             })
         } else{
             showErrorMsg("專案階段暫無法執行此功能，謝謝！");

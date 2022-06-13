@@ -8,16 +8,10 @@ from mysql.connector import errorcode
 
 load_dotenv()
 MYSQL_CONFIG = {
-    'user': os.getenv("user"), 
-    'password': os.getenv("password"),
-    'host': '127.0.0.1',
+    'user': os.getenv("rds_user"), 
+    'password': os.getenv("rds_password"),
+    'host': os.getenv("rds_host")
 }
-
-# MYSQL_CONFIG = {
-#     'user': os.getenv("rds_user"), 
-#     'password': os.getenv("rds_password"),
-#     'host': os.getenv("rds_host")
-# }
 
 # Connecting to MySQL
 try:
@@ -32,7 +26,7 @@ cursor = cnx.cursor()
 
 
 # Using/Creating database
-DB_NAME = "find_your_consultant_test"
+DB_NAME = "find_your_consultant"
 
 def create_database(cursor):
     try:

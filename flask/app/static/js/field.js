@@ -38,6 +38,7 @@ function renderProfile(){
         let ratings = data["ratings"];
         let amount = data["amount"];
         let feedback = data["feedback"];
+        console.log(feedback);
 
         setProfile(id, picUrl, name, jobTitle, gender, fields, price, agency, ratings, amount, feedback);
     })

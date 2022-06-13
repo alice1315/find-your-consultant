@@ -13,30 +13,38 @@ def show_memberpage():
         id = payload["info"]["id"]
 
         if membership == "member":
-            sql = ("SELECT email, password, pic_url, name, gender, phone FROM member WHERE id=%s")
+            sql = ("SELECT email, pic_url, name, gender, phone FROM member WHERE id=%s")
             sql_data = (id, )       
             result = db.execute_sql(sql, sql_data, "one")
             return res.respond(result)
+            
         else:
-            sql = ("SELECT con.email, con.password, con.pic_url, con.name, con.gender, con.phone, con.fields, con.agency, con.job_title, con.price, COUNT(ca.case_id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings FROM consultant con LEFT JOIN `case` ca ON con.id=ca.consultant_id LEFT JOIN feedback fe ON ca.case_id=fe.case_id WHERE con.id=%s")
+            sql = ("SELECT con.email, con.pic_url, con.name, con.gender, con.phone, GROUP_CONCAT(f.field_name) AS fields, con.agency, con.job_title, con.price,"
+            " t.amount, t.ratings, t.feedback"
+            " FROM consultant con"
+            " LEFT JOIN consultant_fields cf ON con.id=cf.consultant_id"
+            " LEFT JOIN fields f ON f.field_code=cf.field_code"
+            " INNER JOIN(SELECT ca.consultant_id AS id, COUNT(ca.case_id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings, GROUP_CONCAT(CONCAT(fe.case_id, '&&&', fe.consultant_feedback) ORDER BY fe.time DESC SEPARATOR ';%;') AS feedback"
+            " FROM `case` ca"
+            " LEFT JOIN feedback fe ON ca.case_id=fe.case_id"
+            " GROUP BY id) t"
+            " ON con.id=t.id"
+            " GROUP BY con.id HAVING con.id=%s")
+
             sql_data = (id, )       
             result = db.execute_sql(sql, sql_data, "one")
-
-            # Handle field name
-            fields = []
-            for field_code in result["fields"].split(","):
-                field_name = utils.convert_field_name(field_code)
-                fields.append(field_name)
-            result["fields"] = fields
 
             # Handle ratings
             if not result["ratings"]:
                 result["ratings"] = 0
 
             # Handle feedback
-            sql = ("SELECT fe.case_id, fe.consultant_feedback FROM `case` ca, feedback fe WHERE ca.case_id=fe.case_id AND ca.consultant_id=%s ORDER BY fe.id DESC")
-            feedback = db.execute_sql(sql, sql_data, "all")
-            result["feedback"] = feedback
+            feedback_list = []
+            if result["feedback"]:
+                for feedback in result["feedback"].split(";%;"):
+                    [case_id, feedback_message] = feedback.split("&&&", 1)
+                    feedback_list.append([case_id, feedback_message])
+                result["feedback"] = feedback_list
 
             return res.respond(result)
         

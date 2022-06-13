@@ -7,12 +7,15 @@ def get_consultant_info(fieldCode):
     field_code = fieldCode
 
     sql = ("SELECT con.id, con.pic_url, con.name, con.gender, GROUP_CONCAT(f.field_name) AS fields, con.agency, con.job_title, con.price,"
-    " COUNT(ca.case_id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings, GROUP_CONCAT(fe.consultant_feedback ORDER BY fe.time DESC SEPARATOR ';%;') AS feedback"
+    " t.amount, t.ratings, t.feedback"
     " FROM consultant con"
     " LEFT JOIN consultant_fields cf ON con.id=cf.consultant_id"
     " LEFT JOIN fields f ON f.field_code=cf.field_code"
-    " LEFT JOIN `case` ca ON con.id=ca.consultant_id"
+    " INNER JOIN(SELECT ca.consultant_id AS id, COUNT(ca.case_id) AS amount, ROUND(AVG(fe.consultant_rating)) AS ratings, GROUP_CONCAT(fe.consultant_feedback ORDER BY fe.time DESC SEPARATOR ';%;') AS feedback"
+    " FROM `case` ca"
     " LEFT JOIN feedback fe ON ca.case_id=fe.case_id"
+    " GROUP BY id) t"
+    " ON con.id=t.id"
     " GROUP BY con.id HAVING FIND_IN_SET(%s, fields) > 0")
 
     sql_data = (utils.convert_field_name(field_code), )
