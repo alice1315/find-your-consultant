@@ -5,7 +5,7 @@ from .. import res, db
 from ..models.auth import Auth
 
 # Get chat list 
-@api_.route("/chatlist", methods = ["PATCH"])
+@api_.route("/chatlist", methods = ["GET"])
 def get_chat_list():
     access_token = request.cookies.get("access_token")
     if access_token:
@@ -13,8 +13,7 @@ def get_chat_list():
         membership = payload["info"]["membership"]
         id = payload["info"]["id"]
 
-        data = request.get_json()
-        status = data["status"]
+        status = request.args.get("status")
     
         if membership == "member":
             if status == "doing":
@@ -95,13 +94,11 @@ def set_room():
         return make_response(res.error("經查詢，您已有諮詢此顧問的紀錄，請直接點選【諮詢聊天室】"), 400)
 
 # Get chat history
-@api_.route("/chat", methods = ["PATCH"])
+@api_.route("/chat", methods = ["GET"])
 def get_chat_history():
     access_token = request.cookies.get("access_token")
     if access_token:
-        data = request.get_json()
-        
-        case_id = data["case_id"]
+        case_id = request.args.get("case")
         
         sql = ("SELECT sender_membership, message, DATE_FORMAT(CONVERT_TZ(time,'+00:00','+8:00'), '%H:%i') AS send_time"
         " FROM case_messages WHERE case_id=%s ORDER BY time")

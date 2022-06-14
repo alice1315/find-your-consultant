@@ -1,6 +1,6 @@
 var funcData;
 
-function setChatFunctions(caseId, sendBtn, funcUl){
+function setCaseFunctions(caseId, sendBtn, funcUl){
     let functions = funcUl.children;
     if (membership === "member"){
         showBlock(functions[1], functions[3]);
@@ -183,8 +183,8 @@ function agreeEndCase(caseId, sendBtn){
                 sendBtn.click();
                 socket.emit("change_status", {"case_id": caseId, "status": "同意結案"});
 
-                await patchAgreeEndCase(caseId);
-                setTimeout(() => {location.href = `/feedback?case=${caseId}`;}, "1000");
+                await putAgreeEndCase(caseId);
+                location.href = `/feedback?case=${caseId}`;
             })
         } else{
             showErrorMsg("專案階段暫無法執行此功能，謝謝！");
@@ -213,29 +213,21 @@ function setAgreeMsg(caseId){
 您好，已有共識對此案件編號： ${caseId} 進行結案，感謝您的協助！`;
 }
 
-async function patchAgreeEndCase(caseId){
+async function putAgreeEndCase(caseId){
     let fetchOptions = {
-        method: "PATCH",
+        method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({"case_id": caseId})
     }
 
-    await callFunctionApi("/api/agree", fetchOptions);
+    await callFunctionApi("/api/endcase", fetchOptions);
 }
 
 // Utils
 async function getCaseStatus(caseId){
-    let fetchOptions = {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({"case_id": caseId})
-    }
-
-    await callFunctionApi("/api/status", fetchOptions);
+    await callFunctionApi(`/api/status?case=${caseId}`, {method: "GET"});
 
     if (funcData["data"]){
         return funcData["data"]["status"]

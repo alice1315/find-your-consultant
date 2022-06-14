@@ -5,12 +5,11 @@ from .. import res, db
 from ..models.auth import Auth
 
 # Get current status of case
-@api_.route("/status", methods = ["PATCH"])
+@api_.route("/status", methods = ["GET"])
 def get_status():
     access_token = request.cookies.get("access_token")
     if access_token:
-        data = request.get_json()
-        case_id = data["case_id"]
+        case_id = request.args.get("case")
 
         sql = ("SELECT status FROM `case` WHERE case_id=%s")
         sql_data = (case_id, )
@@ -67,7 +66,7 @@ def request_to_end_case():
         return make_response(res.error("未登入系統"), 403)
 
 # Agree end case (for member)
-@api_.route("/agree", methods = ["PATCH"])
+@api_.route("/endcase", methods = ["PUT"])
 def agree_end_case():
     access_token = request.cookies.get("access_token")
     if access_token:

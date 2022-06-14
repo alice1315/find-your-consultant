@@ -4,7 +4,7 @@ from . import api_
 from .. import res, db, utils
 from ..models.auth import Auth
 
-@api_.route("/memberpage", methods = ["GET"])
+@api_.route("/member", methods = ["GET"])
 def show_memberpage():
     access_token = request.cookies.get("access_token")
     if access_token:

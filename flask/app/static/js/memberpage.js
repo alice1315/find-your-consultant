@@ -12,7 +12,7 @@ async function memberInit(){
 }
 
 async function initMemberData(){
-    await fetch("/api/memberpage", {method: "GET"})
+    await fetch("/api/member", {method: "GET"})
     .then((resp) => {
         return resp.json();
     }).then((result) => {

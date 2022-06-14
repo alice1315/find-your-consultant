@@ -31,22 +31,15 @@ async function renderPage(){
 }
 
 // Handle chat list
-async function getChatData(status){
-    let fetchOptions = {
-        method: "PATCH",
-        headers:{
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({"status": status})
-    }
-    await initChatData("/api/chatlist", fetchOptions);
+async function getChatListData(status){
+    await initChatData(`/api/chatlist?status=${status}`, {method: "GET"});
 
     return chatData["data"]
 }
 
 async function getChatList(){
-    doingData = await getChatData("doing");
-    finishedData = await getChatData("finished");
+    doingData = await getChatListData("doing");
+    finishedData = await getChatListData("finished");
 
     document.querySelector("#doing-amount").innerText = doingData.length;
     document.querySelector("#finished-amount").innerText = finishedData.length;
@@ -126,7 +119,7 @@ function handleSmallClick(small, name, jobTitle, field, picUrl, caseId, status){
     let sendBtn = renderSendBtn();
     let funcUl = renderChatFunctionList();
     startChat(picUrl, chatWindow, sendBtn, caseId);
-    setChatFunctions(caseId, sendBtn, funcUl);
+    setCaseFunctions(caseId, sendBtn, funcUl);
 
     // Read notificaiton
     socket.emit("read", {"case_id": caseId, "membership": membership})
@@ -172,15 +165,7 @@ function changeChatList(){
 
 // Handle chat history
 async function getChatHistory(caseId){
-    let fetchOptions = {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({"case_id": caseId})
-    }
-
-    await initChatData("/api/chat", fetchOptions);
+    await initChatData(`/api/chat?case=${caseId}`, {method: "GET"});
 }
 
 function renderChatHistory(picUrl, chatWindow){
