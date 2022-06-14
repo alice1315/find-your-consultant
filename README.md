@@ -89,7 +89,8 @@ Reducing redundant data and executing better through database normalization.
 # RESTful API
 
 </br>
-<img src="https://user-images.githubusercontent.com/29305102/173399905-7ab6bc01-e988-441b-84e0-5ef307f91fd7.png" alt="RESTfulAPI" width="800"/>
+<img src="https://user-images.githubusercontent.com/29305102/173632184-fdb803d7-2735-4923-9f3d-9dd457a64362.png" alt="RESTfulAPI" width="800"/>
+
 </br>
 
 # Back-end skills
