@@ -1,7 +1,7 @@
 # Find Your Consultant
 Find your consultant is a platform that matches people looking for professional advice.
 
-<img src="https://user-images.githubusercontent.com/29305102/173347372-35036009-c2e8-4b3a-b454-50cc6257986f.png" alt="image" width="1000">
+<img src="https://user-images.githubusercontent.com/29305102/173868322-7ca4082f-422a-450a-a508-bc7e56e7d60c.png" alt="image" width="1000">
 
 </br>
 
@@ -103,7 +103,7 @@ Networking
 - Domain Name System(DNS)
 - NGINX
 - SSL (SSL For Free)
-- WebSocket
+- WebSocket (Socket.IO)
 
 Version Control System
 - Git / GitHub
