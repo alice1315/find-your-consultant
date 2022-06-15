@@ -35,11 +35,6 @@ There are two membership in Find your consultant. <br/>
 1. SignUp & SignIn
 - Uploading and managing files with AWS Simple Cloud Storge(S3) service.
 - Using JSON Web Token(JWT) for authentication.
-
-SignUp            |  SignIn
-:-------------------------:|:-------------------------:
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/29305102/173403254-2300a8ce-e429-4ca8-a626-2777b5d3a73f.png"> |  <img width="500" alt="image" src="https://user-images.githubusercontent.com/29305102/173403072-f1821b0a-9f12-4de2-9554-51c2c5376e7e.png"> 
-
 </br>
 
 2. Professional fields filter
@@ -50,7 +45,7 @@ SignUp            |  SignIn
 3. Start consulting
 - Using Socket.IO to build a real-time communication.
   * You could send and receive messages instantly.
-  * Both could immediately receive the newest status.
+  * Both could immediately receive the changed status.
 </br>
 <img src="https://user-images.githubusercontent.com/29305102/173410447-ec282f9c-29a9-40f8-829b-1aaf0c1bd02b.mp4" alt="image" width="1000">
 </br>
@@ -72,7 +67,7 @@ SignUp            |  SignIn
 <img src="https://user-images.githubusercontent.com/29305102/173431644-711a394d-e813-4b62-a48a-a11dea0f12c3.png" alt="findyourc-30" width="600">
 </br>
 
-# Database design (MySQL)
+# Database Design (MySQL)
 Reducing data redundancy through database normalization.
 </br>
 <img src="https://user-images.githubusercontent.com/29305102/173345924-c20366fc-f421-4e17-ac98-f9110c553756.png" alt="MySQL-Diagram" width="600"/>
