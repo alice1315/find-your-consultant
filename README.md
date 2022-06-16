@@ -64,14 +64,15 @@ There are two membership in Find your consultant. <br/>
 </br>
 
 # Backend Architecture
-<img src="https://user-images.githubusercontent.com/29305102/173431644-711a394d-e813-4b62-a48a-a11dea0f12c3.png" alt="findyourc-30" width="600">
+<img src="https://user-images.githubusercontent.com/29305102/174129099-566f163d-1555-4963-9cdd-a6162d997b2a.png" alt="findyourc-30" width="600">
 </br>
 
 # Database Design (MySQL)
 Reducing data redundancy through database normalization.
 </br>
-<img src="https://user-images.githubusercontent.com/29305102/173345924-c20366fc-f421-4e17-ac98-f9110c553756.png" alt="MySQL-Diagram" width="600"/>
+<img src="https://user-images.githubusercontent.com/29305102/174130101-1ef13b5a-6251-4c2a-96a4-f51eda0d2e3f.png" alt="MySQL-Diagram" width="600"/>
 </br>
+
 
 # RESTful API
 <img src="https://user-images.githubusercontent.com/29305102/173632184-fdb803d7-2735-4923-9f3d-9dd457a64362.png" alt="RESTfulAPI" width="800"/>
