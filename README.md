@@ -11,7 +11,7 @@ Website: https://findyourconsultant.online
 </br>
 
 # Test Account
-There are two membership in Find your consultant. <br/>
+There are two membership in Find Your Consultant. <br/>
 'Regular member' is for people who are looking for advice, and 'consultant' is for people who could provide expert advice with professional fields.
 
 </br>
