@@ -47,18 +47,22 @@ There are two membership in Find Your Consultant. <br/>
   * You could send and receive messages instantly.
   * Both could immediately receive the changed status.
 </br>
-<img src="https://user-images.githubusercontent.com/29305102/173410447-ec282f9c-29a9-40f8-829b-1aaf0c1bd02b.mp4" width="1000">
+<!-- <img src="https://user-images.githubusercontent.com/29305102/173410447-ec282f9c-29a9-40f8-829b-1aaf0c1bd02b.mp4" width="1000"> -->
+
+https://user-images.githubusercontent.com/29305102/177822814-024d06cf-333c-4871-9576-e4a716ead98b.mp4
+
 </br>
-   
 
 4. Make a payment
 - Paying with credit card through the third-party cash flow service TapPay.
   * Regular member could pay to continue consulting.
 </br>
-<img src="https://user-images.githubusercontent.com/29305102/173412568-d49f8e0b-bda1-4569-8ee8-e232908da480.mp4" width="1000">
+<!-- <img src="https://user-images.githubusercontent.com/29305102/173412568-d49f8e0b-bda1-4569-8ee8-e232908da480.mp4" width="1000"> -->
+
+
+https://user-images.githubusercontent.com/29305102/177822713-bb05f3d1-34e9-4c50-a38f-240f38582d2f.mp4
+
 </br>
-https://user-images.githubusercontent.com/29305102/173412568-d49f8e0b-bda1-4569-8ee8-e232908da480.mp4
-  
 
 5. End Case
 - Reqular member could give some feedback to the consultant.
